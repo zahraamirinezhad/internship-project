@@ -1,19 +1,21 @@
-const jwt = require('JsonWebToken')
-const User = require('./models/User')
+const jwt = require("JsonWebToken");
+const User = require("./models/User");
 
 function verify(req, res, next) {
-  const authHeader = req.headers.token
+  console.log("one");
+  console.log(req);
+  const authHeader = req.headers.token;
   if (authHeader) {
-    const token = authHeader.split(' ')[1]
+    const token = authHeader.split(" ")[1];
 
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-      if (err) res.status(403).json('Token is not valid !!')
-      req.user = user
-      next()
-    })
+      if (err) res.status(403).json("Token is not valid !!");
+      req.user = user;
+      next();
+    });
   } else {
-    return res.status(401).json('You are not authenticated !!')
+    return res.status(401).json("You are not authenticated !!");
   }
 }
 
-module.exports = verify
+module.exports = verify;

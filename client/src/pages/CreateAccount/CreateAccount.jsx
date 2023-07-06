@@ -1,13 +1,13 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import classes from "./CreateAccount.module.scss";
 import ForgotPasswordIMG from "../../images/advertisment.png";
 import SignUp from "../../images/SignUp.png";
 import PasswordChecklist from "react-password-checklist";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import AuthContext from "../../authContext/AuthContext";
 
 const CreateAccount = () => {
-  const navigate = useNavigate();
+  const { register } = useContext(AuthContext);
 
   const [userNameData, setUserNameData] = useState("");
   const [passwordData, setPasswordData] = useState("");
@@ -18,12 +18,11 @@ const CreateAccount = () => {
     if (password_validate(passwordData) && validateEmail(emailData)) {
       e.preventDefault();
       try {
-        await axios.post(`${process.env.REACT_APP_API_ADDRESS}auth/register`, {
+        await register({
           email: emailData,
           username: userNameData,
           password: passwordData,
         });
-        navigate("/login");
       } catch (err) {
         console.log(err);
       }

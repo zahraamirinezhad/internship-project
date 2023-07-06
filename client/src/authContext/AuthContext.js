@@ -1,31 +1,63 @@
-import AuthReducer from "./AuthReducer";
-import { createContext, useEffect, useReducer } from "react";
+import { React, createContext, useState } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-const INITIAL_STATE = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
-  isFetching: false,
-  error: false,
-};
-
-export const AuthContext = createContext(INITIAL_STATE);
+const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+  const [user, setUser] = useState(() => {
+    if (localStorage.getItem("tokens")) {
+      let tokens = JSON.parse(localStorage.getItem("tokens"));
+      return jwt_decode(tokens.accessToken);
+    }
+    return null;
+  });
 
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
+  const getAccessToken = () => {
+    if (localStorage.getItem("tokens")) {
+      let tokens = JSON.parse(localStorage.getItem("tokens"));
+      console.log(tokens);
+      return tokens.accessToken;
+    }
+    return null;
+  };
+
+  const navigate = useNavigate();
+
+  const login = async (payload) => {
+    console.log(payload);
+    const apiResponse = await axios.post(
+      `${process.env.REACT_APP_API_ADDRESS}auth/login/`,
+      payload
+    );
+    console.log(apiResponse);
+    localStorage.setItem("tokens", JSON.stringify(apiResponse.data));
+    setUser(jwt_decode(apiResponse.data.accessToken));
+    navigate("/mainPage");
+    return apiResponse.data.accessToken;
+  };
+
+  const register = async (payload) => {
+    console.log(payload);
+    const apiResponse = await axios.post(
+      `${process.env.REACT_APP_API_ADDRESS}auth/register/`,
+      payload
+    );
+    console.log(apiResponse.data.accessToken);
+    localStorage.setItem(
+      "tokens",
+      JSON.stringify(apiResponse.data.accessToken)
+    );
+    setUser(jwt_decode(apiResponse.data.accessToken));
+    navigate("/mainPage");
+  };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user: state.user,
-        isFetching: state.isFetching,
-        error: state.error,
-        dispatch,
-      }}
-    >
+    <AuthContext.Provider value={{ user, getAccessToken, login, register }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;

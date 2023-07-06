@@ -3,19 +3,20 @@ import classes from "./Login.module.scss";
 import ForgotPasswordIMG from "../../images/advertisment.png";
 import Next from "../../images/next.png";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../authContext/AuthContext";
-import { login } from "../../authContext/apiCalls";
+import AuthContext from "../../authContext/AuthContext";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+
   const [emailData, setEmailData] = useState("");
   const [passwordData, setPasswordData] = useState("");
-  const { dispatch } = useContext(AuthContext);
   const [emailValid, setEmailValid] = useState(true);
 
   const manageLogin = (e) => {
     e.preventDefault();
     try {
-      login({ email: emailData, password: passwordData }, dispatch);
+      const res = login({ email: emailData, password: passwordData });
+      console.log(res);
     } catch (err) {
       console.log(err);
     }

@@ -1,27 +1,25 @@
 import classes from "./App.module.scss";
 import { CreateAccount, Login, MainContainer } from "./pages";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "./authContext/AuthContext";
+import { Routes, Route } from "react-router-dom";
+import AuthContext from "./authContext/AuthContext";
 import { useContext } from "react";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const token = useContext(AuthContext).getAccessToken();
+  console.log(token);
 
   return (
     <div className={classes.container}>
       <Routes>
-        <Route path="/" element={user ? <MainContainer /> : <Login />} />
         <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" replace />}
+          path="/"
+          element={token ? <MainContainer token={token} /> : <Login />}
         />
-        <Route
-          path="/createAccount"
-          element={!user ? <CreateAccount /> : <Navigate to="/" replace />}
-        />
-        {user && (
+        <Route path="/login" element={<Login />} />
+        <Route path="/createAccount" element={<CreateAccount />} />
+        {token && (
           <>
-            <Route path="/mainPage" element={<MainContainer />} />
+            <Route path="/mainPage" element={<MainContainer token={token} />} />
           </>
         )}
       </Routes>
