@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   padding: 1rem 1.5rem;
-  background-color: #fee7e8;
+  background-color: #e6e6ff;
 
   .stepperContainer {
     display: flex;
@@ -84,6 +84,10 @@
             &:focus {
               outline: none;
               border: 1px solid #303030;
+            }
+
+            &.invalidEmail {
+              border: 2px solid red;
             }
           }
         }

@@ -1,14 +1,29 @@
 import classes from "./App.module.scss";
-import { CreateAccount, Login } from "./pages";
-import { Routes, Route } from "react-router-dom";
+import { CreateAccount, Login, MainContainer } from "./pages";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from "./authContext/AuthContext";
+import { useContext } from "react";
 
 function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className={classes.container}>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/" element={user ? <MainContainer /> : <Login />} />
+        <Route
+          path="/login"
+          element={!user ? <Login /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/createAccount"
+          element={!user ? <CreateAccount /> : <Navigate to="/" replace />}
+        />
+        {user && (
+          <>
+            <Route path="/mainPage" element={<MainContainer />} />
+          </>
+        )}
       </Routes>
     </div>
   );

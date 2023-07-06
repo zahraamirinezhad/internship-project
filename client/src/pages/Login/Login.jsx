@@ -7,14 +7,33 @@ import { AuthContext } from "../../authContext/AuthContext";
 import { login } from "../../authContext/apiCalls";
 
 const Login = () => {
-  const [userNameData, setUserNameData] = useState("");
+  const [emailData, setEmailData] = useState("");
   const [passwordData, setPasswordData] = useState("");
   const { dispatch } = useContext(AuthContext);
+  const [emailValid, setEmailValid] = useState(true);
 
   const manageLogin = (e) => {
     e.preventDefault();
-    login({ userNameData, passwordData }, dispatch);
+    try {
+      login({ email: emailData, password: passwordData }, dispatch);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  function manageEmailValidation(value) {
+    if (validateEmail(value)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+    setEmailData(value);
+  }
 
   return (
     <div className={classes.container}>
@@ -26,11 +45,12 @@ const Login = () => {
         <div className={classes.steps}>
           <div className={classes.step1}>
             <div className={classes.enterData}>
-              <label>Username</label>
+              <label>Email</label>
               <input
                 type="text"
+                className={`${!emailValid && classes.invalidEmail}`}
                 onChange={(value) => {
-                  setUserNameData(value.target.value);
+                  manageEmailValidation(value.target.value);
                 }}
               />
             </div>
