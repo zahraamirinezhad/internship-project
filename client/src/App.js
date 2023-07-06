@@ -20,6 +20,10 @@ function App() {
         {token && (
           <>
             <Route path="/mainPage" element={<MainContainer token={token} />} />
+            <Route
+              path="/profileStructure/profile"
+              element={<MainContainer token={token} />}
+            />
           </>
         )}
       </Routes>
