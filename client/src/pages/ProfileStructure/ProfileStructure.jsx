@@ -4,11 +4,11 @@ import MyProfile from "../../images/MyProfile.png";
 import My_Idea from "../../images/MyIdea.png";
 import Edit_Profile from "../../images/EditProfile.png";
 import { useLocation, Link } from "react-router-dom";
-import { Profile } from "../../components";
+import { Profile, EditProfile } from "../../components";
 
 const ProfileStructure = ({ token }) => {
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
   const url =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
 
@@ -33,7 +33,7 @@ const ProfileStructure = ({ token }) => {
           {
             profile: <Profile token={token} />,
             // myCourses: <MyCourses token={token} />,
-            // editProfile: <EditProfile token={token} />,
+            editProfile: <EditProfile token={token} />,
           }[url]
         }
       </div>

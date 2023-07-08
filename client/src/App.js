@@ -24,6 +24,10 @@ function App() {
               path="/profileStructure/profile"
               element={<MainContainer token={token} />}
             />
+            <Route
+              path="/profileStructure/editProfile"
+              element={<MainContainer token={token} />}
+            />
           </>
         )}
       </Routes>

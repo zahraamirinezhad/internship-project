@@ -4,6 +4,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: white;
 
   @media (max-width: 1199.98px) {
     flex-direction: column;
@@ -24,16 +25,20 @@
     }
 
     .info {
+      width: 100%;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 3rem;
-      border: 1px solid #303030;
+      // border: 1px solid #303030;
+      box-shadow: 6px 6px 10px 1px rgba(0, 2, 161, 1);
       border-radius: 0.2rem;
       padding: 1rem 1.5rem;
+      background-color: #e0ddfc;
+      flex-direction: column;
 
-      @media (max-width: 859.99px) {
-        flex-direction: column;
+      @media (max-width: 991.98px) {
+        gap: 1rem;
       }
 
       .profileImage {
@@ -47,112 +52,33 @@
       }
 
       .userPersonalInfo {
-        @media (max-width: 859.99px) {
+        flex: 1;
+        display: flex;
+        width: 100%;
+        gap: 1.5rem;
+
+        @media (max-width: 991.98px) {
           width: 100%;
         }
 
-        .enterInfo {
-          display: flex;
-          align-items: center;
-          margin: 1rem 0;
-          // gap: 1rem;
-
-          @media (max-width: 859.99px) {
-            width: 100%;
-          }
-
-          @media (max-width: 575.98px) {
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 0.5rem;
-          }
-
-          label {
-            width: 8rem;
-          }
-
-          textarea {
-            width: 35rem;
-            background-color: #ffffff;
-            border: 1px solid #303030;
-            border-radius: 0.2rem;
-            outline: none;
-            padding: 0.2rem 0.5rem;
-
-            &::-webkit-scrollbar {
-              display: none;
-            }
-
-            @media (max-width: 1199.98px) {
-              width: 25rem;
-            }
-
-            @media (max-width: 859.99px) {
-              width: 80%;
-            }
-
-            @media (max-width: 575.98px) {
-              width: 100%;
-              max-width: 100%;
-              overflow: hidden;
-              overflow-x: scroll;
-            }
-          }
-
-          p {
-            width: 35rem;
-            height: 2rem;
-            background-color: #ffffff;
-            border: 1px solid #303030;
-            border-radius: 0.2rem;
-            outline: none;
-            padding: 0.2rem 0.5rem;
-            overflow: hidden;
-            overflow-x: scroll;
-            white-space: nowrap;
-
-            &::-webkit-scrollbar {
-              display: none;
-            }
-
-            @media (max-width: 1199.98px) {
-              width: 25rem;
-            }
-
-            @media (max-width: 859.99px) {
-              width: 80%;
-            }
-
-            @media (max-width: 575.98px) {
-              width: 100%;
-              max-width: 100%;
-              overflow: hidden;
-              overflow-x: scroll;
-            }
-          }
+        @media (max-width: 575.98px) {
+          flex-direction: column;
+          gap: 0;
         }
 
-        .sideBySide {
+        .slide {
+          flex: 1;
           display: flex;
-          align-items: center;
+          flex-direction: column;
           justify-content: space-between;
 
-          @media (max-width: 859.99px) {
-            width: 100%;
-            gap: 1rem;
-          }
-
-          @media (max-width: 767.98px) {
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-          }
-
-          div {
+          .enterInfo {
             display: flex;
+            align-items: flex-start;
+            margin: 1rem 0;
+            // gap: 1rem;
 
-            @media (max-width: 859.99px) {
+            @media (max-width: 991.98px) {
               width: 100%;
             }
 
@@ -165,21 +91,46 @@
 
             label {
               width: 8rem;
+              font-weight: bold;
+            }
 
-              @media (max-width: 654.98px) {
-                width: 7.5rem;
+            textarea {
+              width: 100%;
+              min-height: 8rem;
+              background-color: #ffffff;
+              border: none;
+              box-shadow: 6px 6px 10px 1px #6a68fa;
+              border-radius: 0.2rem;
+              outline: none;
+              padding: 0.2rem 0.5rem;
+              overflow: hidden;
+              overflow-y: scroll;
+
+              &::-webkit-scrollbar {
+                display: none;
+              }
+
+              @media (max-width: 991.98px) {
+                width: 80%;
+              }
+
+              @media (max-width: 575.98px) {
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                overflow-x: scroll;
               }
             }
 
             p {
-              width: 12rem;
+              width: 100%;
               height: 2rem;
               background-color: #ffffff;
-              border: 1px solid #303030;
+              border: none;
+              box-shadow: 6px 6px 10px 1px #6a68fa;
               border-radius: 0.2rem;
               outline: none;
               padding: 0.2rem 0.5rem;
-              font-size: 0.9rem;
               overflow: hidden;
               overflow-x: scroll;
               white-space: nowrap;
@@ -188,20 +139,80 @@
                 display: none;
               }
 
-              @media (max-width: 1199.98px) {
-                width: 6rem;
-              }
-
-              @media (max-width: 859.99px) {
-                width: 59%;
-              }
-
-              @media (max-width: 767.98px) {
-                width: 30%;
+              @media (max-width: 991.98px) {
+                width: 80%;
               }
 
               @media (max-width: 575.98px) {
                 width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                overflow-x: scroll;
+              }
+            }
+          }
+
+          .sideBySide {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            @media (max-width: 991.98px) {
+              width: 100%;
+              gap: 1rem;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: center;
+            }
+
+            div {
+              display: flex;
+
+              @media (max-width: 991.98px) {
+                width: 100%;
+              }
+
+              @media (max-width: 575.98px) {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 0.5rem;
+              }
+
+              label {
+                width: 6.5rem;
+                font-weight: bold;
+
+                @media (max-width: 991.98px) {
+                  width: 8rem;
+                }
+              }
+
+              p {
+                width: 6rem;
+                height: 2rem;
+                background-color: #ffffff;
+                border: none;
+                box-shadow: 6px 6px 10px 1px #6a68fa;
+                border-radius: 0.2rem;
+                outline: none;
+                padding: 0.2rem 0.5rem;
+                font-size: 0.9rem;
+                overflow: hidden;
+                overflow-x: scroll;
+                white-space: nowrap;
+
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+
+                @media (max-width: 991.98px) {
+                  width: 80%;
+                }
+
+                @media (max-width: 575.98px) {
+                  width: 100%;
+                }
               }
             }
           }

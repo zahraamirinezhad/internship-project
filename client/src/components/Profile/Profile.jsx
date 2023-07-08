@@ -47,11 +47,11 @@ const Profile = ({ token }) => {
         setUserLastName(res.data.lastName);
         setUserGender(res.data.gender);
         setUserBio(res.data.bio);
-        setUserBirthDate(res.data.birthDate);
-        setUserCountry(res.data.address.country);
-        setUserState(res.data.address.state);
-        setUserCity(res.data.address.city);
-        setUserAddress(res.data.address.address);
+        setUserBirthDate(res.data.birthDate.slice(0, 10));
+        setUserCountry(res.data.country);
+        setUserState(res.data.state);
+        setUserCity(res.data.city);
+        setUserAddress(res.data.address);
         setUserUserName(res.data.username);
 
         setIsLoading(false);
@@ -68,46 +68,57 @@ const Profile = ({ token }) => {
       <div className={classes.profileInfo}>
         <div className={classes.info}>
           <img
-            src={
-              userProfile == null
-                ? UserProfile
-                : `http://api.iwantnet.space:8001${userProfile}`
-            }
+            src={UserProfile}
             alt="User_Profile"
             className={classes.profileImage}
           />
           <div className={classes.userPersonalInfo}>
-            <div className={classes.enterInfo}>
-              <label>First Name</label>
-              <p>{userFirstName}</p>
-            </div>
-            <div className={classes.enterInfo}>
-              <label>Last Name</label>
-              <p>{userLastName}</p>
-            </div>
-            <div className={classes.sideBySide}>
-              <div className={classes.enterGender}>
-                <label>Gender</label>
-                <p>{userGender}</p>
+            <div className={classes.slide}>
+              <div className={classes.enterInfo}>
+                <label>Username</label>
+                <p>{userUserName}</p>
               </div>
-              <div className={classes.enterBirthDate}>
-                <label>Birth Date</label>
-                <p>{userBirthDate}</p>
+              <div className={classes.sideBySide}>
+                <div className={classes.enterGender}>
+                  <label>Gender</label>
+                  <p>{userGender}</p>
+                </div>
+                <div className={classes.enterBirthDate}>
+                  <label>Birth Date</label>
+                  <p>{userBirthDate}</p>
+                </div>
               </div>
-            </div>
-            <div className={classes.enterInfo}>
-              <label>Address</label>
-              {isLoading ? (
-                <CircularProgress />
-              ) : (
+              <div className={classes.enterInfo}>
+                <label>Bio</label>
                 <textarea
-                  rows={4}
-                >{`${userCountry}-${userState}-${userCity}-${userAddress}`}</textarea>
-              )}
+                  type="text"
+                  value={userBio}
+                  onChange={(e) => {
+                    setUserBio(e.target.value);
+                  }}
+                />
+              </div>
             </div>
-            <div className={classes.enterInfo}>
-              <label>Username</label>
-              <p>{userUserName}</p>
+            <div className={classes.slide}>
+              <div className={classes.enterInfo}>
+                <label>First Name</label>
+                <p>{userFirstName}</p>
+              </div>
+              <div className={classes.enterInfo}>
+                <label>Last Name</label>
+                <p>{userLastName}</p>
+              </div>
+
+              <div className={classes.enterInfo}>
+                <label>Address</label>
+                {isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <textarea
+                    rows={4}
+                  >{`${userCountry}-${userState}-${userCity}-${userAddress}`}</textarea>
+                )}
+              </div>
             </div>
           </div>
         </div>
