@@ -7,22 +7,21 @@
   .sidebar {
     width: 100%;
     // height: calc(100vh - 50px);
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 2rem;
     font-family: Verdana, sans-serif;
     padding: 0.5rem 1rem;
 
-    @media (max-width: 991.98px) {
+    @media (max-width: 767.98px) {
       display: none;
     }
 
     .sidebarOptions {
       flex: 1;
       width: 100%;
-      color: white;
-      background-color: #c70650;
+      color: #ca004e;
       font-size: 1rem;
       padding: 0.5rem 1rem;
       display: flex;
@@ -30,18 +29,23 @@
       justify-content: center;
       gap: 1rem;
       cursor: pointer;
-      border: 1px solid #ffffff;
+      border: 1px solid #ca004e;
       transition: all 0.3s ease-in-out;
       text-decoration: none;
       font-family: Verdana, sans-serif;
       border-radius: 2rem;
+      box-shadow: 0px 6px 10px 1px rgba(202, 0, 78, 1);
 
       &:hover {
-        background-color: #fb2576;
+        background-color: #ca004e;
+        box-shadow: none;
+        color: white;
       }
 
       &:focus {
-        background-color: #a10a44;
+        background-color: #db1e66;
+        box-shadow: none;
+        color: white;
       }
 
       img {

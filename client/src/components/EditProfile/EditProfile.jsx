@@ -4,7 +4,7 @@ import UserProfile from "../../images/user (2).png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import Apply from "../../images/apply.png";
+import { CheckCircleOutline } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 
 const EditProfile = ({ token }) => {
@@ -22,6 +22,8 @@ const EditProfile = ({ token }) => {
   const [userUserName, setUserUserName] = useState(null);
   const [userBio, setUserBio] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -51,6 +53,8 @@ const EditProfile = ({ token }) => {
         setUserAddress(res.data.address);
         setUserUserName(res.data.username);
         setMainUserName(res.data.username);
+
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -138,6 +142,7 @@ const EditProfile = ({ token }) => {
                 <div className={classes.enterInfo}>
                   <label>First Name</label>
                   <input
+                    className={isLoading && classes.isLoading}
                     type="text"
                     value={userFirstName}
                     onChange={(e) => {
@@ -148,6 +153,7 @@ const EditProfile = ({ token }) => {
                 <div className={classes.enterInfo}>
                   <label>Last Name</label>
                   <input
+                    className={isLoading && classes.isLoading}
                     type="text"
                     value={userLastName}
                     onChange={(e) => {
@@ -159,6 +165,7 @@ const EditProfile = ({ token }) => {
                   <div className={classes.enterGender}>
                     <label>Gender</label>
                     <select
+                      className={isLoading && classes.isLoading}
                       name="gender"
                       onChange={(e) => {
                         setUserGender(e.target.value);
@@ -185,6 +192,7 @@ const EditProfile = ({ token }) => {
                   <div className={classes.enterBirthDate}>
                     <label>Birth Date</label>
                     <DatePicker
+                      className={isLoading && classes.isLoading}
                       selected={new Date(userBirthDate)}
                       onChange={(date) => setUserBirthDate(date)}
                       minDate={new Date("1923-01-01")}
@@ -197,6 +205,7 @@ const EditProfile = ({ token }) => {
                   <div>
                     <label>Country</label>
                     <input
+                      className={isLoading && classes.isLoading}
                       type="text"
                       value={userCountry}
                       onChange={(e) => {
@@ -207,6 +216,7 @@ const EditProfile = ({ token }) => {
                   <div>
                     <label>State</label>
                     <input
+                      className={isLoading && classes.isLoading}
                       type="text"
                       value={userState}
                       onChange={(e) => {
@@ -217,6 +227,7 @@ const EditProfile = ({ token }) => {
                   <div>
                     <label>City</label>
                     <input
+                      className={isLoading && classes.isLoading}
                       type="text"
                       value={userCity}
                       onChange={(e) => {
@@ -227,8 +238,10 @@ const EditProfile = ({ token }) => {
                 </div>
                 <div className={classes.enterInfo}>
                   <label>Address</label>
-                  <input
+                  <textarea
+                    className={isLoading && classes.isLoading}
                     type="text"
+                    rows={4}
                     value={userAddress}
                     onChange={(e) => {
                       setUserAddress(e.target.value);
@@ -238,6 +251,7 @@ const EditProfile = ({ token }) => {
                 <div className={classes.enterInfo}>
                   <label>Username</label>
                   <input
+                    className={isLoading && classes.isLoading}
                     type="text"
                     value={userUserName}
                     onChange={(e) => {
@@ -250,6 +264,7 @@ const EditProfile = ({ token }) => {
             <div className={classes.bio}>
               <label>Bio</label>
               <textarea
+                className={isLoading && classes.isLoading}
                 type="text"
                 value={userBio}
                 onChange={(e) => {
@@ -263,7 +278,7 @@ const EditProfile = ({ token }) => {
               <CircularProgress />
             ) : (
               <button onClick={changeUserInfo}>
-                <img src={Apply} alt="apply" />
+                <CheckCircleOutline />
                 Apply
               </button>
             )}

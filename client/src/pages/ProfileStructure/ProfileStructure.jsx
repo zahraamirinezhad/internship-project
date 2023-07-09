@@ -1,10 +1,13 @@
 import { React } from "react";
 import classes from "./ProfileStructure.module.scss";
-import MyProfile from "../../images/MyProfile.png";
-import My_Idea from "../../images/MyIdea.png";
-import Edit_Profile from "../../images/EditProfile.png";
 import { useLocation, Link } from "react-router-dom";
 import { Profile, EditProfile } from "../../components";
+import {
+  AccountCircle,
+  ManageAccounts,
+  CastForEducation,
+  School,
+} from "@mui/icons-material";
 
 const ProfileStructure = ({ token }) => {
   const location = useLocation();
@@ -16,16 +19,16 @@ const ProfileStructure = ({ token }) => {
     <div className={classes.container}>
       <div className={classes.sidebar}>
         <Link className={classes.sidebarOptions} to="/profileStructure/profile">
-          <img src={MyProfile} alt="Profile" /> Profile
+          <AccountCircle /> Profile
         </Link>
         <Link
           className={classes.sidebarOptions}
           to="/profileStructure/editProfile"
         >
-          <img src={Edit_Profile} alt="Edit_Profile" /> Edit Profile
+          <ManageAccounts /> Edit Profile
         </Link>
         <Link className={classes.sidebarOptions} to="/profileStructure/myIdeas">
-          <img src={My_Idea} alt="My_Ideas" /> My Courses
+          <School /> My Courses
         </Link>
       </div>
       <div className={classes.main}>

@@ -1,34 +1,20 @@
 import { React, useEffect, useState } from "react";
 import classes from "./Profile.module.scss";
 import UserProfile from "../../images/user (2).png";
-import Next from "../../images/next.png";
-import Previous from "../../images/prev.png";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
 const Profile = ({ token }) => {
-  const [nextPage, setNextPage] = useState("first");
   const [userProfile, setUserProfile] = useState(null);
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
   const [userGender, setUserGender] = useState(null);
   const [userBirthDate, setUserBirthDate] = useState(null);
-  const [userCountry, setUserCountry] = useState(" ");
-  const [userState, setUserState] = useState(" ");
-  const [userCity, setUserCity] = useState(" ");
   const [userAddress, setUserAddress] = useState(" ");
   const [userUserName, setUserUserName] = useState(null);
   const [userBio, setUserBio] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleNext = () => {
-    setNextPage("sec");
-  };
-
-  const handlePrev = () => {
-    setNextPage("first");
-  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -41,17 +27,16 @@ const Profile = ({ token }) => {
             },
           }
         );
-        console.log(res);
+        console.log(res.data);
         setUserProfile(res.data.profilePic);
         setUserFirstName(res.data.firstName);
         setUserLastName(res.data.lastName);
         setUserGender(res.data.gender);
         setUserBio(res.data.bio);
         setUserBirthDate(res.data.birthDate.slice(0, 10));
-        setUserCountry(res.data.country);
-        setUserState(res.data.state);
-        setUserCity(res.data.city);
-        setUserAddress(res.data.address);
+        setUserAddress(
+          `${res.data.country}-${res.data.state}-${res.data.city}-${res.data.address}`
+        );
         setUserUserName(res.data.username);
 
         setIsLoading(false);
@@ -76,21 +61,42 @@ const Profile = ({ token }) => {
             <div className={classes.slide}>
               <div className={classes.enterInfo}>
                 <label>Username</label>
-                <p>{userUserName}</p>
+                <p
+                  className={`${classes.smallData} ${
+                    isLoading && classes.isLoading
+                  }`}
+                >
+                  {userUserName}
+                </p>
               </div>
               <div className={classes.sideBySide}>
                 <div className={classes.enterGender}>
                   <label>Gender</label>
-                  <p>{userGender}</p>
+                  <p
+                    className={`${classes.largeData} ${
+                      isLoading && classes.isLoading
+                    }`}
+                  >
+                    {userGender}
+                  </p>
                 </div>
                 <div className={classes.enterBirthDate}>
                   <label>Birth Date</label>
-                  <p>{userBirthDate}</p>
+                  <p
+                    className={`${classes.smallData} ${
+                      isLoading && classes.isLoading
+                    }`}
+                  >
+                    {userBirthDate}
+                  </p>
                 </div>
               </div>
               <div className={classes.enterInfo}>
                 <label>Bio</label>
-                <textarea
+                <p
+                  className={`${classes.largeData} ${
+                    isLoading && classes.isLoading
+                  }`}
                   type="text"
                   value={userBio}
                   onChange={(e) => {
@@ -102,22 +108,34 @@ const Profile = ({ token }) => {
             <div className={classes.slide}>
               <div className={classes.enterInfo}>
                 <label>First Name</label>
-                <p>{userFirstName}</p>
+                <p
+                  className={`${classes.smallData} ${
+                    isLoading && classes.isLoading
+                  }`}
+                >
+                  {userFirstName}
+                </p>
               </div>
               <div className={classes.enterInfo}>
                 <label>Last Name</label>
-                <p>{userLastName}</p>
+                <p
+                  className={`${classes.smallData} ${
+                    isLoading && classes.isLoading
+                  }`}
+                >
+                  {userLastName}
+                </p>
               </div>
 
               <div className={classes.enterInfo}>
                 <label>Address</label>
-                {isLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <textarea
-                    rows={4}
-                  >{`${userCountry}-${userState}-${userCity}-${userAddress}`}</textarea>
-                )}
+                <p
+                  className={`${classes.largeData} ${
+                    isLoading && classes.isLoading
+                  }`}
+                >
+                  {userAddress}
+                </p>
               </div>
             </div>
           </div>

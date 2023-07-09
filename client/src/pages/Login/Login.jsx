@@ -1,9 +1,9 @@
 import { React, useState, useContext } from "react";
 import classes from "./Login.module.scss";
 import ForgotPasswordIMG from "../../images/advertisment.png";
-import Next from "../../images/next.png";
 import { Link } from "react-router-dom";
 import AuthContext from "../../authContext/AuthContext";
+import LoginIcon from "@mui/icons-material/Login";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -65,7 +65,7 @@ const Login = () => {
               />
             </div>
             <button className={classes.option} onClick={(e) => manageLogin(e)}>
-              <img src={Next} alt="login" />
+              <LoginIcon />
               Login
             </button>
             <div className={classes.userOption}>
