@@ -6,19 +6,11 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    if (localStorage.getItem("tokens")) {
-      let tokens = JSON.parse(localStorage.getItem("tokens"));
-      return jwt_decode(tokens.accessToken);
-    }
-    return null;
-  });
-
   const getAccessToken = () => {
     if (localStorage.getItem("tokens")) {
       let tokens = JSON.parse(localStorage.getItem("tokens"));
       console.log(tokens);
-      return tokens.accessToken;
+      return tokens;
     }
     return null;
   };
@@ -32,10 +24,11 @@ export const AuthContextProvider = ({ children }) => {
       payload
     );
     console.log(apiResponse);
-    localStorage.setItem("tokens", JSON.stringify(apiResponse.data));
-    setUser(jwt_decode(apiResponse.data.accessToken));
+    localStorage.setItem(
+      "tokens",
+      JSON.stringify(apiResponse.data.accessToken)
+    );
     navigate("/mainPage");
-    return apiResponse.data.accessToken;
   };
 
   const register = async (payload) => {
@@ -44,17 +37,16 @@ export const AuthContextProvider = ({ children }) => {
       `${process.env.REACT_APP_API_ADDRESS}auth/register/`,
       payload
     );
-    console.log(apiResponse.data.accessToken);
+    console.log(apiResponse);
     localStorage.setItem(
       "tokens",
       JSON.stringify(apiResponse.data.accessToken)
     );
-    setUser(jwt_decode(apiResponse.data.accessToken));
     navigate("/mainPage");
   };
 
   return (
-    <AuthContext.Provider value={{ user, getAccessToken, login, register }}>
+    <AuthContext.Provider value={{ getAccessToken, login, register }}>
       {children}
     </AuthContext.Provider>
   );

@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
     const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
       expiresIn: "5d",
     });
-    res.status(201).json({ ...user, accessToken });
+    res.status(201).json({ accessToken });
   } catch (err) {
     res.status(500).json(err);
   }

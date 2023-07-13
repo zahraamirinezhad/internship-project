@@ -99,12 +99,9 @@ const Profile = ({ token }) => {
                   className={`${classes.largeData} ${
                     isLoading && classes.isLoading
                   }`}
-                  type="text"
-                  value={userBio}
-                  onChange={(e) => {
-                    setUserBio(e.target.value);
-                  }}
-                />
+                >
+                  {userBio}
+                </p>
               </div>
             </div>
             <div className={classes.slide}>
