@@ -8,7 +8,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: Verdana, sans-serif;
 
     @media (max-width: 991.98px) {
       display: none;
@@ -46,7 +45,6 @@
       padding: 0.5rem 1.2rem;
 
       h1 {
-        font-family: Rubik, sans-serif;
         font-weight: 500;
         font-size: 1.5rem;
       }
@@ -129,14 +127,4 @@
       }
     }
   }
-}
-
-@font-face {
-  font-family: Verdana;
-  src: url("../../fonts/Verdana.ttf");
-}
-
-@font-face {
-  font-family: Rubik;
-  src: url("../../fonts/Rubik-VariableFont_wght.ttf");
 }

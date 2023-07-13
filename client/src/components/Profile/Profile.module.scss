@@ -11,14 +11,12 @@
   }
 
   h2 {
-    font-family: Rubik, sans-serif;
     margin: 1rem 1.5rem;
   }
 
   .profileInfo {
     width: 100%;
     padding: 1rem 1.5rem;
-    font-family: Montserrat, sans-serif;
 
     @media (max-width: 1199.98px) {
       width: 100%;
@@ -218,14 +216,4 @@
   to {
     opacity: 0.5;
   }
-}
-
-@font-face {
-  font-family: Montserrat;
-  src: url("../../fonts/Montserrat-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: Verdana;
-  src: url("../../fonts/Verdana.ttf");
 }

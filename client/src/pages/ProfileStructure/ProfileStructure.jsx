@@ -5,7 +5,7 @@ import { Profile, EditProfile } from "../../components";
 import {
   AccountCircle,
   ManageAccounts,
-  CastForEducation,
+  MenuBook,
   School,
 } from "@mui/icons-material";
 
@@ -27,7 +27,13 @@ const ProfileStructure = ({ token }) => {
         >
           <ManageAccounts /> Edit Profile
         </Link>
-        <Link className={classes.sidebarOptions} to="/profileStructure/myIdeas">
+        <Link className={classes.sidebarOptions} to="/practice">
+          <MenuBook /> Practice
+        </Link>
+        <Link
+          className={classes.sidebarOptions}
+          to="/profileStructure/myCourses"
+        >
           <School /> My Courses
         </Link>
       </div>

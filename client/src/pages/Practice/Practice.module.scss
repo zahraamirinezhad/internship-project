@@ -1,0 +1,236 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .options {
+    width: 45rem;
+    // height: calc(100vh - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
+
+    .languageOptions {
+      flex: 1;
+      width: 100%;
+      color: #ca004e;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      border: 1px solid #8f0037;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      border-radius: 2rem;
+      box-shadow: 0px 6px 10px 1px #8f0037;
+
+      &:hover {
+        background-color: #a80242;
+        box-shadow: none;
+        color: white;
+      }
+    }
+  }
+
+  .html {
+    position: absolute;
+    animation: htmlAnimation 10s linear 0s infinite alternate;
+    color: #e62e00;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+  }
+
+  .css {
+    position: absolute;
+    animation: cssAnimation 10s linear 0s infinite alternate;
+    color: #0000ff;
+    opacity: 0.5;
+    top: 10%;
+    left: 0;
+  }
+
+  .javascript {
+    position: absolute;
+    animation: javascriptAnimation 10s linear 0s infinite alternate;
+    color: #ffff00;
+    opacity: 0.5;
+    top: 0;
+    left: 60%;
+  }
+
+  .nodejs {
+    position: absolute;
+    animation: nodejsAnimation 10s linear 0s infinite alternate;
+    color: #00cc00;
+    opacity: 0.5;
+    bottom: 0;
+    right: 0;
+  }
+
+  .python {
+    position: absolute;
+    animation: pythonAnimation 10s linear 0s infinite alternate;
+    color: #ffcc00;
+    opacity: 0.5;
+    bottom: 15%;
+    right: 10%;
+  }
+
+  .c {
+    position: absolute;
+    animation: cAnimation 10s linear 0s infinite alternate;
+    color: #000080;
+    opacity: 0.5;
+    top: 20%;
+    left: 20%;
+  }
+
+  .cpp {
+    position: absolute;
+    animation: cppAnimation 10s linear 0s infinite alternate;
+    color: #000066;
+    opacity: 0.5;
+    top: 40;
+    left: 40;
+  }
+
+  .php {
+    position: absolute;
+    animation: phpAnimation 10s linear 0s infinite alternate;
+    color: #e60000;
+    opacity: 0.5;
+    top: 10;
+    left: 10;
+  }
+}
+
+@keyframes htmlAnimation {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  50% {
+    top: 20%;
+    left: 30%;
+  }
+  100% {
+    top: 5%;
+    left: 50%;
+  }
+}
+
+@keyframes cssAnimation {
+  0% {
+    top: 10%;
+    left: 0;
+  }
+  50% {
+    top: 5%;
+    left: 40%;
+  }
+  100% {
+    top: 5%;
+    left: 60%;
+  }
+}
+
+@keyframes javascriptAnimation {
+  0% {
+    top: 0;
+    left: 60%;
+  }
+  50% {
+    top: 30%;
+    left: 40%;
+  }
+  100% {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+@keyframes nodejsAnimation {
+  0% {
+    bottom: 0;
+    right: 0;
+  }
+  50% {
+    bottom: 30%;
+    right: 20%;
+  }
+  100% {
+    bottom: 10%;
+    right: 50%;
+  }
+}
+
+@keyframes pythonAnimation {
+  0% {
+    bottom: 15%;
+    right: 10%;
+  }
+  50% {
+    bottom: 30%;
+    right: 30%;
+  }
+  100% {
+    bottom: 60%;
+    right: 50%;
+  }
+}
+
+@keyframes cAnimation {
+  0% {
+    top: 20%;
+    left: 20%;
+  }
+  50% {
+    top: 30%;
+    left: 40%;
+  }
+  100% {
+    top: 0%;
+    left: 50%;
+  }
+}
+
+@keyframes cppAnimation {
+  0% {
+    top: 40%;
+    left: 40%;
+  }
+  50% {
+    top: 10%;
+    left: 5%;
+  }
+  100% {
+    top: 0%;
+    left: 20%;
+  }
+}
+
+@keyframes phpAnimation {
+  0% {
+    top: 10%;
+    left: 10%;
+  }
+  50% {
+    top: 30%;
+    left: 30%;
+  }
+  100% {
+    top: 40%;
+    left: 50%;
+  }
+}

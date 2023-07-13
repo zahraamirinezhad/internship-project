@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const verify = require("../VerifyToken");
-const CryptoJS = require("crypto-js");
 const multer = require("multer");
 
 const editUser = multer({ dest: "files/" });

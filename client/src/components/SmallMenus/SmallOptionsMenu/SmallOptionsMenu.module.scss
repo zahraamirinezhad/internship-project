@@ -28,20 +28,18 @@
     align-items: center;
     justify-content: start;
     gap: 1rem;
-    font-family: Verdana, sans-serif;
 
     button {
       border: none;
       outline: none;
       background-color: transparent;
-      font-family: Verdana, sans-serif;
     }
 
     .btn {
       border: none;
       outline: none;
       background-color: transparent;
-      font-family: Verdana, sans-serif;
+
       width: 100%;
     }
 
@@ -52,7 +50,7 @@
         align-items: center;
         justify-content: start;
         gap: 1rem;
-        font-family: Verdana, sans-serif;
+
         color: white;
         text-decoration: none;
 
@@ -64,9 +62,4 @@
       }
     }
   }
-}
-
-@font-face {
-  font-family: Verdana;
-  src: url("../../../fonts/Verdana.ttf");
 }

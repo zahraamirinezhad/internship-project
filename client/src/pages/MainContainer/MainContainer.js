@@ -2,7 +2,7 @@ import { React } from "react";
 import classes from "./MainContainer.module.scss";
 import { Header } from "../../components";
 import { useLocation } from "react-router-dom";
-import { MainPage, ProfileStructure } from "../";
+import { MainPage, ProfileStructure, Practice, Compiler } from "../";
 
 const MainContainer = ({ token }) => {
   const location = useLocation();
@@ -19,6 +19,8 @@ const MainContainer = ({ token }) => {
             {
               mainPage: <MainPage token={token} />,
               profileStructure: <ProfileStructure token={token} />,
+              practice: <Practice token={token} />,
+              otherLan: <Compiler token={token} />,
             }[url]
           }
         </div>

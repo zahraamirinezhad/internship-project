@@ -46,7 +46,6 @@
 
     &.userInfo {
       .account {
-        font-family: Verdana, sans-serif;
         color: white;
         text-decoration: none;
 
@@ -87,18 +86,7 @@
     }
 
     &.title {
-      font-family: Pacifico_Regular, sans-serif;
       color: #ffffff;
     }
   }
-}
-
-@font-face {
-  font-family: Pacifico_Regular;
-  src: url("../../fonts/Pacifico-Regular.ttf");
-}
-
-@font-face {
-  font-family: Verdana;
-  src: url("../../fonts/Verdana.ttf");
 }
