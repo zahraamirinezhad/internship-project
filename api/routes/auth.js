@@ -12,7 +12,15 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.SECRET_KEY
     ).toString(),
-    profilePic: req.body.profilePic ? req.body.profilePic : "",
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    birthDate: req.body.userBirthDate,
+    gender: req.body.gender,
+    bio: req.body.bio,
+    country: req.body.country,
+    state: req.body.state,
+    city: req.body.city,
+    address: req.body.address,
   });
 
   try {

@@ -33,7 +33,9 @@ const Profile = ({ token }) => {
         setUserLastName(res.data.lastName);
         setUserGender(res.data.gender);
         setUserBio(res.data.bio);
-        setUserBirthDate(res.data.birthDate.slice(0, 10));
+        setUserBirthDate(
+          res.data.birthDate !== null ? res.data.birthDate.slice(0, 10) : null
+        );
         setUserAddress(
           `${res.data.country}-${res.data.state}-${res.data.city}-${res.data.address}`
         );
