@@ -2,7 +2,13 @@ import { React } from "react";
 import classes from "./MainContainer.module.scss";
 import { Header } from "../../components";
 import { useLocation } from "react-router-dom";
-import { MainPage, ProfileStructure, Practice, Compiler } from "../";
+import {
+  MainPage,
+  ProfileStructure,
+  Practice,
+  Compiler,
+  PracticeWebLan,
+} from "../";
 
 const MainContainer = ({ token }) => {
   const location = useLocation();
@@ -21,6 +27,7 @@ const MainContainer = ({ token }) => {
               profileStructure: <ProfileStructure token={token} />,
               practice: <Practice token={token} />,
               otherLan: <Compiler token={token} />,
+              webLan: <PracticeWebLan />,
             }[url]
           }
         </div>

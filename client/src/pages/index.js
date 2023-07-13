@@ -5,3 +5,4 @@ export { default as MainPage } from "./MainPage/MainPage";
 export { default as ProfileStructure } from "./ProfileStructure/ProfileStructure";
 export { default as Practice } from "./Practice/Practice";
 export { default as Compiler } from "./Compiler/Compiler";
+export { default as PracticeWebLan } from "./PracticeWebLan/PracticeWebLan";

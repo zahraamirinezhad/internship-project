@@ -30,6 +30,7 @@ function App() {
             />
             <Route path="/practice" element={<MainContainer token={token} />} />
             <Route path="/otherLan" element={<MainContainer token={token} />} />
+            <Route path="/webLan" element={<MainContainer token={token} />} />
           </>
         )}
       </Routes>
