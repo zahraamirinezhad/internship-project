@@ -28,7 +28,11 @@ const Profile = ({ token }) => {
           }
         );
         console.log(res.data);
-        setUserProfile(res.data.profilePic);
+        setUserProfile(
+          res.data.profilePic === null
+            ? UserProfile
+            : `http://localhost:8800/${res.data.profilePic}`
+        );
         setUserFirstName(res.data.firstName);
         setUserLastName(res.data.lastName);
         setUserGender(res.data.gender);
@@ -54,11 +58,15 @@ const Profile = ({ token }) => {
       <h2>Profile</h2>
       <div className={classes.profileInfo}>
         <div className={classes.info}>
-          <img
-            src={UserProfile}
-            alt="User_Profile"
-            className={classes.profileImage}
-          />
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <img
+              src={userProfile}
+              alt="User_Profile"
+              className={classes.profileImage}
+            />
+          )}
           <div className={classes.userPersonalInfo}>
             <div className={classes.slide}>
               <div className={classes.enterInfo}>

@@ -9,7 +9,6 @@ import { CircularProgress } from "@mui/material";
 
 const EditProfile = ({ token }) => {
   const [mainUserName, setMainUserName] = useState("");
-  const [selectedProfile, setUserSelectedProfile] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
@@ -21,8 +20,9 @@ const EditProfile = ({ token }) => {
   const [userAddress, setUserAddress] = useState(null);
   const [userUserName, setUserUserName] = useState(null);
   const [userBio, setUserBio] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
 
+  const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingUserProfile, setIsUploadingUserProfile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,10 +37,8 @@ const EditProfile = ({ token }) => {
           }
         );
         console.log(res);
-        res.data.profilePic !== "" &&
-          setUserProfile(
-            `http://api.iwantnet.space:8001${res.data.profile_image}`
-          );
+        res.data.profilePic !== null &&
+          setUserProfile(`http://localhost:8800/${res.data.profilePic}`);
 
         setUserFirstName(res.data.firstName);
         setUserLastName(res.data.lastName);
@@ -68,7 +66,6 @@ const EditProfile = ({ token }) => {
     if (userUserName !== mainUserName) {
       formData.append("username", userUserName);
     }
-    console.log(userBirthDate);
     formData.append("firstName", userFirstName);
     formData.append("lastName", userLastName);
     formData.append("birthDate", userBirthDate);
@@ -78,10 +75,6 @@ const EditProfile = ({ token }) => {
     formData.append("state", userState);
     formData.append("city", userCity);
     formData.append("address", userAddress);
-    console.log(userCountry);
-    if (selectedProfile !== null) {
-      formData.append("profile_image", selectedProfile);
-    }
 
     for (const value of formData.values()) {
       console.log(value);
@@ -108,10 +101,30 @@ const EditProfile = ({ token }) => {
     }
   };
 
-  const handleUploadedImage = (e) => {
+  const handleUploadedImage = async (e) => {
+    setIsUploadingUserProfile(true);
     console.log(e.target.files[0]);
-    setUserSelectedProfile(e.target.files[0]);
     setUserProfile(URL.createObjectURL(e.target.files[0]));
+
+    const formData = new FormData();
+    formData.append("avatar", e.target.files[0]);
+
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_API_ADDRESS}users/uploadUserImage`,
+        formData,
+        {
+          headers: {
+            token: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+      setIsUploadingUserProfile(false);
+    } catch (err) {
+      console.log(err);
+      setIsUploadingUserProfile(false);
+    }
   };
 
   return (
@@ -122,22 +135,26 @@ const EditProfile = ({ token }) => {
         <div className={classes.profileInfo}>
           <div className={classes.userInfo}>
             <div className={classes.info}>
-              <div className={classes.profileImage}>
-                <input
-                  id="selectProfileImage"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    handleUploadedImage(e);
-                  }}
-                />
-                <label for="selectProfileImage">
-                  <img
-                    src={userProfile == null ? UserProfile : userProfile}
-                    alt="User_Profile"
+              {isUploadingUserProfile ? (
+                <CircularProgress />
+              ) : (
+                <div className={classes.profileImage}>
+                  <input
+                    id="selectProfileImage"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      handleUploadedImage(e);
+                    }}
                   />
-                </label>
-              </div>
+                  <label for="selectProfileImage">
+                    <img
+                      src={userProfile == null ? UserProfile : userProfile}
+                      alt="User_Profile"
+                    />
+                  </label>
+                </div>
+              )}
               <div className={classes.userPersonalInfo}>
                 <div className={classes.enterInfo}>
                   <label>First Name</label>

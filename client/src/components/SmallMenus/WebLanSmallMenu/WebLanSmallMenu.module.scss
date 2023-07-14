@@ -1,0 +1,83 @@
+.container {
+  position: absolute;
+  top: 5.5rem;
+  list-style-type: none;
+  width: 10rem;
+  z-index: 10;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-8rem);
+    transition: 1s ease-in;
+  }
+
+  &.invisible {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10rem);
+    transition: 1s ease-out;
+  }
+
+  .navbar {
+    width: 100%;
+    list-style-type: none;
+    background-color: #333;
+    // box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+    // -webkit-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+    // -moz-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+
+    li {
+      height: 3rem;
+      width: 100%;
+
+      button,
+      select {
+        border: none;
+        outline: none;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      &.run {
+        button {
+          background-color: #04aa6d;
+          box-shadow: 10px 10px 5px 0px #017a4e inset;
+          -webkit-box-shadow: 10px 10px 5px 0px #017a4e inset;
+          -moz-box-shadow: 10px 10px 5px 0px #017a4e inset;
+        }
+      }
+
+      &.clear {
+        button {
+          background-color: #0066ff;
+          box-shadow: 10px 10px 5px 0px #013686 inset;
+          -webkit-box-shadow: 10px 10px 5px 0px #013686 inset;
+          -moz-box-shadow: 10px 10px 5px 0px #013686 inset;
+        }
+      }
+
+      &.theme {
+        select {
+          background-color: #737373;
+          box-shadow: 10px 10px 5px 0px #404040 inset;
+          -webkit-box-shadow: 10px 10px 5px 0px #404040 inset;
+          -moz-box-shadow: 10px 10px 5px 0px #404040 inset;
+        }
+      }
+
+      &.lan {
+        select {
+          background-color: #cc0066;
+          box-shadow: 10px 10px 5px 0px #800040 inset;
+          -webkit-box-shadow: 10px 10px 5px 0px #800040 inset;
+          -moz-box-shadow: 10px 10px 5px 0px #800040 inset;
+        }
+      }
+    }
+  }
+}

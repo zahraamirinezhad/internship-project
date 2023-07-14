@@ -1,13 +1,43 @@
+const express = require("express");
 const router = require("express").Router();
 const User = require("../models/User");
 const verify = require("../VerifyToken");
 const multer = require("multer");
+const path = require("path");
 
 const editUser = multer({ dest: "files/" });
 
+const Storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "_" + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: Storage,
+}).single("avatar");
+
+router.put("/uploadUserImage", verify, upload, async (req, res) => {
+  console.log(req);
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        profilePic: req.file.path,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //UPDATE
 router.put("/update", editUser.any(), verify, async (req, res) => {
-  console.log(req.body);
   console.log(req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(

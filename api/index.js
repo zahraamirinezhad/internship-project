@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/compile", compilerRoute);
+app.use("/uploads", express.static("uploads"));
 
 const port = process.env.PORT || 8800;
 app.listen(port, () => {

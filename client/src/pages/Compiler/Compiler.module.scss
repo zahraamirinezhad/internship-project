@@ -4,77 +4,108 @@
   min-height: 100vh;
   background-color: white;
 
-  .navbar {
+  .navbarContainer {
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
-    list-style-type: none;
     background-color: #333;
-    // box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
-    // -webkit-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
-    // -moz-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
 
-    li {
-      height: 3rem;
-      //   width: 8rem;
-      flex: 1;
+    .navbar {
+      width: 50.5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      list-style-type: none;
+      background-color: #333;
+      // box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+      // -webkit-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+      // -moz-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
 
-      button,
-      select {
+      @media (max-width: 767.98px) {
+        width: 100%;
+      }
+
+      @media (max-width: 575.98px) {
+        display: none;
+      }
+
+      li {
+        height: 3rem;
+        //   width: 8rem;
+        flex: 1;
+
+        button,
+        select {
+          border: none;
+          outline: none;
+          height: 100%;
+          width: 100%;
+          cursor: pointer;
+          text-align: center;
+          color: white;
+          font-weight: bold;
+        }
+
+        &.rotateEditor {
+          button {
+            background-color: #cc0000;
+            box-shadow: 10px 10px 5px 0px #800000 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #800000 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #800000 inset;
+          }
+        }
+
+        &.run {
+          button {
+            background-color: #04aa6d;
+            box-shadow: 10px 10px 5px 0px #017a4e inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #017a4e inset;
+            -moz-box-shadow: 10px 10px 5px 0px #017a4e inset;
+          }
+        }
+
+        &.clear {
+          button {
+            background-color: #0066ff;
+            box-shadow: 10px 10px 5px 0px #013686 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #013686 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #013686 inset;
+          }
+        }
+
+        &.theme {
+          select {
+            background-color: #737373;
+            box-shadow: 10px 10px 5px 0px #404040 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #404040 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #404040 inset;
+          }
+        }
+
+        &.lan {
+          select {
+            background-color: #cc0066;
+            box-shadow: 10px 10px 5px 0px #800040 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #800040 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #800040 inset;
+          }
+        }
+      }
+    }
+
+    .smallMenu {
+      display: none;
+      margin: 0.5rem;
+
+      @media (max-width: 575.98px) {
+        display: block;
+      }
+
+      .showMenu {
         border: none;
         outline: none;
-        height: 100%;
-        width: 100%;
+        background: transparent;
         cursor: pointer;
-        text-align: center;
-        color: white;
-        font-weight: bold;
-      }
-
-      &.rotateEditor {
-        button {
-          background-color: #cc0000;
-          box-shadow: 10px 10px 5px 0px #800000 inset;
-          -webkit-box-shadow: 10px 10px 5px 0px #800000 inset;
-          -moz-box-shadow: 10px 10px 5px 0px #800000 inset;
-        }
-      }
-
-      &.run {
-        button {
-          background-color: #04aa6d;
-          box-shadow: 10px 10px 5px 0px #017a4e inset;
-          -webkit-box-shadow: 10px 10px 5px 0px #017a4e inset;
-          -moz-box-shadow: 10px 10px 5px 0px #017a4e inset;
-        }
-      }
-
-      &.clear {
-        button {
-          background-color: #0066ff;
-          box-shadow: 10px 10px 5px 0px #013686 inset;
-          -webkit-box-shadow: 10px 10px 5px 0px #013686 inset;
-          -moz-box-shadow: 10px 10px 5px 0px #013686 inset;
-        }
-      }
-
-      &.theme {
-        select {
-          background-color: #737373;
-          box-shadow: 10px 10px 5px 0px #404040 inset;
-          -webkit-box-shadow: 10px 10px 5px 0px #404040 inset;
-          -moz-box-shadow: 10px 10px 5px 0px #404040 inset;
-        }
-      }
-
-      &.lan {
-        select {
-          background-color: #cc0066;
-          box-shadow: 10px 10px 5px 0px #800040 inset;
-          -webkit-box-shadow: 10px 10px 5px 0px #800040 inset;
-          -moz-box-shadow: 10px 10px 5px 0px #800040 inset;
-        }
       }
     }
   }
@@ -84,13 +115,16 @@
     height: 50rem;
     display: flex;
 
+    @media (max-width: 575.98px) {
+      flex-direction: column;
+    }
+
     &.rotate {
       flex-direction: column;
     }
 
     .editor {
       flex: 1 !important;
-      width: 100% !important;
       height: 50rem !important;
     }
 

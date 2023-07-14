@@ -1,5 +1,10 @@
 import React from "react";
 import AceEditor from "react-ace";
+import classes from "./Editor.module.scss";
+
+import "ace-builds/src-noconflict/ace";
+// import "ace-builds/webpack-resolver";
+
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow";
@@ -10,11 +15,13 @@ import "ace-builds/src-noconflict/theme-solarized_dark";
 import "ace-builds/src-noconflict/theme-solarized_light";
 import "ace-builds/src-noconflict/theme-terminal";
 
+import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/mode-html";
-
-import classes from "./Editor.module.scss";
+// import "ace-builds/src/worker-javascript.js";
+// import "ace-builds/src/worker-css.js";
+// import "ace-builds/src/worker-html.js";
 
 const Editor = ({ value, mode, setVal, theme }) => {
   return (
@@ -37,6 +44,7 @@ const Editor = ({ value, mode, setVal, theme }) => {
         enableSnippets: true,
         showLineNumbers: true,
         tabSize: 2,
+        useWorker: false,
       }}
     />
   );
