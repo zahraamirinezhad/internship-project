@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 const EditProfile = ({ token }) => {
   const [mainUserName, setMainUserName] = useState("");
   const [userProfile, setUserProfile] = useState(null);
+  const [userSelectedProfile, setUserSelectedProfile] = useState(null);
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
   const [userGender, setUserGender] = useState("male");
@@ -22,7 +23,6 @@ const EditProfile = ({ token }) => {
   const [userBio, setUserBio] = useState(null);
 
   const [isUploading, setIsUploading] = useState(false);
-  const [isUploadingUserProfile, setIsUploadingUserProfile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -75,6 +75,7 @@ const EditProfile = ({ token }) => {
     formData.append("state", userState);
     formData.append("city", userCity);
     formData.append("address", userAddress);
+    formData.append("avatar", userSelectedProfile);
 
     for (const value of formData.values()) {
       console.log(value);
@@ -102,29 +103,9 @@ const EditProfile = ({ token }) => {
   };
 
   const handleUploadedImage = async (e) => {
-    setIsUploadingUserProfile(true);
     console.log(e.target.files[0]);
+    setUserSelectedProfile(e.target.files[0]);
     setUserProfile(URL.createObjectURL(e.target.files[0]));
-
-    const formData = new FormData();
-    formData.append("avatar", e.target.files[0]);
-
-    try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_API_ADDRESS}users/uploadUserImage`,
-        formData,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(res);
-      setIsUploadingUserProfile(false);
-    } catch (err) {
-      console.log(err);
-      setIsUploadingUserProfile(false);
-    }
   };
 
   return (
@@ -135,26 +116,22 @@ const EditProfile = ({ token }) => {
         <div className={classes.profileInfo}>
           <div className={classes.userInfo}>
             <div className={classes.info}>
-              {isUploadingUserProfile ? (
-                <CircularProgress />
-              ) : (
-                <div className={classes.profileImage}>
-                  <input
-                    id="selectProfileImage"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      handleUploadedImage(e);
-                    }}
+              <div className={classes.profileImage}>
+                <input
+                  id="selectProfileImage"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    handleUploadedImage(e);
+                  }}
+                />
+                <label for="selectProfileImage">
+                  <img
+                    src={userProfile == null ? UserProfile : userProfile}
+                    alt="User_Profile"
                   />
-                  <label for="selectProfileImage">
-                    <img
-                      src={userProfile == null ? UserProfile : userProfile}
-                      alt="User_Profile"
-                    />
-                  </label>
-                </div>
-              )}
+                </label>
+              </div>
               <div className={classes.userPersonalInfo}>
                 <div className={classes.enterInfo}>
                   <label>First Name</label>

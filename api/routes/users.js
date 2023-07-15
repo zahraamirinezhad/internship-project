@@ -1,11 +1,8 @@
-const express = require("express");
 const router = require("express").Router();
 const User = require("../models/User");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
-
-const editUser = multer({ dest: "files/" });
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -20,30 +17,15 @@ const upload = multer({
   storage: Storage,
 }).single("avatar");
 
-router.put("/uploadUserImage", verify, upload, async (req, res) => {
+//UPDATE
+router.put("/update", verify, upload, async (req, res) => {
   console.log(req);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       {
-        profilePic: req.file.path,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//UPDATE
-router.put("/update", editUser.any(), verify, async (req, res) => {
-  console.log(req.body);
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.id,
-      {
         $set: req.body,
+        profilePic: req.file.path,
       },
       { new: true }
     );
@@ -75,6 +57,17 @@ router.get("/find", verify, async (req, res) => {
     const user = await User.findById(req.user.id);
     const { password, ...info } = user._doc;
     res.status(200).json(info);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET USER STATUS
+router.get("/status", verify, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const status = user.isTeacher;
+    res.status(200).json(status);
   } catch (err) {
     res.status(500).json(err);
   }

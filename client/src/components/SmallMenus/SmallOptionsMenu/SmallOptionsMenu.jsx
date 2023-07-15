@@ -1,53 +1,26 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React } from "react";
 import classes from "./SmallOptionsMenu.module.scss";
 import User from "../../../images/user.png";
 import Login from "../../../images/login.png";
 import Home from "../../../images/home.png";
-import { useLocation, Link } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
-const SmallOptionsMenu = ({ showOptionsMenuHandler, isShowOptionsMenu }) => {
-  const [userProfile, setUserProfile] = useState(null);
-  const [userName, setUserName] = useState(null);
-
-  // useEffect(() => {
-  //   const getUserData = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.REACT_APP_API_ADDRESS}user/profile/`,
-  //         {
-  //           headers: {
-  //             Authorization: "Bearer " + token,
-  //           },
-  //         }
-  //       );
-  //       console.log(res);
-  //       setUserProfile(res.data.profile_image);
-  //       setUserName(res.data.username);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getUserData();
-  // }, []);
-
+const SmallOptionsMenu = ({
+  showOptionsMenuHandler,
+  isShowOptionsMenu,
+  userProfile,
+  userUserName,
+}) => {
   return (
     <ul
-      className={`${(showOptionsMenuHandler, classes.optionsMenu)} ${
+      className={`${classes.optionsMenu} ${
         isShowOptionsMenu ? classes.visible : classes.invisible
       }`}
     >
       <li onClick={showOptionsMenuHandler} className={classes.userProfile}>
         <Link to="/profileStructure/profile" className={classes.profile}>
-          <img
-            src={
-              userProfile === null
-                ? User
-                : `http://api.iwantnet.space:8001${userProfile}`
-            }
-            alt="user"
-          />
-          <h4>{userName}</h4>
+          <img src={userProfile === null ? User : userProfile} alt="user" />
+          <h4>{userUserName}</h4>
         </Link>
       </li>
       <li onClick={showOptionsMenuHandler}>

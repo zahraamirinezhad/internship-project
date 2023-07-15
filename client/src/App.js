@@ -28,6 +28,10 @@ function App() {
               path="/profileStructure/editProfile"
               element={<MainContainer token={token} />}
             />
+            <Route
+              path="/profileStructure/createCourse"
+              element={<MainContainer token={token} />}
+            />
             <Route path="/practice" element={<MainContainer token={token} />} />
             <Route path="/otherLan" element={<MainContainer token={token} />} />
             <Route path="/webLan" element={<MainContainer token={token} />} />

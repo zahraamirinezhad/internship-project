@@ -15,6 +15,7 @@ const CreateAccount = () => {
   const [emailValid, setEmailValid] = useState(true);
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
+  const [userStudentNumber, setUserStudentNumber] = useState(0);
   const [userGender, setUserGender] = useState("male");
   const [userBirthDate, setUserBirthDate] = useState(new Date());
   const [userCountry, setUserCountry] = useState("");
@@ -22,6 +23,8 @@ const CreateAccount = () => {
   const [userCity, setUserCity] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userBio, setUserBio] = useState("");
+
+  const [isTeacher, setIsTeacher] = useState(false);
 
   const manageRegister = async (e) => {
     if (password_validate(passwordData) && validateEmail(emailData)) {
@@ -33,6 +36,8 @@ const CreateAccount = () => {
           password: passwordData,
           firstName: userFirstName,
           lastName: userLastName,
+          isTeacher: isTeacher,
+          studentNumber: isTeacher ? null : userStudentNumber,
           birthDate: userBirthDate,
           gender: userGender,
           bio: userBio,
@@ -122,6 +127,36 @@ const CreateAccount = () => {
                 setUserLastName(e.target.value);
               }}
             />
+          </div>
+          <div className={classes.setUserStatus}>
+            <div className={classes.userStatus}>
+              <label>Are You a teacher ?</label>
+              <div className={classes.checkBox}>
+                <input
+                  id="IsTeacher"
+                  type="checkbox"
+                  onChange={(e) => {
+                    setIsTeacher(e.target.checked);
+                  }}
+                />
+                <label for="IsTeacher" className={classes.custom}></label>
+              </div>
+            </div>
+            <div
+              className={`${classes.enterData} ${isTeacher && classes.teacher}`}
+            >
+              <label>Student Number</label>
+              <input
+                className={classes.shortData}
+                type="number"
+                value={userStudentNumber}
+                onChange={(e) => {
+                  setUserStudentNumber(e.target.value);
+                }}
+                readOnly={isTeacher}
+                min={0}
+              />
+            </div>
           </div>
           <div className={classes.sideBySide}>
             <div className={classes.enterDataLinear}>

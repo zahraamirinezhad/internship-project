@@ -7,7 +7,9 @@ import OptionsMenu from "../../images/userIcon.png";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import SmallOptionsMenu from "../SmallMenus/SmallOptionsMenu/SmallOptionsMenu";
+import UserSmallMenu from "../SmallMenus/UserSmallMenu/UserSmallMenu";
 import Skeleton from "../Skeleton/Skeleton";
+import Menu from "../../images/burger-menu.png";
 
 const Header = ({ token }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +35,11 @@ const Header = ({ token }) => {
           }
         );
         console.log(res);
-        // setUserProfile(res.data.profile_image);
+        setUserProfile(
+          res.data.profilePic === null
+            ? User
+            : `http://localhost:8800/${res.data.profilePic}`
+        );
         setUserName(res.data.username);
         setIsLoading(false);
       } catch (err) {
@@ -66,6 +72,8 @@ const Header = ({ token }) => {
           <SmallOptionsMenu
             showOptionsMenuHandler={showOptionsMenuHandler}
             isShowOptionsMenu={isShowOptionsMenu}
+            userProfile={userProfile}
+            userUserName={userName}
           />
         </div>
         <div>
@@ -92,15 +100,23 @@ const Header = ({ token }) => {
             <h4>{userName}</h4>
           </Link>
           <Link to="/profileStructure/profile" className={classes.profile}>
-            <img
-              src={
-                userProfile === null
-                  ? User
-                  : `http://api.iwantnet.space:8001${userProfile}`
-              }
-              alt="user"
-            />
+            <img src={userProfile === null ? User : userProfile} alt="user" />
           </Link>
+
+          {url === "profileStructure" && (
+            <div className={classes.smallMenu}>
+              <button className={classes.showMenuBTN} onClick={showMenuHandler}>
+                <img src={Menu} alt="menu" />
+              </button>
+
+              {url === "profileStructure" && (
+                <UserSmallMenu
+                  showMenuHandler={showMenuHandler}
+                  isShowMenu={isShowMenu}
+                />
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

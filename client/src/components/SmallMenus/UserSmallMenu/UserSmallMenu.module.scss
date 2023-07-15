@@ -1,0 +1,45 @@
+.container {
+  position: absolute;
+  top: 3.5rem;
+  list-style-type: none;
+  width: 10rem;
+  z-index: 10;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-8rem);
+    transition: 1s ease-in;
+  }
+
+  &.invisible {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10rem);
+    transition: 1s ease-out;
+  }
+
+  li {
+    .sidebarOptions {
+      box-shadow: 6px 6px 10px 1px rgba(202, 0, 78, 1) inset;
+      flex: 1;
+      width: 100%;
+      color: white;
+      background-color: #800031;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      border: 1px solid #ca004e;
+      text-decoration: none;
+
+      img {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+}
