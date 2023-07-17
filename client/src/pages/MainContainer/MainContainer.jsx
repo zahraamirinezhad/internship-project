@@ -1,6 +1,6 @@
 import { React } from "react";
 import classes from "./MainContainer.module.scss";
-import { Header } from "../../components";
+import { EditCourse, Header } from "../../components";
 import { useLocation } from "react-router-dom";
 import {
   MainPage,
@@ -28,6 +28,7 @@ const MainContainer = ({ token }) => {
               practice: <Practice token={token} />,
               otherLan: <Compiler token={token} />,
               webLan: <PracticeWebLan />,
+              editCourse: <EditCourse />,
             }[url]
           }
         </div>

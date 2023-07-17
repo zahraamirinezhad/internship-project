@@ -14,6 +14,7 @@
   box-shadow: 10px 10px 10px 1px rgb(202, 0, 78);
   transition: all 0.3s ease-out;
   cursor: pointer;
+  z-index: 100;
 
   &:hover {
     transform: translate(0, -5px);
@@ -190,9 +191,4 @@
       // border-top: 2px solid #303030;
     }
   }
-}
-
-@font-face {
-  font-family: Rubik;
-  src: url("../../fonts/Rubik-VariableFont_wght.ttf");
 }

@@ -1,14 +1,13 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import classes from "./MainPage.module.scss";
 import axios from "axios";
+import Temp from "../../images/user (2).png";
+import Course from "../../components/Course/Course";
 
 const MainPage = ({ token }) => {
-  // const [seeAll, setSeeAll] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [userIdeas, setUserIdeas] = useState([]);
-
-  // const [isShowMenu, setIsShowMenu] = useState(false);
-  // const [isShowOptionsMenu, setIsShowOptionsMenu] = useState(false);
+  const [seeAll, setSeeAll] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
 
   // const showMenuHandler = () => {
   //   setIsShowOptionsMenu(false);
@@ -65,95 +64,296 @@ const MainPage = ({ token }) => {
 
   return (
     <div className={classes.container}>
-      {/* <div className={classes.toolbar}>
+      <span className={`${classes.backCricle} ${classes.red}`}></span>
+      <span className={`${classes.backCricle} ${classes.green}`}></span>
+      <span className={`${classes.backCricle} ${classes.blue}`}></span>
+      <span className={`${classes.backCricle} ${classes.pink}`}></span>
+      <div className={classes.seeAllContainer}>
         <button
-          onClick={() => {
-            applyFilter("art");
-          }}
+          className={`${classes.seeAllIdeas} ${
+            seeAll && classes.disableButton
+          }`}
+          onClick={() => setSeeAll(true)}
+          disabled={seeAll}
         >
-          Arts
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("tech");
-          }}
-        >
-          Tech
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("food-craft");
-          }}
-        >
-          Food
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("games");
-          }}
-        >
-          Games
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("films");
-          }}
-        >
-          Films
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("music");
-          }}
-        >
-          Music
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("publishing");
-          }}
-        >
-          Publishing
-        </button>
-        <button
-          onClick={() => {
-            applyFilter("science");
-          }}
-        >
-          Science
+          See All
         </button>
       </div>
 
-      <div className={classes.body}>
-        <div className={classes.seeAllContainer}>
-          <h1>Ideas</h1>
-
-          <div className={classes.optionsContainer}>
-            <button
-              className={`${classes.seeAllIdeas} ${
-                seeAll && classes.disableButton
-              }`}
-              onClick={() => setSeeAll(true)}
-              disabled={seeAll}
-            >
-              See All
-            </button>
-            <div className={classes.smallMenu}>
-              <button className={classes.showMenuBTN} onClick={showMenuHandler}>
-                <img src={Menu} alt="menu" />
-              </button>
-
-              <MainPageSmallMenu
-                showMenuHandler={showMenuHandler}
-                isShowMenu={isShowMenu}
-                applyFilter={applyFilter}
-              />
-            </div>
-          </div>
+      <div className={classes.coursesContainer}>
+        <div className={classes.courses}>
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
+          <Course
+            title="tile"
+            avatar="uploads/1689302343450_.jpg"
+            goal="goal"
+            abstract="abstract"
+          />
         </div>
-
-        <div className={classes.ideasContainer}>
-          <div className={`${classes.ideas} ${seeAll && classes.scrollable}`}>
+        {/* <div className={`${classes.ideas} ${seeAll && classes.scrollable}`}>
             {isLoading ? (
               <Skeleton type="Idea" />
             ) : (
@@ -206,9 +406,8 @@ const MainPage = ({ token }) => {
                     )}
               </>
             )}
-          </div>
-        </div>
-      </div> */}
+          </div> */}
+      </div>
     </div>
   );
 };

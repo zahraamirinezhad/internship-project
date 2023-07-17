@@ -4,8 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2rem 1rem;
-  background-color: #3f0071;
+  background-color: transparent;
+  box-shadow: 0px 0px 10px 1px #f571a3 inset;
+  padding: 0.5rem 1rem;
 
   div {
     display: flex;
@@ -86,7 +87,29 @@
     }
 
     &.title {
-      color: #ffffff;
+      color: #3f0071;
+      font-family: Pacifico-Regular, sans-serif;
+      font-weight: bold;
     }
   }
+}
+
+@font-face {
+  font-family: ChelaOne-Regular;
+  src: url("../../fonts/ChelaOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: DancingScript-VariableFont_wght;
+  src: url("../../fonts/DancingScript-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: Pacifico-Regular;
+  src: url("../../fonts/Pacifico-Regular.ttf");
+}
+
+@font-face {
+  font-family: Satisfy-Regular;
+  src: url("../../fonts/Satisfy-Regular.ttf");
 }

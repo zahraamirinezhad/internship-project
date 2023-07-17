@@ -1,0 +1,425 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  gap: 2rem;
+  margin: 2rem auto;
+
+  .courseDetails {
+    width: 30rem;
+    padding: 0.5rem 1rem;
+    border: 2px dashed #ca004e;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    &.courseCreated {
+      opacity: 0.5;
+
+      .createCourse {
+        display: none;
+      }
+    }
+
+    .selectCourseImage {
+      background-color: #d9d9d9;
+      height: 10rem;
+      width: 10rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      input {
+        cursor: pointer;
+        display: none;
+      }
+
+      img {
+        max-height: 10rem;
+        max-width: 10rem;
+        cursor: pointer;
+      }
+    }
+
+    .enterCourseDetails {
+      width: 100%;
+
+      .enterData {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1rem 0;
+
+        @media (max-width: 849.98px) {
+          width: 100%;
+        }
+
+        input,
+        textarea {
+          outline: none;
+          width: 100%;
+          border: 1px solid #303030;
+          padding: 0.3rem 0.5rem;
+          border-radius: 0.2rem;
+
+          @media (max-width: 849.98px) {
+            width: 100%;
+          }
+
+          &:focus {
+            outline: none;
+            border: 1px solid #303030;
+          }
+
+          &.invalidEmail {
+            border: 2px solid red;
+          }
+
+          &.shortData {
+            width: 40%;
+          }
+        }
+
+        textarea {
+          height: 5rem;
+          overflow: hidden;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .createCourse {
+      width: 5rem;
+      position: relative;
+      background-color: #8a0035;
+      border: none;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      transition: all 0.5s ease-in-out;
+      cursor: pointer;
+      border-radius: 0.2rem;
+
+      &:hover {
+        background-color: #ca004e;
+      }
+    }
+  }
+
+  .courseDoc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 30rem;
+    padding: 0.5rem 1rem;
+    border: 2px dashed #ca004e;
+    border-radius: 1rem;
+
+    .addDoc {
+      position: relative;
+      background-color: white;
+      border: none;
+      color: #8a0035;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      transition: all 0.5s ease-in-out;
+      cursor: pointer;
+      border-radius: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px dashed #ca004e;
+      font-size: 1rem;
+      font-weight: bold;
+
+      &.filesUploading {
+        opacity: 0.5;
+      }
+
+      input {
+        cursor: pointer;
+        display: none;
+      }
+
+      &:hover {
+        background-color: #ca004e;
+        color: white;
+
+        &::after {
+          color: white;
+          border: 1px dashed white;
+        }
+      }
+
+      &::after {
+        content: "+";
+        border-radius: 50%;
+        border: 1px dashed #ca004e;
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+
+    .addedDocs {
+      max-height: 20rem;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0.5rem;
+
+      &.filesUploading {
+        opacity: 0.5;
+      }
+
+      /* width */
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #bdbdbd;
+        border-radius: 0.5rem;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #838383;
+      }
+    }
+
+    .finishAddingFiles {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        width: 12rem;
+        border: none;
+        outline: none;
+        color: #990000;
+        border: 2px solid #990000;
+        background-color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+        font-weight: bold;
+
+        &:hover {
+          background-color: #990000;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .addQuestion {
+    width: 30rem;
+    padding: 0.5rem 1rem;
+    border: 2px dashed #ca004e;
+    border-radius: 1rem;
+
+    .questionForm {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+
+      .questionData {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        label {
+          width: 5rem;
+        }
+
+        textarea {
+          width: 18rem;
+          max-height: 4rem;
+          border: none;
+          outline: none;
+          background-color: transparent;
+          padding: 0.5rem 1rem;
+          transition: all 0.2s ease-in-out;
+          background-color: #fadce7;
+          border-radius: 0.2rem;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          &:focus {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            border-bottom: 1px solid #f3347d;
+          }
+        }
+      }
+
+      .choiceData {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.8rem;
+
+        textarea {
+          width: 8rem;
+          max-height: 4rem;
+          border: none;
+          outline: none;
+          background-color: transparent;
+          padding: 0.5rem 1rem;
+          transition: all 0.2s ease-in-out;
+          background-color: #d6e0f5;
+          border-radius: 0.2rem;
+          overflow: hidden;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          &:focus {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            border-bottom: 1px solid #0033cc;
+          }
+        }
+
+        .addChoice {
+          border: none;
+          outline: none;
+          padding: 0.5rem 1rem;
+          color: white;
+          font-size: 1rem;
+          border-radius: 0.2rem;
+          background-color: #001a66;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            background-color: #0033cc;
+          }
+        }
+
+        .choices {
+          width: 100%;
+          padding: 1rem;
+          border: 1px solid #1a1aff;
+          border-radius: 0.5rem;
+          height: fit-content;
+          max-height: 15rem;
+          display: grid;
+          grid-template-columns: auto auto;
+          gap: 0.5rem;
+          overflow: hidden;
+          overflow-y: scroll;
+          background-color: #ffffff;
+
+          @media (max-width: 767.98px) {
+            grid-template-columns: auto;
+          }
+
+          &.scrollable {
+            overflow-y: scroll;
+            padding: 2rem 0;
+          }
+
+          &::-webkit-scrollbar {
+            width: 6px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: lightgray;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: rgb(158, 158, 158);
+            border-radius: 10px;
+          }
+
+          &::-webkit-scrollbar-thumb:hover {
+            background: gray;
+          }
+        }
+      }
+
+      .addQuestion {
+        width: 16rem;
+        border: none;
+        border: 1px solid #008000;
+        outline: none;
+        padding: 0.5rem 1rem;
+        color: #008000;
+        font-size: 1rem;
+        border-radius: 0.2rem;
+        background-color: white;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        margin: 1rem 0;
+
+        &:hover {
+          background-color: #008000;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .finishCreatingCourse {
+    flex: 1;
+    color: #ca004e;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    border: 1px solid #9b013c;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    border-radius: 2rem;
+    box-shadow: 0px 6px 10px 1px rgb(160, 0, 61);
+
+    &:hover {
+      background-color: #9b013c;
+      box-shadow: none;
+      color: white;
+    }
+  }
+}
