@@ -13,7 +13,7 @@ const UploadedFile = ({
   id,
   token,
   type,
-  fileName,
+  name,
   downloadOrDelete,
   courseId,
   path,
@@ -21,31 +21,19 @@ const UploadedFile = ({
   const dispatch = useDispatch();
 
   const deleteFile = async () => {
-    console.log(courseId, id);
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_API_ADDRESS}courses/attachment/${courseId}/${id}`,
-        {
-          headers: {
-            token: "Bearer " + token,
-          },
-        }
-      );
-
-      console.log(res);
-
-      const fileDelRes = await axios.delete(
-        `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/${id}`,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(fileDelRes);
+      // const fileDelRes = await axios.delete(
+      //   `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/${id}`,
+      //   {
+      //     headers: {
+      //       token: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+      // console.log(fileDelRes);
       dispatch(
         attachedFilesActions.deleteAttachedFiles({
-          fileId: id,
+          name: name,
         })
       );
     } catch (e) {
@@ -89,7 +77,7 @@ const UploadedFile = ({
             doc: <img src={docFile} alt="docFile" />,
           }[type]
         }
-        <h3>{fileName}</h3>
+        <h3>{name}</h3>
       </div>
     </div>
   );

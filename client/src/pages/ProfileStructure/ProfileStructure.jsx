@@ -1,7 +1,12 @@
 import { React, useState, useEffect } from "react";
 import classes from "./ProfileStructure.module.scss";
 import { useLocation, Link } from "react-router-dom";
-import { Profile, EditProfile, CreateCourse } from "../../components";
+import {
+  Profile,
+  EditProfile,
+  CreateCourse,
+  MyCourses,
+} from "../../components";
 import {
   AccountCircle,
   ManageAccounts,
@@ -73,7 +78,7 @@ const ProfileStructure = ({ token }) => {
         {
           {
             profile: <Profile token={token} />,
-            // myCourses: <MyCourses token={token} />,
+            myCourses: <MyCourses token={token} />,
             editProfile: <EditProfile token={token} />,
             createCourse: <CreateCourse token={token} />,
           }[url]

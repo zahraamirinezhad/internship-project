@@ -7,33 +7,24 @@ const attachedFilesSlice = createSlice({
     addAttachedFiles(state, action) {
       const newItem = action.payload;
       const existingItem = state.attachedFiles.find(
-        (item) => item.fileId === newItem.fileId
+        (item) => item.name === newItem.name
       );
 
       if (!existingItem) {
         state.attachedFilesNum++;
-        state.attachedFiles.push({
-          fileId: newItem.fileId,
-          fileName: newItem.fileName,
-          path: newItem.path,
-        });
+        state.attachedFiles.push(newItem);
       }
-    },
-    setAttachedFiles(state, action) {
-      const newItem = action.payload;
-      state.attachedFiles = newItem;
-      state.attachedFilesNum = newItem.length;
     },
     deleteAttachedFiles(state, action) {
       const newItem = action.payload;
       const existingItem = state.attachedFiles.find(
-        (item) => item.fileId === newItem.fileId
+        (item) => item.name === newItem.name
       );
 
       if (existingItem) {
         state.attachedFilesNum--;
         state.attachedFiles = state.attachedFiles.filter(
-          (task) => task.fileId !== newItem.fileId
+          (task) => task.name !== newItem.name
         );
       }
     },

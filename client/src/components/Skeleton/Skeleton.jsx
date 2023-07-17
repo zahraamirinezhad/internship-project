@@ -21,6 +21,6 @@ export default function Skeleton({ type }) {
     </div>
   );
 
-  if (type === "Idea") return Array(COUNTER).fill(<IdeaSkeleton />);
+  if (type === "Course") return Array(COUNTER).fill(<IdeaSkeleton />);
   if (type === "Toolbar") return <ToolbarSkeleton />;
 }

@@ -117,4 +117,25 @@ router.get("/stats", async (req, res) => {
   }
 });
 
+router.get("/getAllCourses", verify, async (req, res) => {
+  try {
+    const course = User.findById(req.user.id);
+    const courses = await User.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "creatorId",
+          foreignField: "_id",
+          as: "usersCourses",
+        },
+      },
+    ]);
+    console.log("courses");
+    console.log(courses);
+    // res.status(201).json(course);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

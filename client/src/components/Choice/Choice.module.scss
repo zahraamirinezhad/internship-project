@@ -1,0 +1,48 @@
+.container {
+  min-width: 10rem;
+  padding: 0.5rem;
+  border: 2px dashed lightblue;
+  border-radius: 0.5rem;
+
+  .options {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &.delete {
+        color: #990000;
+
+        &:hover {
+          color: #cc0000;
+        }
+      }
+
+      &.edit {
+        color: #000066;
+
+        &:hover {
+          color: #0000cc;
+        }
+      }
+    }
+  }
+
+  p {
+    color: black;
+    font-size: 1rem;
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

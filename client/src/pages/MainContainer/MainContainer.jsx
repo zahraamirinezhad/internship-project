@@ -8,7 +8,7 @@ import {
   Practice,
   Compiler,
   PracticeWebLan,
-} from "../";
+} from "..";
 
 const MainContainer = ({ token }) => {
   const location = useLocation();

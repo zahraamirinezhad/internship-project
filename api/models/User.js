@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema(
     address: { type: String, default: "" },
     bio: { type: String, default: "" },
     profilePic: { type: String, default: null },
-    courses: { type: Array, default: [] },
   },
   { timestamps: true }
 );

@@ -5,9 +5,16 @@ import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { attachedFilesActions } from "../../store/attachedFiles";
+import { choicesActions } from "../../store/choices";
+import { questionsActions } from "../../store/questions";
 import UploadedFile from "../UploadedFile/UploadedFile";
+import { useNavigate } from "react-router-dom";
+import Choice from "../Choice/Choice";
+import Question from "../Question/Question";
 
 const CreateCourse = ({ token }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const attachedFiles = useSelector(
     (state) => state.attachedFiles.attachedFiles
@@ -15,6 +22,12 @@ const CreateCourse = ({ token }) => {
   const attachedFilesNum = useSelector(
     (state) => state.attachedFiles.attachedFilesNum
   );
+
+  const choices = useSelector((state) => state.choices.choices);
+  const choicesNum = useSelector((state) => state.choices.choicesNum);
+
+  const questions = useSelector((state) => state.questions.questions);
+  const questionsNum = useSelector((state) => state.questions.questionsNum);
 
   const [courseId, setCourseId] = useState("");
   const [courseName, setCourseName] = useState("");
@@ -25,6 +38,11 @@ const CreateCourse = ({ token }) => {
 
   const [courseCreated, setCourseCreated] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [filesUploading, setFilesUploading] = useState(false);
+
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [choice, setChoice] = useState("");
 
   const handleUploadedFile = (e) => {
     console.log(e.target.files[0]);
@@ -59,7 +77,7 @@ const CreateCourse = ({ token }) => {
         }
       );
       console.log(res);
-      setCourseId(res._id);
+      setCourseId(res.data._id);
       setIsCreating(false);
       dispatch(attachedFilesActions.deleteAllAttachedFiles());
       setCourseCreated(true);
@@ -68,25 +86,71 @@ const CreateCourse = ({ token }) => {
     }
   };
 
-  const uploadDoc = async (e) => {
-    console.log(e.target.files[0]);
-    const formData = new FormData();
-    formData.append("avatar", e.target.files[0]);
+  const uploadDoc = (e) => {
+    console.log(e.target.files);
+    console.log(Array.from(e.target.files || []));
+    const filesList = Array.from(e.target.files || []);
 
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}courses/addDoc/64b20a6aaa381b36346f019b`,
-        formData,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
+    for (let i = 0; i < filesList.length; i++) {
+      dispatch(attachedFilesActions.addAttachedFiles(filesList[i]));
+    }
+
+    console.log(attachedFiles);
+  };
+
+  const finishAddingFiles = async () => {
+    for (let i = 0; i < attachedFilesNum; i++) {
+      const formData = new FormData();
+      formData.append("avatar", attachedFiles[i]);
+
+      try {
+        i === 0 && setFilesUploading(true);
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
+          formData,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(res);
+
+        if (i === attachedFilesNum - 1) {
+          setFilesUploading(false);
+          dispatch(choicesActions.deleteAllChoices());
+          dispatch(questionsActions.deleteAllQuestions());
         }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const addChoice = () => {
+    if (choice !== "") {
+      dispatch(choicesActions.addChoice({ name: choice }));
+      setChoice("");
+    }
+  };
+
+  const finishCreatingCourse = () => {
+    navigate("/profileStructure/myCourses");
+  };
+
+  const addQuestion = () => {
+    if (question !== "" && answer !== "" && choicesNum !== 0) {
+      dispatch(
+        questionsActions.addQuestion({
+          name: question,
+          fullAnswer: answer,
+          choices: choices,
+        })
       );
-      console.log(res);
-      dispatch(attachedFilesActions.setAttachedFiles(res.data.docs));
-    } catch (err) {
-      console.log(err);
+      dispatch(choicesActions.deleteAllChoices());
+      setChoice("");
+      setQuestion("");
+      setAnswer("");
     }
   };
 
@@ -149,35 +213,105 @@ const CreateCourse = ({ token }) => {
         )}
       </div>
 
-      <div className={classes.courseDoc}>
-        <label for="uploadDoc" className={classes.addDoc}>
+      <div
+        className={`${classes.courseDoc} ${courseCreated && classes.nowAddDoc}`}
+      >
+        <label
+          for="uploadDoc"
+          className={`${classes.addDoc}  ${
+            filesUploading && classes.filesUploading
+          }`}
+        >
           Add New Document
           <input
             id="uploadDoc"
             type="file"
+            multiple="multiple"
             accept=".pptx, .doc, .pdf, .jpg, .png, .jpeg"
             onChange={uploadDoc}
+            disabled={filesUploading}
           />
         </label>
-        <div className={classes.addedDocs}>
+        <div
+          className={`${classes.addedDocs} ${
+            filesUploading && classes.filesUploading
+          }`}
+        >
           {attachedFilesNum !== 0 && (
             <div className={classes.uploadedFilesList}>
               {attachedFiles.map((item, index) => (
                 <UploadedFile
                   key={index}
-                  token={token}
-                  id={item.fileId}
-                  type={item.fileName.split(".")[1]}
-                  fileName={item.fileName}
-                  path={item.path}
-                  courseId="64b20a6aaa381b36346f019b"
+                  type={item.name.split(".")[1]}
+                  name={item.name}
                   downloadOrDelete="delete"
                 />
               ))}
             </div>
           )}
         </div>
+        {filesUploading ? (
+          <CircularProgress />
+        ) : (
+          <div className={classes.finishAddingFiles}>
+            <button onClick={finishAddingFiles}>Finish Adding Files :)</button>
+          </div>
+        )}
       </div>
+
+      <div className={classes.addQuestion}>
+        <div className={classes.questionForm}>
+          <div className={classes.questionData}>
+            <label>Question</label>
+            <textarea
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+            />
+          </div>
+          <div className={classes.questionData}>
+            <label>Ful Answer</label>
+            <textarea
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+            />
+          </div>
+          <div className={classes.choiceData}>
+            <textarea
+              value={choice}
+              onChange={(e) => setChoice(e.target.value)}
+            />
+            <button className={classes.addChoice} onClick={addChoice}>
+              Add Choice
+            </button>
+            <div className={classes.choices}>
+              {choices.map((item, index) => (
+                <Choice answer={item.name} setChoice={setChoice} />
+              ))}
+            </div>
+          </div>
+          <button className={classes.addQuestion} onClick={addQuestion}>
+            Creating Question Finished :)
+          </button>
+        </div>
+        <div className={classes.questions}>
+          {questions.map((item, index) => (
+            <Question
+              question={item.name}
+              fullAnswer={item.fullAnswer}
+              choices={item.choices}
+              setAnswer={setAnswer}
+              setQuestion={setQuestion}
+            />
+          ))}
+        </div>
+      </div>
+
+      <button
+        className={classes.finishCreatingCourse}
+        onClick={finishCreatingCourse}
+      >
+        Finish Creating Course :))
+      </button>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Course = require("../models/Course");
-const UploadedFile = require("../models/UploadedFile");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
@@ -26,8 +25,7 @@ router.post("/create", verify, upload, async (req, res) => {
     goal: req.body.goal,
     abstract: req.body.abstract,
     avatar: req.file.path,
-    docs: [],
-    levels: [],
+    creatorId: req.user.id,
   });
 
   try {
@@ -38,52 +36,10 @@ router.post("/create", verify, upload, async (req, res) => {
   }
 });
 
-//ADD DOCUMENT TO COURSE
-router.post("/addDoc/:id", verify, upload, async (req, res) => {
-  console.log(req);
-
+router.get("/", verify, async (req, res) => {
   try {
-    const newFile = new UploadedFile({
-      type: req.file.mimetype,
-      path: req.file.path,
-      fileName: req.file.filename,
-    });
-    const file = await newFile.save();
-    console.log("file");
-    console.log(file);
-    const updatedCourse = await Course.findByIdAndUpdate(
-      req.params.id,
-      {
-        $push: {
-          docs: {
-            fileId: file._id.toString(),
-            fileName: file.fileName,
-            path: file.path,
-          },
-        },
-      },
-      { upsert: true, new: true }
-    );
-    res.status(201).json(updatedCourse);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//DELETE ATTACHMENT
-router.delete("/attachment/:id/:fileId", verify, async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-    const docList = course.docs;
-    const newList = docList.filter((x) => x.fileId !== req.params.fileId);
-    const updatedCourse = await Course.findByIdAndUpdate(
-      req.params.id,
-      {
-        docs: newList,
-      },
-      { new: true }
-    );
-    res.status(201).json(updatedCourse);
+    const courses = await Course.find();
+    res.status(200).json(courses);
   } catch (err) {
     res.status(500).json(err);
   }
