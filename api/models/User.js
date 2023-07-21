@@ -1,24 +1,33 @@
-const mongoose = require("mongoose");
+const Sequelize = require("sequelize");
+const db = require("../database");
 
-const UserSchema = new mongoose.Schema(
+const User = db.define(
+  "User",
   {
-    username: { type: String, required: true, unique: true },
-    isTeacher: { type: Boolean, required: true, default: false },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    firstName: { type: String, default: "" },
-    lastName: { type: String, default: "" },
-    studentNumber: { type: Number, default: 0 },
-    gender: { type: String, default: "other" },
-    birthDate: { type: Date, default: "" },
-    country: { type: String, default: "" },
-    state: { type: String, default: "" },
-    city: { type: String, default: "" },
-    address: { type: String, default: "" },
-    bio: { type: String, default: "" },
-    profilePic: { type: String, default: null },
+    username: { type: Sequelize.STRING, allowNull: false, unique: true },
+    isTeacher: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    email: { type: Sequelize.STRING, allowNull: false, unique: true },
+    password: { type: Sequelize.STRING, allowNull: false },
+    firstName: { type: Sequelize.STRING, defaultValue: "" },
+    lastName: { type: Sequelize.STRING, defaultValue: "" },
+    studentNumber: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+    },
+    gender: { type: Sequelize.STRING, defaultValue: "other" },
+    birthDate: { type: Sequelize.DATE },
+    country: { type: Sequelize.STRING, defaultValue: "" },
+    state: { type: Sequelize.STRING, defaultValue: "" },
+    city: { type: Sequelize.STRING, defaultValue: "" },
+    address: { type: Sequelize.STRING, defaultValue: "" },
+    bio: { type: Sequelize.STRING, defaultValue: "" },
+    profilePic: { type: Sequelize.STRING, defaultValue: null },
   },
-  { timestamps: true }
+  { timestamps: true, freezeTableName: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = User;

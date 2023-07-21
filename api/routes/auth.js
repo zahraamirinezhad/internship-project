@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
-  const newUser = new User({
+  await User.create({
     username: req.body.username,
     email: req.body.email,
     password: CryptoJS.AES.encrypt(
@@ -23,24 +23,29 @@ router.post("/register", async (req, res) => {
     state: req.body.state,
     city: req.body.city,
     address: req.body.address,
-  });
-
-  try {
-    const user = await newUser.save();
-    const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "5d",
+  })
+    .then((user) => {
+      console.log(user);
+      const accessToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
+        expiresIn: "5d",
+      });
+      res.status(201).json({ accessToken });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-    res.status(201).json({ accessToken });
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 //LOGIN
 router.post("/login", async (req, res) => {
   console.log(req);
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
     !user && res.status(401).json("Wrong Password or Username !!!");
 
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
@@ -48,12 +53,45 @@ router.post("/login", async (req, res) => {
 
     originalPassword !== req.body.password &&
       res.status(401).json("Wrong Password or Username !!!");
-    const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+    const accessToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
       expiresIn: "5d",
     });
-    const { password, ...info } = user._doc;
+    const {
+      username,
+      isTeacher,
+      email,
+      firstName,
+      lastName,
+      studentNumber,
+      gender,
+      birthDate,
+      country,
+      state,
+      city,
+      address,
+      bio,
+      profilePic,
+    } = user;
 
-    res.status(200).json({ ...info, accessToken });
+    res
+      .status(200)
+      .json({
+        username,
+        isTeacher,
+        email,
+        firstName,
+        lastName,
+        studentNumber,
+        gender,
+        birthDate,
+        country,
+        state,
+        city,
+        address,
+        bio,
+        profilePic,
+        accessToken,
+      });
   } catch (err) {
     res.status(500).json(err);
   }

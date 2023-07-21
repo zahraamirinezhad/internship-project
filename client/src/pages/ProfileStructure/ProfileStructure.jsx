@@ -6,6 +6,7 @@ import {
   EditProfile,
   CreateCourse,
   MyCourses,
+  Skeleton,
 } from "../../components";
 import {
   AccountCircle,
@@ -23,6 +24,8 @@ const ProfileStructure = ({ token }) => {
   const url =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -34,8 +37,9 @@ const ProfileStructure = ({ token }) => {
             },
           }
         );
-        setUserIsTeacher(res.data);
+        setUserIsTeacher(res.data.isTeacher);
         console.log(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -45,35 +49,43 @@ const ProfileStructure = ({ token }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.sidebar}>
-        <Link className={classes.sidebarOptions} to="/profileStructure/profile">
-          <AccountCircle /> Profile
-        </Link>
-        <Link
-          className={classes.sidebarOptions}
-          to="/profileStructure/editProfile"
-        >
-          <ManageAccounts /> Edit Profile
-        </Link>
-        {userIsTeacher ? (
+      {isLoading ? (
+        <Skeleton type="ProfileStructureSkeleton" />
+      ) : (
+        <div className={classes.sidebar}>
           <Link
             className={classes.sidebarOptions}
-            to="/profileStructure/createCourse"
+            to="/profileStructure/profile"
           >
-            <MenuBook /> Create Course
+            <AccountCircle /> Profile
           </Link>
-        ) : (
-          <Link className={classes.sidebarOptions} to="/practice">
-            <MenuBook /> Practice
+          <Link
+            className={classes.sidebarOptions}
+            to="/profileStructure/editProfile"
+          >
+            <ManageAccounts /> Edit Profile
           </Link>
-        )}
-        <Link
-          className={classes.sidebarOptions}
-          to="/profileStructure/myCourses"
-        >
-          <School /> My Courses
-        </Link>
-      </div>
+          {userIsTeacher ? (
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/createCourse"
+            >
+              <MenuBook /> Create Course
+            </Link>
+          ) : (
+            <Link className={classes.sidebarOptions} to="/practice">
+              <MenuBook /> Practice
+            </Link>
+          )}
+          <Link
+            className={classes.sidebarOptions}
+            to="/profileStructure/myCourses"
+          >
+            <School /> My Courses
+          </Link>
+        </div>
+      )}
+
       <div className={classes.main}>
         {
           {

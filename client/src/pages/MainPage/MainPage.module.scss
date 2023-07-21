@@ -8,6 +8,9 @@
     position: absolute;
     opacity: 0.3;
 
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+
     &.red {
       background-color: #e62e00;
       top: 0;

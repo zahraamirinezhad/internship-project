@@ -44,7 +44,7 @@ const EditProfile = ({ token }) => {
         setUserLastName(res.data.lastName);
         res.data.gender !== "other" && setUserGender(res.data.gender);
         setUserBio(res.data.bio);
-        res.data.birth_date !== null && setUserBirthDate(res.data.birthDate);
+        res.data.birthDate !== null && setUserBirthDate(res.data.birthDate);
         setUserCountry(res.data.country);
         setUserState(res.data.state);
         setUserCity(res.data.city);
@@ -62,10 +62,11 @@ const EditProfile = ({ token }) => {
 
   const changeUserInfo = async () => {
     setIsUploading(true);
+    console.log("birthDate", userBirthDate);
     const formData = new FormData();
-    if (userUserName !== mainUserName) {
-      formData.append("username", userUserName);
-    }
+    // if (userUserName !== mainUserName) {
+    formData.append("username", userUserName);
+    // }
     formData.append("firstName", userFirstName);
     formData.append("lastName", userLastName);
     formData.append("birthDate", userBirthDate);
@@ -86,7 +87,7 @@ const EditProfile = ({ token }) => {
 
   const uploadNewUserData = async (formData) => {
     try {
-      const res = await axios.put(
+      await axios.put(
         `${process.env.REACT_APP_API_ADDRESS}users/update`,
         formData,
         {
@@ -95,7 +96,6 @@ const EditProfile = ({ token }) => {
           },
         }
       );
-      console.log(res);
       setIsUploading(false);
     } catch (err) {
       console.log(err);

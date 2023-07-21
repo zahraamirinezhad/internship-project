@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./Skeleton.module.scss";
 
 export default function Skeleton({ type }) {
-  const COUNTER = 6;
   const IdeaSkeleton = () => (
     <div className={classes.container}>
       <div className={classes.ideaInfo}>
@@ -21,6 +20,16 @@ export default function Skeleton({ type }) {
     </div>
   );
 
-  if (type === "Course") return Array(COUNTER).fill(<IdeaSkeleton />);
+  const ProfileStructureSkeleton = () => (
+    <div className={classes.profileStructureSidebar}>
+      <div className={classes.profileStructureOption}></div>
+      <div className={classes.profileStructureOption}></div>
+      <div className={classes.profileStructureOption}></div>
+      <div className={classes.profileStructureOption}></div>
+    </div>
+  );
+
+  if (type === "Course") return Array(6).fill(<IdeaSkeleton />);
+  if (type === "ProfileStructureSkeleton") return <ProfileStructureSkeleton />;
   if (type === "Toolbar") return <ToolbarSkeleton />;
 }

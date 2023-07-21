@@ -92,7 +92,8 @@
               font-weight: bold;
             }
 
-            p {
+            input,
+            textarea {
               width: 100%;
               background-color: #ffffff;
               border: none;
@@ -172,7 +173,7 @@
                 }
               }
 
-              p {
+              input {
                 width: 6rem;
                 height: 2rem;
                 background-color: #ffffff;

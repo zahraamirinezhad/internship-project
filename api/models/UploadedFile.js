@@ -1,13 +1,20 @@
-const mongoose = require("mongoose");
+const Sequelize = require("sequelize");
+const db = require("../database");
 
-const UploadedFile = new mongoose.Schema(
+const UploadedFile = db.define(
+  "UploadedFile",
   {
-    fileName: { type: String, required: true, default: "", unique: true },
-    type: { type: String, required: true, default: "" },
-    path: { type: String, required: true, default: "" },
-    courseId: { type: String, required: true, default: "" },
+    fileName: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
+      unique: true,
+    },
+    type: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
+    path: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
+    courseId: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
   },
-  { timestamps: true }
+  { timestamps: true, freezeTableName: true }
 );
 
-module.exports = mongoose.model("UploadedFile", UploadedFile);
+module.exports = UploadedFile;

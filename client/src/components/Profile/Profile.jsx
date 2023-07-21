@@ -41,7 +41,7 @@ const Profile = ({ token }) => {
           res.data.birthDate !== null ? res.data.birthDate.slice(0, 10) : null
         );
         setUserAddress(
-          `${res.data.country}-${res.data.state}-${res.data.city}-${res.data.address}`
+          `${res.data.country}\n${res.data.state}\n${res.data.city}\n${res.data.address}`
         );
         setUserUserName(res.data.username);
 
@@ -71,78 +71,77 @@ const Profile = ({ token }) => {
             <div className={classes.slide}>
               <div className={classes.enterInfo}>
                 <label>Username</label>
-                <p
+                <input
+                  value={userUserName}
+                  readOnly
                   className={`${classes.smallData} ${
                     isLoading && classes.isLoading
                   }`}
-                >
-                  {userUserName}
-                </p>
+                />
               </div>
               <div className={classes.sideBySide}>
                 <div className={classes.enterGender}>
                   <label>Gender</label>
-                  <p
+                  <input
+                    value={userGender}
+                    readOnly
                     className={`${classes.largeData} ${
                       isLoading && classes.isLoading
                     }`}
-                  >
-                    {userGender}
-                  </p>
+                  />
                 </div>
                 <div className={classes.enterBirthDate}>
                   <label>Birth Date</label>
-                  <p
+                  <input
+                    value={userBirthDate}
+                    readOnly
                     className={`${classes.smallData} ${
                       isLoading && classes.isLoading
                     }`}
-                  >
-                    {userBirthDate}
-                  </p>
+                  />
                 </div>
               </div>
               <div className={classes.enterInfo}>
                 <label>Bio</label>
-                <p
+                <textarea
+                  value={userBio}
                   className={`${classes.largeData} ${
                     isLoading && classes.isLoading
                   }`}
-                >
-                  {userBio}
-                </p>
+                />
               </div>
             </div>
             <div className={classes.slide}>
               <div className={classes.enterInfo}>
                 <label>First Name</label>
-                <p
+                <input
+                  value={userFirstName}
+                  readOnly
                   className={`${classes.smallData} ${
                     isLoading && classes.isLoading
                   }`}
-                >
-                  {userFirstName}
-                </p>
+                />
               </div>
               <div className={classes.enterInfo}>
                 <label>Last Name</label>
-                <p
+                <input
+                  value={userLastName}
+                  readOnly
                   className={`${classes.smallData} ${
                     isLoading && classes.isLoading
                   }`}
-                >
-                  {userLastName}
-                </p>
+                />
               </div>
 
               <div className={classes.enterInfo}>
                 <label>Address</label>
-                <p
+                <textarea
+                  value={userAddress}
                   className={`${classes.largeData} ${
                     isLoading && classes.isLoading
                   }`}
-                >
-                  {userAddress}
-                </p>
+                  readOnly
+                />
               </div>
             </div>
           </div>

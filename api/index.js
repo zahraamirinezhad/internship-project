@@ -1,5 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const db = require("./database");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 const authRoute = require("./routes/auth");
 const usersRoute = require("./routes/users");
@@ -10,14 +11,12 @@ const cors = require("cors");
 
 const app = express();
 
-mongoose
-  .connect(process.env.DATABASE)
-  .then((con) => {
-    console.log("successful");
-    console.log(con.connections);
+db.authenticate()
+  .then(() => {
+    console.log("satabase connection successfull");
   })
   .catch((err) => {
-    console.log("error");
+    console.log("satabase connection unsuccessfull");
     console.log(err);
   });
 

@@ -14,8 +14,7 @@ const Login = () => {
   const manageLogin = (e) => {
     e.preventDefault();
     try {
-      const res = login({ email: emailData, password: passwordData });
-      console.log(res);
+      login({ email: emailData, password: passwordData });
     } catch (err) {
       console.log(err);
     }
