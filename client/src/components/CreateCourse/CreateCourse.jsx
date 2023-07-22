@@ -37,6 +37,7 @@ const CreateCourse = ({ token }) => {
   const [courseImage, setCourseImage] = useState(null);
 
   const [courseCreated, setCourseCreated] = useState(false);
+  const [docsAdded, setDocsAdded] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [filesUploading, setFilesUploading] = useState(false);
 
@@ -77,7 +78,7 @@ const CreateCourse = ({ token }) => {
         }
       );
       console.log(res);
-      setCourseId(res.data._id);
+      setCourseId(res.data.id);
       setIsCreating(false);
       dispatch(attachedFilesActions.deleteAllAttachedFiles());
       setCourseCreated(true);
@@ -106,7 +107,7 @@ const CreateCourse = ({ token }) => {
       try {
         i === 0 && setFilesUploading(true);
         const res = await axios.post(
-          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
+          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/485925aa-a0a6-4e55-b829-4338c0801298`,
           formData,
           {
             headers: {
@@ -118,6 +119,7 @@ const CreateCourse = ({ token }) => {
 
         if (i === attachedFilesNum - 1) {
           setFilesUploading(false);
+          setDocsAdded(true);
           dispatch(choicesActions.deleteAllChoices());
           dispatch(questionsActions.deleteAllQuestions());
         }
@@ -129,20 +131,41 @@ const CreateCourse = ({ token }) => {
 
   const addChoice = () => {
     if (choice !== "") {
-      dispatch(choicesActions.addChoice({ name: choice }));
+      dispatch(choicesActions.addChoice({ choice: choice }));
       setChoice("");
     }
   };
 
-  const finishCreatingCourse = () => {
-    navigate("/profileStructure/myCourses");
+  const finishCreatingCourse = async () => {
+    console.log(questions);
+    for (let i = 0; i < questionsNum; i++) {
+      const tempChoices = [];
+      for (let j = 0; j < questions[i].choices.length; j++)
+        tempChoices.push(questions[i].choices[j]);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_ADDRESS}questions/addQuestion/485925aa-a0a6-4e55-b829-4338c0801298`,
+        {
+          question: questions[i].question,
+          fullAnswer: questions[i].fullAnswer,
+          choices: tempChoices,
+        },
+        {
+          headers: {
+            token: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res);
+    }
+    // navigate("/profileStructure/myCourses");
   };
 
   const addQuestion = () => {
     if (question !== "" && answer !== "" && choicesNum !== 0) {
       dispatch(
         questionsActions.addQuestion({
-          name: question,
+          question: question,
           fullAnswer: answer,
           choices: choices,
         })
@@ -167,7 +190,6 @@ const CreateCourse = ({ token }) => {
             type="file"
             accept="image/*"
             onChange={handleUploadedFile}
-            disabled={courseCreated}
           />
           <label for="selectCourseImage">
             <img src={courseImageDisplay} alt="Select_Image" />
@@ -214,7 +236,9 @@ const CreateCourse = ({ token }) => {
       </div>
 
       <div
-        className={`${classes.courseDoc} ${courseCreated && classes.nowAddDoc}`}
+        className={`${classes.courseDoc} ${
+          courseCreated && classes.nowAddDoc
+        } ${docsAdded && classes.finishAddingFiles}`}
       >
         <label
           for="uploadDoc"
@@ -242,7 +266,7 @@ const CreateCourse = ({ token }) => {
               {attachedFiles.map((item, index) => (
                 <UploadedFile
                   key={index}
-                  type={item.name.split(".")[1]}
+                  type={item.name.split(".")[item.name.split(".").length - 1]}
                   name={item.name}
                   downloadOrDelete="delete"
                 />
@@ -259,7 +283,9 @@ const CreateCourse = ({ token }) => {
         )}
       </div>
 
-      <div className={classes.addQuestion}>
+      <div
+        className={`${classes.addQuestion} ${docsAdded && classes.nowAddDoc}`}
+      >
         <div className={classes.questionForm}>
           <div className={classes.questionData}>
             <label>Question</label>
@@ -285,7 +311,7 @@ const CreateCourse = ({ token }) => {
             </button>
             <div className={classes.choices}>
               {choices.map((item, index) => (
-                <Choice answer={item.name} setChoice={setChoice} />
+                <Choice answer={item.choice} setChoice={setChoice} />
               ))}
             </div>
           </div>
@@ -296,7 +322,7 @@ const CreateCourse = ({ token }) => {
         <div className={classes.questions}>
           {questions.map((item, index) => (
             <Question
-              question={item.name}
+              question={item.question}
               fullAnswer={item.fullAnswer}
               choices={item.choices}
               setAnswer={setAnswer}

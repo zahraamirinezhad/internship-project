@@ -19,21 +19,24 @@ const upload = multer({
 
 //CREATE COURSE
 router.post("/create", verify, upload, async (req, res) => {
-  console.log(req);
-  const newCourse = new Course({
+  // await Course.sync({ force: true });
+
+  const avatar = typeof req.file === "undefined" ? null : req.file.path;
+  await Course.create({
     title: req.body.title,
     goal: req.body.goal,
     abstract: req.body.abstract,
-    avatar: req.file.path,
-    creatorId: req.user.id,
-  });
-
-  try {
-    const course = await newCourse.save();
-    res.status(201).json(course);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+    avatar: avatar,
+    TeacherId: req.user.id,
+  })
+    .then((course) => {
+      console.log(course);
+      res.status(201).json(course);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.get("/", verify, async (req, res) => {

@@ -21,18 +21,22 @@ const upload = multer({
 router.post("/addDoc/:id", verify, upload, async (req, res) => {
   console.log(req);
 
-  try {
-    const newFile = new UploadedFile({
-      type: req.file.mimetype,
-      path: req.file.path,
-      fileName: req.file.filename,
-      courseId: req.params.id,
+  // await UploadedFile.sync({ force: true });
+
+  await UploadedFile.create({
+    type: req.file.mimetype,
+    path: req.file.path,
+    fileName: req.file.filename,
+    CourseId: req.params.id,
+  })
+    .then((file) => {
+      console.log(file);
+      res.status(201).json(file);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-    const file = await newFile.save();
-    res.status(201).json(file);
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 // //GET FILES OF SPECIAL COURSE

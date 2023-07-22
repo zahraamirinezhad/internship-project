@@ -1,15 +1,15 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const User = db.define(
-  "User",
+const Student = db.define(
+  "Student",
   {
-    username: { type: Sequelize.STRING, allowNull: false, unique: true },
-    isTeacher: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      primaryKey: true,
     },
+    username: { type: Sequelize.STRING, allowNull: false, unique: true },
     email: { type: Sequelize.STRING, allowNull: false, unique: true },
     password: { type: Sequelize.STRING, allowNull: false },
     firstName: { type: Sequelize.STRING, defaultValue: "" },
@@ -30,4 +30,4 @@ const User = db.define(
   { timestamps: true, freezeTableName: true }
 );
 
-module.exports = User;
+module.exports = Student;

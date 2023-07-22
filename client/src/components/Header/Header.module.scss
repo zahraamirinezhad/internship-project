@@ -5,8 +5,9 @@
   align-items: center;
   justify-content: space-between;
   background-color: transparent;
-  box-shadow: 0px 0px 10px 1px #f571a3 inset;
+  // box-shadow: 0px 0px 10px 1px #f571a3 inset;
   padding: 0.5rem 1rem;
+  border-bottom: 1px solid #f571a3;
 
   div {
     display: flex;
@@ -21,6 +22,12 @@
           outline: none;
           background-color: transparent;
           text-decoration: none;
+          transition: all 0.3s ease-out;
+          cursor: pointer;
+
+          &:hover {
+            transform: translate(0, -5px);
+          }
         }
 
         @media (max-width: 991.98px) {
@@ -49,6 +56,12 @@
       .account {
         color: #4d031f;
         text-decoration: none;
+        transition: all 0.3s ease-out;
+        cursor: pointer;
+
+        &:hover {
+          transform: translate(0, -5px);
+        }
 
         @media (max-width: 991.98px) {
           display: none;
@@ -57,6 +70,12 @@
 
       .profile {
         text-decoration: none;
+        transition: all 0.3s ease-out;
+        cursor: pointer;
+
+        &:hover {
+          transform: translate(0, -5px);
+        }
 
         img {
           width: 3rem;

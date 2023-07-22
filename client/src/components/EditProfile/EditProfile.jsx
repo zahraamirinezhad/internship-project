@@ -7,7 +7,7 @@ import axios from "axios";
 import { CheckCircleOutline } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 
-const EditProfile = ({ token }) => {
+const EditProfile = ({ token, isTeacher }) => {
   const [mainUserName, setMainUserName] = useState("");
   const [userProfile, setUserProfile] = useState(null);
   const [userSelectedProfile, setUserSelectedProfile] = useState(null);
@@ -28,14 +28,26 @@ const EditProfile = ({ token }) => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}users/find`,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
+        let res = null;
+        if (isTeacher) {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}teachers/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        } else {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}students/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        }
         console.log(res);
         res.data.profilePic !== null &&
           setUserProfile(`http://localhost:8800/${res.data.profilePic}`);
@@ -87,15 +99,27 @@ const EditProfile = ({ token }) => {
 
   const uploadNewUserData = async (formData) => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_ADDRESS}users/update`,
-        formData,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
+      if (isTeacher) {
+        await axios.put(
+          `${process.env.REACT_APP_API_ADDRESS}teachers/update`,
+          formData,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
+        );
+      } else {
+        await axios.put(
+          `${process.env.REACT_APP_API_ADDRESS}students/update`,
+          formData,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
+        );
+      }
       setIsUploading(false);
     } catch (err) {
       console.log(err);

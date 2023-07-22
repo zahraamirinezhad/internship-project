@@ -1,13 +1,14 @@
-import { React, useState, useContext } from "react";
+import { React, useState } from "react";
 import classes from "./CreateAccount.module.scss";
 import SignUp from "../../images/SignUp.png";
 import PasswordChecklist from "react-password-checklist";
 import { Link } from "react-router-dom";
-import AuthContext from "../../authContext/AuthContext";
 import DatePicker from "react-datepicker";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
-  const { register } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [userNameData, setUserNameData] = useState("");
   const [passwordData, setPasswordData] = useState("");
@@ -30,22 +31,31 @@ const CreateAccount = () => {
     if (password_validate(passwordData) && validateEmail(emailData)) {
       e.preventDefault();
       try {
-        await register({
-          email: emailData,
-          username: userNameData,
-          password: passwordData,
-          firstName: userFirstName,
-          lastName: userLastName,
-          isTeacher: isTeacher,
-          studentNumber: isTeacher ? null : userStudentNumber,
-          birthDate: userBirthDate,
-          gender: userGender,
-          bio: userBio,
-          country: userCountry,
-          state: userState,
-          city: userCity,
-          address: userAddress,
-        });
+        const apiResponse = await axios.post(
+          `${process.env.REACT_APP_API_ADDRESS}auth/register/`,
+          {
+            email: emailData,
+            username: userNameData,
+            password: passwordData,
+            firstName: userFirstName,
+            lastName: userLastName,
+            isTeacher: isTeacher,
+            studentNumber: isTeacher ? null : userStudentNumber,
+            birthDate: userBirthDate,
+            gender: userGender,
+            bio: userBio,
+            country: userCountry,
+            state: userState,
+            city: userCity,
+            address: userAddress,
+          }
+        );
+        console.log(apiResponse);
+        localStorage.setItem(
+          "tokens",
+          JSON.stringify(apiResponse.data.accessToken)
+        );
+        navigate("/mainPage");
       } catch (err) {
         console.log(err);
       }

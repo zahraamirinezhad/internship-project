@@ -4,7 +4,7 @@ import axios from "axios";
 import Temp from "../../images/user (2).png";
 import Course from "../../components/Course/Course";
 
-const MainPage = ({ token }) => {
+const MainPage = ({ token, isTeacher }) => {
   const [seeAll, setSeeAll] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState([]);

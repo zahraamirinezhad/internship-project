@@ -4,6 +4,11 @@ const db = require("../database");
 const UploadedFile = db.define(
   "UploadedFile",
   {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      primaryKey: true,
+    },
     fileName: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -12,7 +17,6 @@ const UploadedFile = db.define(
     },
     type: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
     path: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
-    courseId: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
   },
   { timestamps: true, freezeTableName: true }
 );

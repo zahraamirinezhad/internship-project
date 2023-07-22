@@ -7,13 +7,13 @@ const choicesSlice = createSlice({
     addChoice(state, action) {
       const newItem = action.payload;
       const existingItem = state.choices.find(
-        (item) => item.name === newItem.name
+        (item) => item.choice === newItem.choice
       );
 
       if (!existingItem) {
         state.choicesNum++;
         state.choices.push({
-          name: newItem.name,
+          choice: newItem.choice,
         });
       }
     },
@@ -24,13 +24,13 @@ const choicesSlice = createSlice({
     deleteChoice(state, action) {
       const newItem = action.payload;
       const existingItem = state.choices.find(
-        (item) => item.name === newItem.name
+        (item) => item.choice === newItem.choice
       );
 
       if (existingItem) {
         state.choicesNum--;
         state.choices = state.choices.filter(
-          (task) => task.name !== newItem.name
+          (task) => task.choice !== newItem.choice
         );
       }
     },

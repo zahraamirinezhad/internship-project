@@ -10,25 +10,27 @@ import {
   PracticeWebLan,
 } from "..";
 
-const MainContainer = ({ token }) => {
+const MainContainer = ({ token, isTeacher }) => {
   const location = useLocation();
-  console.log(location.pathname.split("/"));
-  const url = location.pathname.split("/")[1];
+  // console.log(location);
+  const url = location.pathname.split("/")[2];
   console.log(url);
 
   return (
     <div className={classes.container}>
       <div className={classes.container}>
-        <Header token={token} />
+        <Header token={token} isTeacher={isTeacher} />
         <div className={classes.body}>
           {
             {
-              mainPage: <MainPage token={token} />,
-              profileStructure: <ProfileStructure token={token} />,
-              practice: <Practice token={token} />,
-              otherLan: <Compiler token={token} />,
-              webLan: <PracticeWebLan />,
-              editCourse: <EditCourse />,
+              mainPage: <MainPage token={token} isTeacher={isTeacher} />,
+              profileStructure: (
+                <ProfileStructure token={token} isTeacher={isTeacher} />
+              ),
+              practice: <Practice token={token} isTeacher={isTeacher} />,
+              otherLan: <Compiler token={token} isTeacher={isTeacher} />,
+              webLan: <PracticeWebLan isTeacher={isTeacher} />,
+              editCourse: <EditCourse isTeacher={isTeacher} />,
             }[url]
           }
         </div>

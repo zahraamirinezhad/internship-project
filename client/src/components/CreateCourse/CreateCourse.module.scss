@@ -22,10 +22,7 @@
 
     &.courseCreated {
       opacity: 0.5;
-
-      .createCourse {
-        display: none;
-      }
+      pointer-events: none;
     }
 
     .selectCourseImage {
@@ -134,6 +131,11 @@
       align-items: center;
       justify-content: center;
       gap: 2rem;
+    }
+
+    &.finishAddingFiles {
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .addDoc {
@@ -247,7 +249,7 @@
   }
 
   .addQuestion {
-    // display: none;
+    display: none;
     width: 30rem;
     padding: 0.5rem 1rem;
     border: 2px dashed #ca004e;

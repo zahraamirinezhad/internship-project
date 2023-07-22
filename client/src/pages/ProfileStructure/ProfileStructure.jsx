@@ -1,12 +1,11 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import classes from "./ProfileStructure.module.scss";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import {
   Profile,
   EditProfile,
   CreateCourse,
   MyCourses,
-  Skeleton,
 } from "../../components";
 import {
   AccountCircle,
@@ -14,72 +13,62 @@ import {
   MenuBook,
   School,
 } from "@mui/icons-material";
-import axios from "axios";
 
-const ProfileStructure = ({ token }) => {
-  const [userIsTeacher, setUserIsTeacher] = useState(false);
-
+const ProfileStructure = ({ token, isTeacher }) => {
   const location = useLocation();
   // console.log(location.pathname);
   const url =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}users/status`,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
-        setUserIsTeacher(res.data.isTeacher);
-        console.log(res.data);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserData();
-  }, []);
-
   return (
     <div className={classes.container}>
-      {isLoading ? (
-        <Skeleton type="ProfileStructureSkeleton" />
-      ) : (
+      {isTeacher ? (
         <div className={classes.sidebar}>
           <Link
             className={classes.sidebarOptions}
-            to="/profileStructure/profile"
+            to="/teacher/profileStructure/profile"
           >
             <AccountCircle /> Profile
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/profileStructure/editProfile"
+            to="/teacher/profileStructure/editProfile"
           >
             <ManageAccounts /> Edit Profile
           </Link>
-          {userIsTeacher ? (
-            <Link
-              className={classes.sidebarOptions}
-              to="/profileStructure/createCourse"
-            >
-              <MenuBook /> Create Course
-            </Link>
-          ) : (
-            <Link className={classes.sidebarOptions} to="/practice">
-              <MenuBook /> Practice
-            </Link>
-          )}
           <Link
             className={classes.sidebarOptions}
-            to="/profileStructure/myCourses"
+            to="/teacher/profileStructure/createCourse"
+          >
+            <MenuBook /> Create Course
+          </Link>
+          <Link
+            className={classes.sidebarOptions}
+            to="/teacher/profileStructure/myCourses"
+          >
+            <School /> My Courses
+          </Link>
+        </div>
+      ) : (
+        <div className={classes.sidebar}>
+          <Link
+            className={classes.sidebarOptions}
+            to="/student/profileStructure/profile"
+          >
+            <AccountCircle /> Profile
+          </Link>
+          <Link
+            className={classes.sidebarOptions}
+            to="/student/profileStructure/editProfile"
+          >
+            <ManageAccounts /> Edit Profile
+          </Link>
+          <Link className={classes.sidebarOptions} to="/student/practice">
+            <MenuBook /> Practice
+          </Link>
+          <Link
+            className={classes.sidebarOptions}
+            to="/student/profileStructure/myCourses"
           >
             <School /> My Courses
           </Link>
@@ -89,10 +78,10 @@ const ProfileStructure = ({ token }) => {
       <div className={classes.main}>
         {
           {
-            profile: <Profile token={token} />,
-            myCourses: <MyCourses token={token} />,
-            editProfile: <EditProfile token={token} />,
-            createCourse: <CreateCourse token={token} />,
+            profile: <Profile token={token} isTeacher={isTeacher} />,
+            myCourses: <MyCourses token={token} isTeacher={isTeacher} />,
+            editProfile: <EditProfile token={token} isTeacher={isTeacher} />,
+            createCourse: <CreateCourse token={token} isTeacher={isTeacher} />,
           }[url]
         }
       </div>

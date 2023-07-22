@@ -11,29 +11,43 @@ import UserSmallMenu from "../SmallMenus/UserSmallMenu/UserSmallMenu";
 import Skeleton from "../Skeleton/Skeleton";
 import Menu from "../../images/burger-menu.png";
 
-const Header = ({ token }) => {
+const Header = ({ token, isTeacher }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isShowMenu, setIsShowMenu] = useState(false);
   const [isShowOptionsMenu, setIsShowOptionsMenu] = useState(false);
 
   const location = useLocation();
-  const url = location.pathname.split("/")[1];
+  // console.log(location);
+  const url = location.pathname.split("/")[2];
 
   const [userProfile, setUserProfile] = useState(null);
   const [userName, setUserName] = useState(null);
 
   useEffect(() => {
     console.log(token);
+    console.log(isTeacher);
     const getUserData = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}users/find`,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
+        let res = null;
+        if (isTeacher) {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}teachers/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        } else {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}students/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        }
         console.log(res);
         setUserProfile(
           res.data.profilePic === null
@@ -96,12 +110,36 @@ const Header = ({ token }) => {
         <Skeleton type="Toolbar" />
       ) : (
         <div className={classes.userInfo}>
-          <Link to="/profileStructure/profile" className={classes.account}>
-            <h4>{userName}</h4>
-          </Link>
-          <Link to="/profileStructure/profile" className={classes.profile}>
-            <img src={userProfile === null ? User : userProfile} alt="user" />
-          </Link>
+          {isTeacher ? (
+            <Link
+              to="/teacher/profileStructure/profile"
+              className={classes.account}
+            >
+              <h4>{userName}</h4>
+            </Link>
+          ) : (
+            <Link
+              to="/student/profileStructure/profile"
+              className={classes.account}
+            >
+              <h4>{userName}</h4>
+            </Link>
+          )}
+          {isTeacher ? (
+            <Link
+              to="/teacher/profileStructure/profile"
+              className={classes.profile}
+            >
+              <img src={userProfile === null ? User : userProfile} alt="user" />
+            </Link>
+          ) : (
+            <Link
+              to="/student/profileStructure/profile"
+              className={classes.profile}
+            >
+              <img src={userProfile === null ? User : userProfile} alt="user" />
+            </Link>
+          )}
 
           {url === "profileStructure" && (
             <div className={classes.smallMenu}>

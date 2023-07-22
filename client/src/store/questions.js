@@ -7,13 +7,13 @@ const questionsSlice = createSlice({
     addQuestion(state, action) {
       const newItem = action.payload;
       const existingItem = state.questions.find(
-        (item) => item.name === newItem.name
+        (item) => item.question === newItem.question
       );
 
       if (!existingItem) {
         state.questionsNum++;
         state.questions.push({
-          name: newItem.name,
+          question: newItem.question,
           fullAnswer: newItem.fullAnswer,
           choices: newItem.choices,
         });
@@ -22,13 +22,13 @@ const questionsSlice = createSlice({
     deleteQuestion(state, action) {
       const newItem = action.payload;
       const existingItem = state.questions.find(
-        (item) => item.name === newItem.name
+        (item) => item.question === newItem.question
       );
 
       if (existingItem) {
         state.questionsNum--;
         state.questions = state.questions.filter(
-          (task) => task.name !== newItem.name
+          (task) => task.question !== newItem.question
         );
       }
     },

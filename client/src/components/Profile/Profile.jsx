@@ -4,7 +4,7 @@ import UserProfile from "../../images/user (2).png";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
-const Profile = ({ token }) => {
+const Profile = ({ token, isTeacher }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
@@ -19,14 +19,26 @@ const Profile = ({ token }) => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}users/find`,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
+        let res = null;
+        if (isTeacher) {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}teachers/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        } else {
+          res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}students/find`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+        }
         console.log(res.data);
         setUserProfile(
           res.data.profilePic === null

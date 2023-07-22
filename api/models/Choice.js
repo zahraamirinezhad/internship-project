@@ -1,25 +1,21 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const Course = db.define(
-  "Course",
+const Choice = db.define(
+  "Choice",
   {
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    title: {
+    choice: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
       defaultValue: "",
     },
-    goal: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
-    abstract: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
-    avatar: { type: Sequelize.STRING, defaultValue: null },
   },
   { timestamps: true, freezeTableName: true }
 );
 
-module.exports = Course;
+module.exports = Choice;
