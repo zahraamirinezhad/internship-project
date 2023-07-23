@@ -17,7 +17,7 @@ const MyCourses = ({ token }) => {
     const getUserData = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/`,
+          `${process.env.REACT_APP_API_ADDRESS}courses/getMyCourses`,
           {
             headers: {
               token: `Bearer ${token}`,
@@ -44,7 +44,7 @@ const MyCourses = ({ token }) => {
             <Course
               key={index}
               type="MyCourses"
-              id={item._id}
+              id={item.id}
               token={token}
               title={item.title}
               avatar={item.avatar}

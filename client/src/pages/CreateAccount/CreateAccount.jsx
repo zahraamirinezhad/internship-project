@@ -55,7 +55,10 @@ const CreateAccount = () => {
           "tokens",
           JSON.stringify(apiResponse.data.accessToken)
         );
-        navigate("/mainPage");
+        localStorage.setItem("isTeacher", isTeacher);
+        isTeacher
+          ? navigate("/teacher/mainPage")
+          : navigate("/student/mainPage");
       } catch (err) {
         console.log(err);
       }

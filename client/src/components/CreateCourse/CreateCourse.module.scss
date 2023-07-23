@@ -255,6 +255,10 @@
     border: 2px dashed #ca004e;
     border-radius: 1rem;
 
+    &.nowAddQuestion {
+      display: block;
+    }
+
     .questionForm {
       display: flex;
       flex-direction: column;
@@ -385,7 +389,7 @@
         }
       }
 
-      .addQuestion {
+      .addQues {
         width: 16rem;
         border: none;
         border: 1px solid #008000;

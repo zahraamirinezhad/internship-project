@@ -1,5 +1,8 @@
 const router = require("express").Router();
+const Question = require("../models/Question");
+const UploadedFile = require("../models/UploadedFile");
 const Course = require("../models/Course");
+const Choice = require("../models/Choice");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
@@ -39,10 +42,89 @@ router.post("/create", verify, upload, async (req, res) => {
     });
 });
 
-router.get("/", verify, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const courses = await Course.find();
+    const courses = await Course.findAll();
     res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getMyCourses", verify, async (req, res) => {
+  try {
+    const courses = await Course.findAll({
+      where: {
+        TeacherId: req.user.id,
+      },
+    });
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getCourseDocs/:id", verify, async (req, res) => {
+  try {
+    const courses = await Course.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: UploadedFile,
+    });
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getCourseQuestions/:id", verify, async (req, res) => {
+  try {
+    const courses = await Course.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: Question,
+    });
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getCourseQuestionsChoices/:id", verify, async (req, res) => {
+  try {
+    const question = await Question.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: Choice,
+    });
+    res.status(200).json(question);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.put("/editCourse/:id", verify, upload, async (req, res) => {
+  // console.log(req);
+  try {
+    const avatar =
+      typeof req.file === "undefined" ? req.body.avatar : req.file.path;
+    const course = await Course.update(
+      {
+        title: req.body.title,
+        goal: req.body.goal,
+        abstract: req.body.abstract,
+        avatar: avatar,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).json(course);
   } catch (err) {
     res.status(500).json(err);
   }

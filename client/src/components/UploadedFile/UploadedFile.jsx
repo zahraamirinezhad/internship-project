@@ -22,15 +22,15 @@ const UploadedFile = ({
 
   const deleteFile = async () => {
     try {
-      // const fileDelRes = await axios.delete(
-      //   `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/${id}`,
-      //   {
-      //     headers: {
-      //       token: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-      // console.log(fileDelRes);
+      const fileDelRes = await axios.delete(
+        `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/${id}`,
+        {
+          headers: {
+            token: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(fileDelRes);
       dispatch(
         attachedFilesActions.deleteAttachedFiles({
           name: name,

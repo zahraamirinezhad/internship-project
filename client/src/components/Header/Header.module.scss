@@ -4,10 +4,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: transparent;
-  // box-shadow: 0px 0px 10px 1px #f571a3 inset;
+  background-color: rgba(2, 0, 36, 1);
+  box-shadow: 0px -8px 10px 1px rgb(5, 2, 82) inset;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid #f571a3;
+  // border-bottom: 1px solid #f571a3;
 
   div {
     display: flex;
@@ -54,7 +54,7 @@
 
     &.userInfo {
       .account {
-        color: #4d031f;
+        color: white;
         text-decoration: none;
         transition: all 0.3s ease-out;
         cursor: pointer;
@@ -106,7 +106,7 @@
     }
 
     &.title {
-      color: #3f0071;
+      color: white;
       font-family: Pacifico-Regular, sans-serif;
       font-weight: bold;
     }

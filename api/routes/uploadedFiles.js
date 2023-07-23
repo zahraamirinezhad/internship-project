@@ -19,7 +19,7 @@ const upload = multer({
 
 //ADD DOCUMENT TO COURSE
 router.post("/addDoc/:id", verify, upload, async (req, res) => {
-  console.log(req);
+  // console.log(req);
 
   // await UploadedFile.sync({ force: true });
 
@@ -39,16 +39,20 @@ router.post("/addDoc/:id", verify, upload, async (req, res) => {
     });
 });
 
-// //GET FILES OF SPECIAL COURSE
-// router.delete("/:id", verify, async (req, res) => {
-//   try {
-//     await UploadedFile.findByIdAndDelete(req.params.id);
+//GET FILES OF SPECIAL COURSE
+router.delete("/:id", verify, async (req, res) => {
+  try {
+    await UploadedFile.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
 
-//     res.status(200).json("File deleted successfully :)");
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json("File deleted successfully :)");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //DELETE FILE
 router.delete("/:id", verify, async (req, res) => {

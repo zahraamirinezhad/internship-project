@@ -45,7 +45,7 @@ function App() {
             />
             <Route
               path="/:status/profileStructure/createCourse"
-              element={<MainContainer token={token} />}
+              element={<MainContainer token={token} isTeacher={true} />}
             />
             <Route
               path="/:status/profileStructure/myCourses"
@@ -65,8 +65,8 @@ function App() {
             />
 
             <Route
-              path="/:status/editCourse/:id"
-              element={<MainContainer token={token} />}
+              path="/:status/editCourse/:courseId"
+              element={<MainContainer token={token} isTeacher={true} />}
             />
           </>
         )}

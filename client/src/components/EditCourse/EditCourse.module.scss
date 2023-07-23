@@ -22,10 +22,7 @@
 
     &.courseCreated {
       opacity: 0.5;
-
-      .createCourse {
-        display: none;
-      }
+      pointer-events: none;
     }
 
     .selectCourseImage {
@@ -102,23 +99,6 @@
         }
       }
     }
-
-    .createCourse {
-      width: 5rem;
-      position: relative;
-      background-color: #8a0035;
-      border: none;
-      color: #ffffff;
-      padding: 0.5rem 1rem;
-      text-align: center;
-      transition: all 0.5s ease-in-out;
-      cursor: pointer;
-      border-radius: 0.2rem;
-
-      &:hover {
-        background-color: #ca004e;
-      }
-    }
   }
 
   .courseDoc {
@@ -131,6 +111,11 @@
     padding: 0.5rem 1rem;
     border: 2px dashed #ca004e;
     border-radius: 1rem;
+
+    &.finishAddingFiles {
+      opacity: 0.5;
+      pointer-events: none;
+    }
 
     .addDoc {
       position: relative;
@@ -214,35 +199,10 @@
         background: #838383;
       }
     }
-
-    .finishAddingFiles {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      button {
-        width: 12rem;
-        border: none;
-        outline: none;
-        color: #990000;
-        border: 2px solid #990000;
-        background-color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 0.2rem;
-        cursor: pointer;
-        transition: all 0.5s ease-in-out;
-        font-weight: bold;
-
-        &:hover {
-          background-color: #990000;
-          color: white;
-        }
-      }
-    }
   }
 
   .addQuestion {
+    display: block;
     width: 30rem;
     padding: 0.5rem 1rem;
     border: 2px dashed #ca004e;
@@ -378,7 +338,7 @@
         }
       }
 
-      .addQuestion {
+      .addQues {
         width: 16rem;
         border: none;
         border: 1px solid #008000;

@@ -6,11 +6,12 @@
   align-items: flex-start;
   justify-content: center;
   background-color: white;
+  padding: 2rem;
 
   .courses {
-    width: fit-content;
+    width: 100%;
     padding: 0.5rem 1.5rem;
-    border: 2px solid #303030;
+    border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 0.5rem;
     // height: 21rem;
     // max-height: 21rem;
@@ -21,8 +22,16 @@
     gap: 0.5rem;
     overflow: hidden;
     overflow-y: scroll;
-    background-color: #ffffff;
+    // background-color: #ffffff;
     margin: 2rem auto;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      180deg,
+      rgb(12, 42, 173) 20%,
+      rgb(16, 73, 207) 30%,
+      rgba(1, 179, 233, 1) 90%,
+      rgba(0, 212, 255, 1) 100%
+    );
 
     @media (max-width: 991.98px) {
       grid-template-columns: auto;
@@ -38,16 +47,16 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: lightgray;
+      background: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: rgb(158, 158, 158);
+      background: rgb(6, 24, 105);
       border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: gray;
+      background: rgba(8, 32, 136, 1);
     }
   }
 }

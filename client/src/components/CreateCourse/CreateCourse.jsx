@@ -100,6 +100,7 @@ const CreateCourse = ({ token }) => {
   };
 
   const finishAddingFiles = async () => {
+    console.log(courseId);
     for (let i = 0; i < attachedFilesNum; i++) {
       const formData = new FormData();
       formData.append("avatar", attachedFiles[i]);
@@ -107,7 +108,7 @@ const CreateCourse = ({ token }) => {
       try {
         i === 0 && setFilesUploading(true);
         const res = await axios.post(
-          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/485925aa-a0a6-4e55-b829-4338c0801298`,
+          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
           formData,
           {
             headers: {
@@ -137,17 +138,16 @@ const CreateCourse = ({ token }) => {
   };
 
   const finishCreatingCourse = async () => {
+    console.log(courseId);
     console.log(questions);
+    console.log(questionsNum);
     for (let i = 0; i < questionsNum; i++) {
-      const tempChoices = [];
-      for (let j = 0; j < questions[i].choices.length; j++)
-        tempChoices.push(questions[i].choices[j]);
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}questions/addQuestion/485925aa-a0a6-4e55-b829-4338c0801298`,
+      await axios.post(
+        `${process.env.REACT_APP_API_ADDRESS}questions/addQuestion/${courseId}`,
         {
           question: questions[i].question,
           fullAnswer: questions[i].fullAnswer,
-          choices: tempChoices,
+          choices: questions[i].choices,
         },
         {
           headers: {
@@ -156,9 +156,10 @@ const CreateCourse = ({ token }) => {
           },
         }
       );
-      console.log(res);
     }
-    // navigate("/profileStructure/myCourses");
+    dispatch(choicesActions.deleteAllChoices());
+    dispatch(questionsActions.deleteAllQuestions());
+    navigate("/teacher/profileStructure/myCourses");
   };
 
   const addQuestion = () => {
@@ -284,7 +285,9 @@ const CreateCourse = ({ token }) => {
       </div>
 
       <div
-        className={`${classes.addQuestion} ${docsAdded && classes.nowAddDoc}`}
+        className={`${classes.addQuestion} ${
+          docsAdded && classes.nowAddQuestion
+        }`}
       >
         <div className={classes.questionForm}>
           <div className={classes.questionData}>
@@ -315,7 +318,7 @@ const CreateCourse = ({ token }) => {
               ))}
             </div>
           </div>
-          <button className={classes.addQuestion} onClick={addQuestion}>
+          <button className={classes.addQues} onClick={addQuestion}>
             Creating Question Finished :)
           </button>
         </div>

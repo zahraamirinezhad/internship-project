@@ -17,7 +17,7 @@ const Course = ({
   return (
     <Link
       className={classes.container}
-      to={type === "MyCourses" && isTeacher && `./addQuestions/${id}`}
+      // to={type === "MyCourses" && isTeacher && `./addQuestions/${id}`}
     >
       <div className={classes.courseInfo}>
         <div className={classes.courseTitle}>
@@ -25,7 +25,7 @@ const Course = ({
           {type === "MyCourses" && isTeacher && (
             <Link
               className={`${classes.options} ${classes.editCourse}`}
-              to={`/courseStructure/editcourse/${id}`}
+              to={`/teacher/editCourse/${id}`}
             >
               <Edit />
               Edit

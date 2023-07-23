@@ -69,7 +69,7 @@ router.delete("/:id", verify, async (req, res) => {
 
 //GET USER
 router.get("/find", verify, async (req, res) => {
-  console.log(req);
+  // console.log(req);
   try {
     const user = await Teacher.findOne({
       where: {

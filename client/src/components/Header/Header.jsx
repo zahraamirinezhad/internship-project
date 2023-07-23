@@ -16,6 +16,9 @@ const Header = ({ token, isTeacher }) => {
   const [isShowMenu, setIsShowMenu] = useState(false);
   const [isShowOptionsMenu, setIsShowOptionsMenu] = useState(false);
 
+  console.log(token);
+  console.log(isTeacher);
+
   const location = useLocation();
   // console.log(location);
   const url = location.pathname.split("/")[2];
@@ -96,9 +99,15 @@ const Header = ({ token, isTeacher }) => {
           </Link>
         </div>
         <div>
-          <Link className={classes.btn} to="/mainPage">
-            <img src={Home} alt="home" />
-          </Link>
+          {isTeacher ? (
+            <Link className={classes.btn} to="/teacher/mainPage">
+              <img src={Home} alt="home" />
+            </Link>
+          ) : (
+            <Link className={classes.btn} to="/student/mainPage">
+              <img src={Home} alt="home" />
+            </Link>
+          )}
         </div>
       </div>
 

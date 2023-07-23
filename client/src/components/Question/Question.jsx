@@ -18,11 +18,11 @@ const Question = ({
     setQuestion(question);
     setAnswer(fullAnswer);
     dispatch(choicesActions.setMulChoices(choices));
-    dispatch(questionsActions.deleteQuestion({ name: question }));
+    dispatch(questionsActions.deleteQuestion({ question: question }));
   };
 
   const manageDelete = () => {
-    dispatch(questionsActions.deleteQuestion({ name: question }));
+    dispatch(questionsActions.deleteQuestion({ question: question }));
   };
 
   return (

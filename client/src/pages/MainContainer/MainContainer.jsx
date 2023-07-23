@@ -30,7 +30,7 @@ const MainContainer = ({ token, isTeacher }) => {
               practice: <Practice token={token} isTeacher={isTeacher} />,
               otherLan: <Compiler token={token} isTeacher={isTeacher} />,
               webLan: <PracticeWebLan isTeacher={isTeacher} />,
-              editCourse: <EditCourse isTeacher={isTeacher} />,
+              editCourse: <EditCourse token={token} isTeacher={true} />,
             }[url]
           }
         </div>
