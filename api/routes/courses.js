@@ -130,4 +130,19 @@ router.put("/editCourse/:id", verify, upload, async (req, res) => {
   }
 });
 
+//DELETE COURSE
+router.delete("/:id", verify, async (req, res) => {
+  try {
+    await Course.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).json("Course deleted successfully :)");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

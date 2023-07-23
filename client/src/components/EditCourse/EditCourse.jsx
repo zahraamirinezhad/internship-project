@@ -63,11 +63,7 @@ const EditCourse = ({ token }) => {
             ? SelectImage
             : `http://localhost:8800/${docsRes.data.avatar}`
         );
-        setCourseImage(
-          docsRes.data.avatar === null
-            ? SelectImage
-            : `http://localhost:8800/${docsRes.data.avatar}`
-        );
+        setCourseImage(docsRes.data.avatar);
 
         dispatch(attachedFilesActions.deleteAllAttachedFiles());
         for (let i = 0; i < docsRes.data.UploadedFiles.length; i++) {
