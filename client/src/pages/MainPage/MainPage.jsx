@@ -65,7 +65,7 @@ const MainPage = ({ token, isTeacher }) => {
                       avatar={item.avatar}
                       goal={item.goal}
                       abstract={item.abstract}
-                      isTeacher={false}
+                      isTeacher={isTeacher}
                     />
                   ))
                 : courses.map(
@@ -80,7 +80,7 @@ const MainPage = ({ token, isTeacher }) => {
                           avatar={item.avatar}
                           goal={item.goal}
                           abstract={item.abstract}
-                          isTeacher={true}
+                          isTeacher={isTeacher}
                         />
                       )
                   )}

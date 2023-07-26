@@ -9,11 +9,11 @@ const Choice = ({ answer, setChoice }) => {
 
   const manageEdit = () => {
     setChoice(answer);
-    dispatch(choicesActions.deletechoice({ name: answer }));
+    dispatch(choicesActions.deleteChoice({ choice: answer }));
   };
 
   const manageDelete = () => {
-    dispatch(choicesActions.deletechoice({ name: answer }));
+    dispatch(choicesActions.deleteChoice({ choice: answer }));
   };
 
   return (

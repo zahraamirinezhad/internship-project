@@ -6,3 +6,6 @@ export { default as ProfileStructure } from "./ProfileStructure/ProfileStructure
 export { default as Practice } from "./Practice/Practice";
 export { default as Compiler } from "./Compiler/Compiler";
 export { default as PracticeWebLan } from "./PracticeWebLan/PracticeWebLan";
+export { default as EditCourse } from "./EditCourse/EditCourse";
+export { default as ShowCourse } from "./ShowCourse/ShowCourse";
+export { default as TakeCourse } from "./TakeCourse/TakeCourse";

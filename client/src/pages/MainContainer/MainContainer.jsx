@@ -1,6 +1,6 @@
 import { React } from "react";
 import classes from "./MainContainer.module.scss";
-import { EditCourse, Header } from "../../components";
+import { Header } from "../../components";
 import { useLocation } from "react-router-dom";
 import {
   MainPage,
@@ -8,13 +8,27 @@ import {
   Practice,
   Compiler,
   PracticeWebLan,
+  ShowCourse,
+  EditCourse,
+  TakeCourse,
 } from "..";
+import AuthContext from "../../authContext/AuthContext";
+import { useContext } from "react";
 
-const MainContainer = ({ token, isTeacher }) => {
+const MainContainer = () => {
   const location = useLocation();
   // console.log(location);
-  const url = location.pathname.split("/")[2];
+  const url = location.pathname.split("/")[1];
   console.log(url);
+
+  const data = useContext(AuthContext).getAccessToken();
+  console.log(data);
+  let token = null;
+  let isTeacher = null;
+  if (data) {
+    token = data.tokens;
+    isTeacher = data.isTeacher;
+  }
 
   return (
     <div className={classes.container}>
@@ -23,6 +37,7 @@ const MainContainer = ({ token, isTeacher }) => {
         <div className={classes.body}>
           {
             {
+              "": <MainPage token={token} isTeacher={isTeacher} />,
               mainPage: <MainPage token={token} isTeacher={isTeacher} />,
               profileStructure: (
                 <ProfileStructure token={token} isTeacher={isTeacher} />
@@ -31,6 +46,8 @@ const MainContainer = ({ token, isTeacher }) => {
               otherLan: <Compiler token={token} isTeacher={isTeacher} />,
               webLan: <PracticeWebLan isTeacher={isTeacher} />,
               editCourse: <EditCourse token={token} isTeacher={true} />,
+              showCourse: <ShowCourse token={token} isTeacher={isTeacher} />,
+              takeCourse: <TakeCourse token={token} isTeacher={isTeacher} />,
             }[url]
           }
         </div>

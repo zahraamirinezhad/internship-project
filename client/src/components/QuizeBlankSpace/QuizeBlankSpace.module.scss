@@ -1,0 +1,20 @@
+.container {
+  width: fit-content;
+  display: inline-block;
+  min-width: 2rem;
+  padding: 0.5rem;
+  border: 2px solid rgb(228, 118, 200);
+  border-radius: 0.5rem;
+
+  p {
+    color: black;
+    font-size: 1rem;
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

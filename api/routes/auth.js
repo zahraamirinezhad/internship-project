@@ -38,6 +38,7 @@ router.post("/register", async (req, res) => {
         res.status(500).json(err);
       });
   } else {
+    // await Student.sync({ force: true });
     await Student.create({
       username: req.body.username,
       email: req.body.email,

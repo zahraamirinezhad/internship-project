@@ -9,6 +9,7 @@ const coursesRoute = require("./routes/courses");
 const compilerRoute = require("./routes/compiler");
 const uploadedFilesRoute = require("./routes/uploadedFiles");
 const questionsRoute = require("./routes/questions");
+const scoresRoute = require("./routes/scores");
 const cors = require("cors");
 const Sequelize = require("sequelize");
 const Course = require("./models/Course");
@@ -16,6 +17,8 @@ const Teacher = require("./models/Teacher");
 const UploadedFile = require("./models/UploadedFile");
 const Question = require("./models/Question");
 const Choice = require("./models/Choice");
+const Score = require("./models/Score");
+const Student = require("./models/Student");
 
 const app = express();
 
@@ -38,6 +41,7 @@ app.use("/api/courses", coursesRoute);
 app.use("/api/compile", compilerRoute);
 app.use("/api/uploadedFiles", uploadedFilesRoute);
 app.use("/api/questions", questionsRoute);
+app.use("/api/scores", scoresRoute);
 app.use("/uploads", express.static("uploads"));
 
 // Associations
@@ -74,6 +78,21 @@ Question.hasMany(Choice, {
   },
 });
 Choice.belongsTo(Question);
+//Every student has many courses
+Course.hasMany(Score, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Score.belongsTo(Course);
+Student.hasMany(Score, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Score.belongsTo(Student);
 
 const port = process.env.PORT || 8800;
 app.listen(port, () => {

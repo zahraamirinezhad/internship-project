@@ -1,0 +1,18 @@
+.container {
+  width: fit-content;
+  padding: 0.5rem;
+  border: 2px dashed lightblue;
+  border-radius: 0.5rem;
+
+  p {
+    color: black;
+    font-size: 1rem;
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

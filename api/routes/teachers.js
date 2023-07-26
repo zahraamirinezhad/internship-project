@@ -114,21 +114,6 @@ router.get("/find", verify, async (req, res) => {
   }
 });
 
-//GET USER STATUS
-router.get("/status", verify, async (req, res) => {
-  try {
-    const user = await Teacher.findOne({
-      where: {
-        id: req.user.id,
-      },
-    });
-    const status = user.isTeacher;
-    res.status(200).json({ isTeacher: status });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 router.get("/getAllCourses", verify, async (req, res) => {
   try {
     res.status(201).json("courses");

@@ -87,47 +87,38 @@ const CreateCourse = ({ token }) => {
     }
   };
 
-  const uploadDoc = (e) => {
+  const uploadDoc = async (e) => {
+    setFilesUploading(true);
     console.log(e.target.files);
     console.log(Array.from(e.target.files || []));
     const filesList = Array.from(e.target.files || []);
 
     for (let i = 0; i < filesList.length; i++) {
       dispatch(attachedFilesActions.addAttachedFiles(filesList[i]));
+      const formData = new FormData();
+      formData.append("avatar", filesList[i]);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
+        formData,
+        {
+          headers: {
+            token: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
     }
+
+    setFilesUploading(false);
+    console.log(attachedFiles);
 
     console.log(attachedFiles);
   };
 
   const finishAddingFiles = async () => {
-    console.log(courseId);
-    for (let i = 0; i < attachedFilesNum; i++) {
-      const formData = new FormData();
-      formData.append("avatar", attachedFiles[i]);
-
-      try {
-        i === 0 && setFilesUploading(true);
-        const res = await axios.post(
-          `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
-          formData,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(res);
-
-        if (i === attachedFilesNum - 1) {
-          setFilesUploading(false);
-          setDocsAdded(true);
-          dispatch(choicesActions.deleteAllChoices());
-          dispatch(questionsActions.deleteAllQuestions());
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    setDocsAdded(true);
+    dispatch(choicesActions.deleteAllChoices());
+    dispatch(questionsActions.deleteAllQuestions());
   };
 
   const addChoice = () => {
@@ -159,7 +150,7 @@ const CreateCourse = ({ token }) => {
     }
     dispatch(choicesActions.deleteAllChoices());
     dispatch(questionsActions.deleteAllQuestions());
-    navigate("/teacher/profileStructure/myCourses");
+    navigate("/profileStructure/myCourses");
   };
 
   const addQuestion = () => {
@@ -267,6 +258,8 @@ const CreateCourse = ({ token }) => {
               {attachedFiles.map((item, index) => (
                 <UploadedFile
                   key={index}
+                  token={token}
+                  id={item.id}
                   type={item.name.split(".")[item.name.split(".").length - 1]}
                   name={item.name}
                   downloadOrDelete="delete"

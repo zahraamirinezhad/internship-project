@@ -8,66 +8,41 @@ function App() {
   const data = useContext(AuthContext).getAccessToken();
   console.log(data);
   let token = null;
-  let isTeacher = null;
   if (data) {
     token = data.tokens;
-    isTeacher = data.isTeacher;
   }
 
   return (
     <div className={classes.container}>
       <Routes>
-        <Route
-          path="/:status/mainPage"
-          element={
-            token ? (
-              <MainContainer token={token} isTeacher={isTeacher} />
-            ) : (
-              <Login />
-            )
-          }
-        />
+        <Route path="/" element={token ? <MainContainer /> : <Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createAccount" element={<CreateAccount />} />
         {token && (
           <>
+            <Route path="/mainPage" element={<MainContainer />} />
             <Route
-              path="/:status/mainPage"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
+              path="/profileStructure/profile"
+              element={<MainContainer />}
             />
             <Route
-              path="/:status/profileStructure/profile"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
+              path="/profileStructure/editProfile"
+              element={<MainContainer />}
             />
             <Route
-              path="/:status/profileStructure/editProfile"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
+              path="/profileStructure/createCourse"
+              element={<MainContainer />}
             />
             <Route
-              path="/:status/profileStructure/createCourse"
-              element={<MainContainer token={token} isTeacher={true} />}
+              path="/profileStructure/myCourses"
+              element={<MainContainer />}
             />
-            <Route
-              path="/:status/profileStructure/myCourses"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
-            />
-            <Route
-              path="/:status/practice"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
-            />
-            <Route
-              path="/:status/otherLan"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
-            />
-            <Route
-              path="/:status/webLan"
-              element={<MainContainer token={token} isTeacher={isTeacher} />}
-            />
-
-            <Route
-              path="/:status/editCourse/:courseId"
-              element={<MainContainer token={token} isTeacher={true} />}
-            />
+            <Route path="/practice" element={<MainContainer />} />
+            <Route path="/otherLan" element={<MainContainer />} />
+            <Route path="/webLan" element={<MainContainer />} />
+            <Route path="/editCourse/:courseId" element={<MainContainer />} />
+            <Route path="/showCourse/:courseId" element={<MainContainer />} />
+            <Route path="/takeCourse/:courseId" element={<MainContainer />} />
           </>
         )}
       </Routes>

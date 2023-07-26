@@ -100,11 +100,11 @@ const Header = ({ token, isTeacher }) => {
         </div>
         <div>
           {isTeacher ? (
-            <Link className={classes.btn} to="/teacher/mainPage">
+            <Link className={classes.btn} to="mainPage">
               <img src={Home} alt="home" />
             </Link>
           ) : (
-            <Link className={classes.btn} to="/student/mainPage">
+            <Link className={classes.btn} to="mainPage">
               <img src={Home} alt="home" />
             </Link>
           )}
@@ -120,35 +120,17 @@ const Header = ({ token, isTeacher }) => {
       ) : (
         <div className={classes.userInfo}>
           {isTeacher ? (
-            <Link
-              to="/teacher/profileStructure/profile"
-              className={classes.account}
-            >
+            <Link to="/profileStructure/profile" className={classes.account}>
               <h4>{userName}</h4>
             </Link>
           ) : (
-            <Link
-              to="/student/profileStructure/profile"
-              className={classes.account}
-            >
+            <Link to="/profileStructure/profile" className={classes.account}>
               <h4>{userName}</h4>
             </Link>
           )}
-          {isTeacher ? (
-            <Link
-              to="/teacher/profileStructure/profile"
-              className={classes.profile}
-            >
-              <img src={userProfile === null ? User : userProfile} alt="user" />
-            </Link>
-          ) : (
-            <Link
-              to="/student/profileStructure/profile"
-              className={classes.profile}
-            >
-              <img src={userProfile === null ? User : userProfile} alt="user" />
-            </Link>
-          )}
+          <Link to="/profileStructure/profile" className={classes.profile}>
+            <img src={userProfile === null ? User : userProfile} alt="user" />
+          </Link>
 
           {url === "profileStructure" && (
             <div className={classes.smallMenu}>

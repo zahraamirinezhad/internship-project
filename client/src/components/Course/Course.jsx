@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./Course.module.scss";
 import { Edit, Delete } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Course = ({
   type,
@@ -15,17 +14,14 @@ const Course = ({
   isTeacher,
 }) => {
   return (
-    <Link
-      className={classes.container}
-      // to={type === "MyCourses" && isTeacher && `./addQuestions/${id}`}
-    >
+    <Link className={classes.container} to={`/showCourse/${id}`}>
       <div className={classes.courseInfo}>
         <div className={classes.courseTitle}>
           <h1 className={classes.title}>{title}</h1>
           {type === "MyCourses" && isTeacher && (
             <Link
               className={`${classes.options} ${classes.editCourse}`}
-              to={`/teacher/editCourse/${id}`}
+              to={`/editCourse/${id}`}
             >
               <Edit />
               Edit
@@ -45,13 +41,11 @@ const Course = ({
           <p className={classes.courseDesc}>{abstract}</p>
         </div>
       </div>
-      <Link to={`/stepsStructure/courseShow/${id}`}>
-        <img
-          className={classes.courseImage}
-          src={`http://localhost:8800/${avatar}`}
-          alt="course_Image"
-        />
-      </Link>
+      <img
+        className={classes.courseImage}
+        src={`http://localhost:8800/${avatar}`}
+        alt="course_Image"
+      />
     </Link>
   );
 };

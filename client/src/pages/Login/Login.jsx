@@ -29,12 +29,13 @@ const Login = () => {
         }
       );
       console.log(apiResponse);
+      console.log(isTeacher);
       localStorage.setItem(
         "tokens",
         JSON.stringify(apiResponse.data.accessToken)
       );
       localStorage.setItem("isTeacher", isTeacher);
-      isTeacher ? navigate("/teacher/mainPage") : navigate("/student/mainPage");
+      navigate("/");
       // navigate("/mainPage", { state: { isTeacher } });
       // err.data === "Wrong_Password_Username" ? setError(true) : setError(false);
     } catch (err) {

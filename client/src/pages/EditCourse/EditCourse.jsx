@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { attachedFilesActions } from "../../store/attachedFiles";
 import { choicesActions } from "../../store/choices";
 import { questionsActions } from "../../store/questions";
-import UploadedFile from "../UploadedFile/UploadedFile";
+import UploadedFile from "../../components/UploadedFile/UploadedFile";
 import { useNavigate, useParams } from "react-router-dom";
-import Choice from "../Choice/Choice";
-import Question from "../Question/Question";
+import Choice from "../../components/Choice/Choice";
+import Question from "../../components/Question/Question";
 
 const EditCourse = ({ token }) => {
   const navigate = useNavigate();
@@ -228,7 +228,7 @@ const EditCourse = ({ token }) => {
     dispatch(attachedFilesActions.deleteAllAttachedFiles());
     dispatch(choicesActions.deleteAllChoices());
     dispatch(questionsActions.deleteAllQuestions());
-    navigate("/teacher/profileStructure/myCourses");
+    navigate("/profileStructure/myCourses");
   };
 
   return (

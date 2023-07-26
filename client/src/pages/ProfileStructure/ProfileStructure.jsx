@@ -26,25 +26,25 @@ const ProfileStructure = ({ token, isTeacher }) => {
         <div className={classes.sidebar}>
           <Link
             className={classes.sidebarOptions}
-            to="/teacher/profileStructure/profile"
+            to="/profileStructure/profile"
           >
             <AccountCircle /> Profile
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/teacher/profileStructure/editProfile"
+            to="/profileStructure/editProfile"
           >
             <ManageAccounts /> Edit Profile
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/teacher/profileStructure/createCourse"
+            to="/profileStructure/createCourse"
           >
             <MenuBook /> Create Course
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/teacher/profileStructure/myCourses"
+            to="/profileStructure/myCourses"
           >
             <School /> My Courses
           </Link>
@@ -53,22 +53,22 @@ const ProfileStructure = ({ token, isTeacher }) => {
         <div className={classes.sidebar}>
           <Link
             className={classes.sidebarOptions}
-            to="/student/profileStructure/profile"
+            to="/profileStructure/profile"
           >
             <AccountCircle /> Profile
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/student/profileStructure/editProfile"
+            to="/profileStructure/editProfile"
           >
             <ManageAccounts /> Edit Profile
           </Link>
-          <Link className={classes.sidebarOptions} to="/student/practice">
+          <Link className={classes.sidebarOptions} to="/practice">
             <MenuBook /> Practice
           </Link>
           <Link
             className={classes.sidebarOptions}
-            to="/student/profileStructure/myCourses"
+            to="/profileStructure/myCourses"
           >
             <School /> My Courses
           </Link>
