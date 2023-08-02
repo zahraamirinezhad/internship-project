@@ -3,6 +3,8 @@ import { attachedFilesReducer } from "./attachedFiles";
 import { coursesReducer } from "./course";
 import { choicesReducer } from "./choices";
 import { questionsReducer } from "./questions";
+import { selectedAnswersReducer } from "./selectedAnswers";
+import { usersReducer } from "./user";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
     courses: coursesReducer,
     choices: choicesReducer,
     questions: questionsReducer,
+    selectedAnswers: selectedAnswersReducer,
+    users: usersReducer,
   },
 });
 

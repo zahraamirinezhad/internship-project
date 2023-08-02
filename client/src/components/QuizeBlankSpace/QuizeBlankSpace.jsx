@@ -1,20 +1,33 @@
-import { React, useState } from "react";
+import { React } from "react";
 import classes from "./QuizeBlankSpace.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { choicesActions } from "../../store/choices";
+import { selectedAnswersActions } from "../../store/selectedAnswers";
 
-const QuizeBlankSpace = () => {
+const QuizeBlankSpace = ({ index, ans }) => {
   const dispatch = useDispatch();
-  const [answer, setAnswer] = useState("");
+
+  const selectedAnswers = useSelector(
+    (state) => state.selectedAnswers.selectedAnswers
+  );
+  const selectedAnswersNum = useSelector(
+    (state) => state.selectedAnswers.selectedAnswersNum
+  );
 
   const handleDrop = (e) => {
     e.preventDefault();
 
+    dispatch(
+      selectedAnswersActions.addSelectedAnswers({
+        index: index,
+        selectedAnswer: e.dataTransfer.getData("answer"),
+      })
+    );
+
     console.log(e);
     console.log(e.dataTransfer.getData("answer"));
-    if (answer === "") {
+    if (getAnswer(index) === "") {
       console.log(1);
-      setAnswer(e.dataTransfer.getData("answer"));
       dispatch(
         choicesActions.deleteChoice({
           choice: e.dataTransfer.getData("answer"),
@@ -22,14 +35,23 @@ const QuizeBlankSpace = () => {
       );
     } else {
       console.log(1);
-      dispatch(choicesActions.addChoice({ choice: answer }));
-      setAnswer(e.dataTransfer.getData("answer"));
+      dispatch(
+        choicesActions.addChoice({ choice: e.dataTransfer.getData("answer") })
+      );
       dispatch(
         choicesActions.deleteChoice({
           choice: e.dataTransfer.getData("answer"),
         })
       );
     }
+  };
+
+  const getAnswer = (index) => {
+    for (let i = 0; i < selectedAnswersNum; i++) {
+      if (selectedAnswers[i].index === index)
+        return selectedAnswers[i].selectedAnswer;
+    }
+    return "";
   };
 
   return (
@@ -42,7 +64,7 @@ const QuizeBlankSpace = () => {
       }}
       className={classes.container}
     >
-      <p>{answer}</p>
+      <p>{getAnswer(index)}</p>
     </div>
   );
 };

@@ -95,13 +95,21 @@ const PracticeWebLan = () => {
             mode="html"
             setVal={setHtml}
             theme={editorTheme}
+            size="small"
           />
-          <Editor value={css} mode="css" setVal={setCss} theme={editorTheme} />
+          <Editor
+            value={css}
+            mode="css"
+            setVal={setCss}
+            theme={editorTheme}
+            size="small"
+          />
           <Editor
             value={javascript}
             mode="javascript"
             setVal={setJavascript}
             theme={editorTheme}
+            size="small"
           />
         </div>
         <div className={classes.result}>

@@ -23,10 +23,10 @@ import "ace-builds/src-noconflict/mode-html";
 // import "ace-builds/src/worker-css.js";
 // import "ace-builds/src/worker-html.js";
 
-const Editor = ({ value, mode, setVal, theme }) => {
+const Editor = ({ value, mode, setVal, theme, size }) => {
   return (
     <AceEditor
-      className={classes.editor}
+      className={`${classes.editor} ${size === "small" && classes.small}`}
       placeholder={mode}
       value={value}
       mode={mode}

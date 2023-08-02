@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { coursesActions } from "../../store/course";
 import Skeleton from "../Skeleton/Skeleton";
 
-const MyCourses = ({ token }) => {
+const MyCourses = ({ token, isTeacher }) => {
   const dispatch = useDispatch();
   const userCourses = useSelector((state) => state.courses.courses);
   const userCoursesNum = useSelector((state) => state.courses.coursesNum);
@@ -16,17 +16,31 @@ const MyCourses = ({ token }) => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getMyCourses`,
-          {
-            headers: {
-              token: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(res.data);
-        dispatch(coursesActions.setData(res.data));
-        setIsLoading(false);
+        if (isTeacher) {
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}teachers/getMyCourses`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log(res.data);
+          dispatch(coursesActions.setData(res.data));
+          setIsLoading(false);
+        } else {
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_ADDRESS}students/getTakenCourses`,
+            {
+              headers: {
+                token: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log(res.data);
+          dispatch(coursesActions.setData(res.data));
+          setIsLoading(false);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -36,6 +50,7 @@ const MyCourses = ({ token }) => {
 
   return (
     <div className={classes.container}>
+      <h2>My Courses</h2>
       <div className={classes.courses}>
         {isLoading ? (
           <Skeleton type="Course" />
@@ -43,14 +58,13 @@ const MyCourses = ({ token }) => {
           userCourses.map((item, index) => (
             <Course
               key={index}
-              type="MyCourses"
               id={item.id}
               token={token}
               title={item.title}
               avatar={item.avatar}
               goal={item.goal}
               abstract={item.abstract}
-              isTeacher={true}
+              isTeacher={isTeacher}
             />
           ))
         )}

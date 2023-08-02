@@ -9,3 +9,4 @@ export { default as PracticeWebLan } from "./PracticeWebLan/PracticeWebLan";
 export { default as EditCourse } from "./EditCourse/EditCourse";
 export { default as ShowCourse } from "./ShowCourse/ShowCourse";
 export { default as TakeCourse } from "./TakeCourse/TakeCourse";
+export { default as CourseDataShow } from "./CourseDataShow/CourseDataShow";

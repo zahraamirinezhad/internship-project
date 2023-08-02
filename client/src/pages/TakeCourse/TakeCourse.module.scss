@@ -5,8 +5,109 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: white;
-  gap: 2rem;
-  margin: 2rem auto;
+  justify-content: start;
+  background-color: #f2f5f7;
+  gap: 7rem;
+  padding: 2rem;
+
+  .courseStatus {
+    width: 80%;
+  }
+
+  .courseQuestion {
+    width: 100%;
+    margin: 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .questionBox {
+      border: 1px dashed grey;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      width: 40rem;
+      height: 20rem;
+
+      .question {
+        background-color: #f2f5f7;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+
+      .choices {
+        width: 100%;
+        max-height: 10rem;
+        overflow: hidden;
+        overflow-y: scroll;
+        padding: 1rem;
+        border: 1px solid grey;
+        border-radius: 0.5rem;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 0.5rem;
+        background-color: #ffffff;
+
+        @media (max-width: 767.98px) {
+          grid-template-columns: auto;
+        }
+
+        /* width */
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: #bdbdbd;
+          border-radius: 0.5rem;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: #838383;
+        }
+      }
+    }
+  }
+
+  .options {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+
+    button {
+      width: 10rem;
+      border: none;
+      border: 1px solid #0000e6;
+      outline: none;
+      padding: 0.5rem 1rem;
+      color: #0000e6;
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.4s ease-in-out;
+      margin: 1rem 0;
+
+      &:hover {
+        background-color: #0000e6;
+        color: white;
+      }
+    }
+  }
 }

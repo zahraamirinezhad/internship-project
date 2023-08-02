@@ -6,14 +6,12 @@ const coursesSlice = createSlice({
   reducers: {
     addcourse(state, action) {
       const newItem = action.payload;
-      const existingItem = state.courses.find(
-        (item) => item.uuid === newItem.uuid
-      );
+      const existingItem = state.courses.find((item) => item.id === newItem.id);
 
       if (!existingItem) {
         state.coursesNum++;
         state.courses.push({
-          id: newItem._id,
+          id: newItem.id,
           title: newItem.title,
           avatar: newItem.avatar,
           goal: newItem.goal,
@@ -26,17 +24,13 @@ const coursesSlice = createSlice({
       state.courses = action.payload;
       state.coursesNum = action.payload.length;
     },
-    deletecourse(state, action) {
+    deleteCourse(state, action) {
       const newItem = action.payload;
-      const existingItem = state.courses.find(
-        (item) => item.uuid === newItem.uuid
-      );
+      const existingItem = state.courses.find((item) => item.id === newItem.id);
 
       if (existingItem) {
         state.coursesNum--;
-        state.courses = state.courses.filter(
-          (task) => task.uuid !== newItem.uuid
-        );
+        state.courses = state.courses.filter((task) => task.id !== newItem.id);
       }
     },
     deleteAllcourses(state, action) {

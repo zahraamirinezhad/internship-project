@@ -58,6 +58,7 @@
         text-decoration: none;
         transition: all 0.3s ease-out;
         cursor: pointer;
+        font-family: var(--satisfy);
 
         &:hover {
           transform: translate(0, -5px);
@@ -107,28 +108,8 @@
 
     &.title {
       color: white;
-      font-family: Pacifico-Regular, sans-serif;
+      font-family: var(--pacificoRegular);
       font-weight: bold;
     }
   }
-}
-
-@font-face {
-  font-family: ChelaOne-Regular;
-  src: url("../../fonts/ChelaOne-Regular.ttf");
-}
-
-@font-face {
-  font-family: DancingScript-VariableFont_wght;
-  src: url("../../fonts/DancingScript-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: Pacifico-Regular;
-  src: url("../../fonts/Pacifico-Regular.ttf");
-}
-
-@font-face {
-  font-family: Satisfy-Regular;
-  src: url("../../fonts/Satisfy-Regular.ttf");
 }

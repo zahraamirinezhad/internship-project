@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const Student = require("../models/Student");
+const Score = require("../models/Score");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
+const Course = require("../models/Course");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -123,6 +125,32 @@ router.get("/status", verify, async (req, res) => {
     });
     const status = user.isTeacher;
     res.status(200).json({ isTeacher: status });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getTakenCourses", verify, async (req, res) => {
+  try {
+    const scores = await Student.findOne({
+      where: {
+        id: req.user.id,
+      },
+      include: Score,
+    });
+
+    const courses = [];
+    for (let i = 0; i < scores.Scores.length; i++) {
+      const course = await Score.findOne({
+        where: {
+          id: scores.Scores[i].id,
+        },
+        include: Course,
+      });
+      courses.push(course.Course);
+    }
+
+    res.status(200).json(courses);
   } catch (err) {
     res.status(500).json(err);
   }

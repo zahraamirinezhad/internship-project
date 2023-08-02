@@ -11,6 +11,7 @@ import {
   ShowCourse,
   EditCourse,
   TakeCourse,
+  CourseDataShow,
 } from "..";
 import AuthContext from "../../authContext/AuthContext";
 import { useContext } from "react";
@@ -48,6 +49,7 @@ const MainContainer = () => {
               editCourse: <EditCourse token={token} isTeacher={true} />,
               showCourse: <ShowCourse token={token} isTeacher={isTeacher} />,
               takeCourse: <TakeCourse token={token} isTeacher={isTeacher} />,
+              courseDataShow: <CourseDataShow token={token} isTeacher={true} />,
             }[url]
           }
         </div>

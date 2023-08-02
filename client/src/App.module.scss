@@ -1,5 +1,123 @@
+:root {
+  --poppins: Poppins, sans-serif;
+  --pacificoRegular: Pacifico-Regular, sans-serif;
+  --satisfy: Satisfy, sans-serif;
+  --carterOne: CarterOne, sans-serif;
+  --concertOne: ConcertOne, sans-serif;
+  --kaushanScript: KaushanScript, sans-serif;
+  --roboto: Roboto, sans-serif;
+  --lobster: Lobster, sans-serif;
+  --lumanosimo: Lumanosimo, sans-serif;
+  --lugrasimo: Lugrasimo, sans-serif;
+  --dancingScript: DancingScript, sans-serif;
+  --caveat: Caveat, sans-serif;
+  --indieFlower: IndieFlower, sans-serif;
+
+  --light-light: #c5e0f8;
+  --light: #8d8e8f;
+  --dark: #585a5c;
+  --bg: white;
+  --shadow: #c5e0f8;
+  --border: #c5e0f8;
+  --logo: blue;
+  --title: #8d8e8f;
+  --text: black;
+  --icon: black;
+  --counter-bg: red;
+  --counter-text: white;
+  --item-bg: white;
+  --light-dark: #8d8e8f;
+  --dark-light: #585a5c;
+  --page-title: black;
+}
+
+[data-theme="dark"] {
+  --light-light: #d3fff7;
+  --light: #4dffc3;
+  --dark: #36b29c;
+  --bg: #0a0909;
+  --dark-dark: #01362c;
+  --shadow: #01362c;
+  --border: #4dffc3;
+  --logo: #4dffc3;
+  --title: #36b29c;
+  --text: #4dffc3;
+  --icon: #4dffc3;
+  --counter-bg: #36b29c;
+  --counter-text: #01362c;
+  --item-bg: black;
+  --light-dark: #36b29c;
+  --dark-light: #4dffc3;
+  --page-title: #36b29c;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("./fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: Pacifico-Regular;
+  src: url("./fonts/Pacifico-Regular.ttf");
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("./fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: Lumanosimo;
+  src: url("./fonts/Lumanosimo-Regular.ttf");
+}
+
+@font-face {
+  font-family: Lugrasimo;
+  src: url("./fonts/Lugrasimo-Regular.ttf");
+}
+
+@font-face {
+  font-family: DancingScript;
+  src: url("./fonts/DancingScript-Regular.ttf");
+}
+
+@font-face {
+  font-family: Lobster;
+  src: url("./fonts/Lobster-Regular.ttf");
+}
+
+@font-face {
+  font-family: Caveat;
+  src: url("./fonts/Caveat-Regular.ttf");
+}
+
+@font-face {
+  font-family: IndieFlower;
+  src: url("./fonts/IndieFlower-Regular.ttf");
+}
+
+@font-face {
+  font-family: Satisfy;
+  src: url("./fonts/Satisfy-Regular.ttf");
+}
+
+@font-face {
+  font-family: CarterOne;
+  src: url("./fonts/CarterOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: ConcertOne;
+  src: url("./fonts/ConcertOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: KaushanScript;
+  src: url("./fonts/KaushanScript-Regular.ttf");
 }

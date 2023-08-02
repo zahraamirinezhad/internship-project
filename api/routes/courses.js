@@ -3,9 +3,11 @@ const Question = require("../models/Question");
 const UploadedFile = require("../models/UploadedFile");
 const Course = require("../models/Course");
 const Choice = require("../models/Choice");
+const Score = require("../models/Score");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
+const Student = require("../models/Student");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,19 +47,6 @@ router.post("/create", verify, upload, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const courses = await Course.findAll();
-    res.status(200).json(courses);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/getMyCourses", verify, async (req, res) => {
-  try {
-    const courses = await Course.findAll({
-      where: {
-        TeacherId: req.user.id,
-      },
-    });
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json(err);
@@ -140,6 +129,32 @@ router.delete("/:id", verify, async (req, res) => {
     });
 
     res.status(200).json("Course deleted successfully :)");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getStudents/:courseId", verify, async (req, res) => {
+  try {
+    const scores = await Course.findOne({
+      where: {
+        id: req.params.courseId,
+      },
+      include: Score,
+    });
+
+    const students = [];
+    for (let i = 0; i < scores.Scores.length; i++) {
+      const student = await Score.findOne({
+        where: {
+          id: scores.Scores[i].id,
+        },
+        include: Student,
+      });
+      students.push(student.Student);
+    }
+
+    res.status(200).json(students);
   } catch (err) {
     res.status(500).json(err);
   }

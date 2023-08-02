@@ -99,15 +99,9 @@ const Header = ({ token, isTeacher }) => {
           </Link>
         </div>
         <div>
-          {isTeacher ? (
-            <Link className={classes.btn} to="mainPage">
-              <img src={Home} alt="home" />
-            </Link>
-          ) : (
-            <Link className={classes.btn} to="mainPage">
-              <img src={Home} alt="home" />
-            </Link>
-          )}
+          <Link className={classes.btn} to="/mainPage">
+            <img src={Home} alt="home" />
+          </Link>
         </div>
       </div>
 
@@ -119,15 +113,9 @@ const Header = ({ token, isTeacher }) => {
         <Skeleton type="Toolbar" />
       ) : (
         <div className={classes.userInfo}>
-          {isTeacher ? (
-            <Link to="/profileStructure/profile" className={classes.account}>
-              <h4>{userName}</h4>
-            </Link>
-          ) : (
-            <Link to="/profileStructure/profile" className={classes.account}>
-              <h4>{userName}</h4>
-            </Link>
-          )}
+          <Link to="/profileStructure/profile" className={classes.account}>
+            <h4>{userName}</h4>
+          </Link>
           <Link to="/profileStructure/profile" className={classes.profile}>
             <img src={userProfile === null ? User : userProfile} alt="user" />
           </Link>

@@ -25,52 +25,87 @@ const ProfileStructure = ({ token, isTeacher }) => {
       {isTeacher ? (
         <div className={classes.sidebar}>
           <Link
+            style={{ "--clr": "#ca004e" }}
             className={classes.sidebarOptions}
             to="/profileStructure/profile"
           >
-            <AccountCircle /> Profile
+            <span>
+              <AccountCircle /> Profile
+            </span>
+            <i></i>
           </Link>
           <Link
+            style={{ "--clr": "#0000b3" }}
             className={classes.sidebarOptions}
             to="/profileStructure/editProfile"
           >
-            <ManageAccounts /> Edit Profile
+            <span>
+              <ManageAccounts /> Edit Profile
+            </span>
+            <i></i>
           </Link>
           <Link
+            style={{ "--clr": "#e60000" }}
             className={classes.sidebarOptions}
             to="/profileStructure/createCourse"
           >
-            <MenuBook /> Create Course
+            <span>
+              <MenuBook /> Create Course
+            </span>
+            <i></i>
           </Link>
           <Link
+            style={{ "--clr": "#009900" }}
             className={classes.sidebarOptions}
             to="/profileStructure/myCourses"
           >
-            <School /> My Courses
+            <span>
+              <School /> My Courses
+            </span>
+            <i></i>
           </Link>
         </div>
       ) : (
         <div className={classes.sidebar}>
           <Link
+            style={{ "--clr": "#ca004e" }}
             className={classes.sidebarOptions}
             to="/profileStructure/profile"
           >
-            <AccountCircle /> Profile
+            <span>
+              <AccountCircle /> Profile
+            </span>
+            <i></i>
           </Link>
           <Link
+            style={{ "--clr": "#0000b3" }}
             className={classes.sidebarOptions}
             to="/profileStructure/editProfile"
           >
-            <ManageAccounts /> Edit Profile
-          </Link>
-          <Link className={classes.sidebarOptions} to="/practice">
-            <MenuBook /> Practice
+            <span>
+              <ManageAccounts /> Edit Profile
+            </span>
+            <i></i>
           </Link>
           <Link
+            style={{ "--clr": "#e60000" }}
+            className={classes.sidebarOptions}
+            to="/practice"
+          >
+            <span>
+              <MenuBook /> Practice
+            </span>
+            <i></i>
+          </Link>
+          <Link
+            style={{ "--clr": "#009900" }}
             className={classes.sidebarOptions}
             to="/profileStructure/myCourses"
           >
-            <School /> My Courses
+            <span>
+              <School /> My Courses
+            </span>
+            <i></i>
           </Link>
         </div>
       )}

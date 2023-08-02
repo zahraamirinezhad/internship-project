@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Teacher = require("../models/Teacher");
+const Course = require("../models/Course");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
@@ -117,6 +118,19 @@ router.get("/find", verify, async (req, res) => {
 router.get("/getAllCourses", verify, async (req, res) => {
   try {
     res.status(201).json("courses");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getMyCourses", verify, async (req, res) => {
+  try {
+    const courses = await Course.findAll({
+      where: {
+        TeacherId: req.user.id,
+      },
+    });
+    res.status(200).json(courses);
   } catch (err) {
     res.status(500).json(err);
   }

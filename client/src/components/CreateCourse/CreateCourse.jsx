@@ -171,6 +171,7 @@ const CreateCourse = ({ token }) => {
 
   return (
     <div className={classes.container}>
+      <h2>Create New Course</h2>
       <div
         className={`${classes.courseDetails} ${
           courseCreated && classes.courseCreated
@@ -189,33 +190,36 @@ const CreateCourse = ({ token }) => {
         </div>
         <div className={classes.enterCourseDetails}>
           <div className={classes.enterData}>
-            <label>Title</label>
             <input
               type="text"
               onChange={(e) => {
                 setCourseName(e.target.value);
               }}
+              required
               readOnly={courseCreated}
             />
+            <span>Title</span>
           </div>
           <div className={classes.enterData}>
-            <label>Goals</label>
             <input
               type="text"
               onChange={(e) => {
                 setCourseGoal(e.target.value);
               }}
+              required
               readOnly={courseCreated}
             />
+            <span>Goals</span>
           </div>
           <div className={classes.enterData}>
-            <label>Abstract</label>
             <textarea
               onChange={(e) => {
                 setCourseBio(e.target.value);
               }}
+              required
               readOnly={courseCreated}
             />
+            <span>Abstract</span>
           </div>
         </div>
         {isCreating ? (
@@ -284,18 +288,24 @@ const CreateCourse = ({ token }) => {
       >
         <div className={classes.questionForm}>
           <div className={classes.questionData}>
-            <label>Question</label>
-            <textarea
+            <input
+              type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
+              required
+              readOnly={courseCreated}
             />
+            <span>Question</span>
           </div>
           <div className={classes.questionData}>
-            <label>Ful Answer</label>
-            <textarea
+            <input
+              type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
+              required
+              readOnly={courseCreated}
             />
+            <span>Ful Answer</span>
           </div>
           <div className={classes.choiceData}>
             <textarea
@@ -305,11 +315,13 @@ const CreateCourse = ({ token }) => {
             <button className={classes.addChoice} onClick={addChoice}>
               Add Choice
             </button>
-            <div className={classes.choices}>
-              {choices.map((item, index) => (
-                <Choice answer={item.choice} setChoice={setChoice} />
-              ))}
-            </div>
+            {choicesNum !== 0 && (
+              <div className={classes.choices}>
+                {choices.map((item, index) => (
+                  <Choice answer={item.choice} setChoice={setChoice} />
+                ))}
+              </div>
+            )}
           </div>
           <button className={classes.addQues} onClick={addQuestion}>
             Creating Question Finished :)

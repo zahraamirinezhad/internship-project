@@ -5,3 +5,4 @@ export { default as Editor } from "./Editor/Editor";
 export { default as CreateCourse } from "./CreateCourse/CreateCourse";
 export { default as MyCourses } from "./MyCourses/MyCourses";
 export { default as Skeleton } from "./Skeleton/Skeleton";
+export { default as Cofee } from "./Cofee/Cofee";

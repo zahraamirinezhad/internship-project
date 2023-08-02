@@ -4,14 +4,18 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #f2f5f7;
 
   @media (max-width: 1199.98px) {
     flex-direction: column;
   }
 
   h2 {
+    font-family: var(--concertOne);
     margin: 1rem 1.5rem;
+    font-size: 2.5rem;
+    text-shadow: 5px 3px 5px #443dc1;
+    letter-spacing: 0.3rem;
   }
 
   .profileInfo {
@@ -90,6 +94,7 @@
             label {
               width: 8rem;
               font-weight: bold;
+              font-family: var(--lobster);
             }
 
             input,
@@ -102,6 +107,7 @@
               outline: none;
               padding: 0.2rem 0.5rem;
               overflow: hidden;
+              font-family: var(--roboto);
 
               &::-webkit-scrollbar {
                 display: none;
@@ -167,6 +173,7 @@
               label {
                 width: 6.5rem;
                 font-weight: bold;
+                font-family: var(--lobster);
 
                 @media (max-width: 991.98px) {
                   width: 8rem;
@@ -186,6 +193,7 @@
                 overflow: hidden;
                 overflow-x: scroll;
                 white-space: nowrap;
+                font-family: var(--roboto);
 
                 @media (max-width: 991.98px) {
                   width: 80%;

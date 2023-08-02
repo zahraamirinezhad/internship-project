@@ -2,7 +2,7 @@
   width: 100%;
   // height: 100%;
   min-height: 100vh;
-  background-color: white;
+  background-color: #f2f5f7;
 
   .sidebar {
     width: 100%;
@@ -11,50 +11,106 @@
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
+    background-color: #f2f5f7;
 
     @media (max-width: 991.98px) {
       display: none;
     }
 
     .sidebarOptions {
-      flex: 1;
-      width: 100%;
-      color: #ca004e;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      cursor: pointer;
-      border: 1px solid #ca004e;
-      transition: all 0.3s ease-in-out;
       text-decoration: none;
-      border-radius: 2rem;
-      box-shadow: 0px 6px 10px 1px rgba(202, 0, 78, 1);
+      position: relative;
+      transition: 0.5s;
 
       &:hover {
-        background-color: #ca004e;
-        box-shadow: none;
-        color: white;
+        letter-spacing: 0.1rem;
+        box-shadow: 0 0 30px var(--clr);
+
+        span {
+          border: 2px solid var(--clr);
+          color: var(--clr);
+          font-weight: bold;
+        }
+
+        i::before {
+          width: 20px;
+          left: 80%;
+          border-color: var(--clr);
+        }
+
+        i::after {
+          width: 20px;
+          left: 20%;
+          border-color: var(--clr);
+        }
       }
 
-      &:focus {
-        background-color: #db1e66;
-        box-shadow: none;
-        color: white;
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        background-color: transparent;
       }
 
-      img {
-        width: 2rem;
-        height: 2rem;
+      span {
+        position: relative;
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        cursor: pointer;
+        font-family: var(--carterOne);
+        z-index: 1;
+        border: 2px solid #828487;
+        color: #27282c;
+
+        img {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+
+      i {
+        position: absolute;
+        inset: 0;
+        display: block;
+
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: -3.5px;
+          left: 20%;
+          width: 10px;
+          height: 5px;
+          border: 2px solid #27282c;
+          background-color: #f2f5f7;
+          transition: 0.5s;
+          z-index: 10;
+          transform: translateX(-50%);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: -3.5px;
+          left: 80%;
+          width: 10px;
+          height: 5px;
+          border: 2px solid #27282c;
+          background-color: #f2f5f7;
+          transition: 0.5s;
+          z-index: 10;
+          transform: translateX(-50%);
+        }
       }
     }
   }
 
   .main {
-    flex: 6;
-    background-color: white;
+    background-color: #f2f5f7;
   }
 }

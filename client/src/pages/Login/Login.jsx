@@ -1,9 +1,11 @@
-import { React, useState, useContext } from "react";
+import { React, useState } from "react";
 import classes from "./Login.module.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Snackbar, Alert } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,31 +17,37 @@ const Login = () => {
   const [isTeacher, setIsTeacher] = useState(false);
 
   const [error, setError] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [dataComplete, setDataComplete] = useState(false);
 
   const manageLogin = async (e) => {
     e.preventDefault();
-    try {
-      const apiResponse = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}auth/login/`,
-        {
-          email: emailData,
-          password: passwordData,
-          isTeacher: isTeacher,
-          userStudentNumber: userStudentNumber,
-        }
-      );
-      console.log(apiResponse);
-      console.log(isTeacher);
-      localStorage.setItem(
-        "tokens",
-        JSON.stringify(apiResponse.data.accessToken)
-      );
-      localStorage.setItem("isTeacher", isTeacher);
-      navigate("/");
-      // navigate("/mainPage", { state: { isTeacher } });
-      // err.data === "Wrong_Password_Username" ? setError(true) : setError(false);
-    } catch (err) {
-      console.log(err);
+    if (passwordData !== "" && validateEmail(emailData)) {
+      try {
+        const apiResponse = await axios.post(
+          `${process.env.REACT_APP_API_ADDRESS}auth/login/`,
+          {
+            email: emailData,
+            password: passwordData,
+            isTeacher: isTeacher,
+            userStudentNumber: userStudentNumber,
+          }
+        );
+        console.log(apiResponse);
+        console.log(isTeacher);
+        localStorage.setItem(
+          "tokens",
+          JSON.stringify(apiResponse.data.accessToken)
+        );
+        localStorage.setItem("isTeacher", isTeacher);
+        navigate("/");
+        // navigate("/mainPage", { state: { isTeacher } });
+        // err.data === "Wrong_Password_Username" ? setError(true) : setError(false);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setDataComplete(true);
     }
   };
 
@@ -59,30 +67,38 @@ const Login = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.dark_cover}></div>
-      <div className={classes.titleContainer}>
-        <h1 className={classes.title}>Login</h1>
-      </div>
       <div className={classes.login}>
-        <div className={classes.steps}>
+        <div className={classes.borderLine}></div>
+        <dic className={classes.form}>
           <div className={classes.enterData}>
-            <label>Email</label>
             <input
               type="text"
               className={`${!emailValid && classes.invalidEmail}`}
               onChange={(value) => {
                 manageEmailValidation(value.target.value);
               }}
+              required
             />
+            <span>Email</span>
+            <i></i>
           </div>
           <div className={classes.enterData}>
-            <label>Password</label>
             <input
-              type="password"
+              type={passwordVisible ? "text" : "password"}
               onChange={(value) => {
                 setPasswordData(value.target.value);
               }}
+              required
             />
+            <span>Password</span>
+            <i></i>
+            <button
+              onClick={() => {
+                setPasswordVisible(!passwordVisible);
+              }}
+            >
+              {passwordVisible ? <Visibility /> : <VisibilityOff />}
+            </button>
           </div>
           <div className={classes.setUserStatus}>
             <div className={classes.userStatus}>
@@ -99,7 +115,9 @@ const Login = () => {
               </div>
             </div>
             <div
-              className={`${classes.enterData} ${isTeacher && classes.teacher}`}
+              className={`${classes.enterStudentNumber} ${
+                isTeacher && classes.teacher
+              }`}
             >
               <label>Student Number</label>
               <input
@@ -128,8 +146,26 @@ const Login = () => {
               Create Account
             </Link>
           </div>
-        </div>
+        </dic>
       </div>
+      <Snackbar
+        open={dataComplete}
+        autoHideDuration={2000}
+        onClose={() => {
+          setDataComplete(false);
+        }}
+      >
+        <Alert
+          variant="filled"
+          severity="error"
+          onClose={() => {
+            setDataComplete(false);
+          }}
+          sx={{ width: "100%" }}
+        >
+          Please Fill the Form Completely
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
