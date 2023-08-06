@@ -120,26 +120,34 @@ const ShowCourse = ({ token }) => {
   return (
     <div className={classes.container}>
       <div className={classes.courseDetails}>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
         <div className={classes.courseImage}>
           <img src={courseImage} alt="Select_Image" />
         </div>
         <div className={classes.enterCourseDetails}>
           <div className={classes.enterData}>
-            <label>Title</label>
             <input value={courseName} type="text" readOnly />
+            <span>Title</span>
           </div>
           <div className={classes.enterData}>
-            <label>Goals</label>
             <input value={courseGoal} type="text" readOnly />
+            <span>Goals</span>
           </div>
           <div className={classes.enterData}>
-            <label>Abstract</label>
             <textarea value={courseBio} readOnly />
+            <span>Abstract</span>
           </div>
         </div>
       </div>
 
       <div className={classes.courseDocs}>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
         <div className={classes.addedDocs}>
           {attachedFilesNum !== 0 && (
             <div className={classes.uploadedFilesList}>
@@ -158,6 +166,7 @@ const ShowCourse = ({ token }) => {
           )}
         </div>
       </div>
+
       <div className={classes.courseOptions}>
         {courseTaken ? (
           <button className={classes.logOut} onClick={logOut}>

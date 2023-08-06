@@ -1,8 +1,9 @@
 .container {
   width: 20rem;
   height: 8rem;
-  background-color: #fee7e8;
-  border: 1px solid #303030;
+  border: 1px solid #cc0052;
+  background-color: #f5ebee;
+  box-shadow: inset -5px -5px 15px #ff6699;
   border-radius: 0.3rem;
   padding: 0.3rem 0.3rem 0.5rem 1rem;
   text-decoration: none;
@@ -33,6 +34,7 @@
       color: white;
       font-size: 0.7rem;
       transition: all 0.3s ease-in-out;
+      font-family: var(--roboto);
 
       &.delete {
         background-color: #cd0404;
@@ -64,6 +66,7 @@
       white-space: nowrap;
       overflow: hidden;
       overflow-x: scroll;
+      font-family: var(--poppins);
 
       &::-webkit-scrollbar {
         display: none;

@@ -10,7 +10,7 @@
   color: #0f0f0a;
   box-shadow: 10px 10px 10px 1px rgba(6, 71, 162, 1);
   transition: all 0.3s ease-out;
-  background-color: #f2f5f7;
+  background-color: var(--light-bg);
 
   &:hover {
     transform: translate(0, -10px);

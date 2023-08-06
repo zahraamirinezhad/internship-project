@@ -8,40 +8,83 @@ import {
   School,
 } from "@mui/icons-material";
 
-const UserSmallMenu = ({ showMenuHandler, isShowMenu }) => {
+const UserSmallMenu = ({ showMenuHandler, isShowMenu, isTeacher }) => {
   return (
-    <ul
-      className={`${classes.container} ${
-        isShowMenu ? classes.visible : classes.invisible
-      }`}
-    >
-      <li onClick={showMenuHandler}>
-        <Link className={classes.sidebarOptions} to="/profileStructure/profile">
-          <AccountCircle /> Profile
-        </Link>
-      </li>
-      <li onClick={showMenuHandler}>
-        <Link
-          className={classes.sidebarOptions}
-          to="/profileStructure/editProfile"
+    <>
+      {isTeacher ? (
+        <ul
+          className={`${classes.container} ${
+            isShowMenu ? classes.visible : classes.invisible
+          }`}
         >
-          <ManageAccounts /> Edit Profile
-        </Link>
-      </li>
-      <li onClick={showMenuHandler}>
-        <Link className={classes.sidebarOptions} to="/practice">
-          <MenuBook /> Practice
-        </Link>
-      </li>
-      <li onClick={showMenuHandler}>
-        <Link
-          className={classes.sidebarOptions}
-          to="/profileStructure/myCourses"
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/profile"
+            >
+              <AccountCircle /> Profile
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/editProfile"
+            >
+              <ManageAccounts /> Edit Profile
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link className={classes.sidebarOptions} to="/createCourse">
+              <MenuBook /> Create Course
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/myCourses"
+            >
+              <School /> My Courses
+            </Link>
+          </li>
+        </ul>
+      ) : (
+        <ul
+          className={`${classes.container} ${
+            isShowMenu ? classes.visible : classes.invisible
+          }`}
         >
-          <School /> My Courses
-        </Link>
-      </li>
-    </ul>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/profile"
+            >
+              <AccountCircle /> Profile
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/editProfile"
+            >
+              <ManageAccounts /> Edit Profile
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link className={classes.sidebarOptions} to="/practice">
+              <MenuBook /> Practice
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/myCourses"
+            >
+              <School /> My Courses
+            </Link>
+          </li>
+        </ul>
+      )}
+    </>
   );
 };
 

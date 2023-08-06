@@ -21,7 +21,7 @@ const Header = ({ token, isTeacher }) => {
 
   const location = useLocation();
   // console.log(location);
-  const url = location.pathname.split("/")[2];
+  const url = location.pathname.split("/")[1];
 
   const [userProfile, setUserProfile] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -130,6 +130,7 @@ const Header = ({ token, isTeacher }) => {
                 <UserSmallMenu
                   showMenuHandler={showMenuHandler}
                   isShowMenu={isShowMenu}
+                  isTeacher={isTeacher}
                 />
               )}
             </div>
