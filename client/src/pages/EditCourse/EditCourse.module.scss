@@ -109,112 +109,150 @@
     }
   }
 
-  .courseDoc {
+  .addLevel {
+    // display: none;
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
     width: 30rem;
-    padding: 0.5rem 1rem;
+    padding: 2rem 1rem;
     border: 2px dashed #ca004e;
     border-radius: 1rem;
 
-    &.finishAddingFiles {
-      opacity: 0.5;
-      pointer-events: none;
+    &.nowAddLevel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
     }
 
-    .addDoc {
-      position: relative;
-      background-color: white;
-      border: none;
-      color: #8a0035;
-      padding: 0.5rem 1rem;
-      text-align: center;
-      transition: all 0.5s ease-in-out;
-      cursor: pointer;
-      border-radius: 0.2rem;
+    .levelDetails {
       display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
       align-items: center;
-      gap: 1rem;
-      border: 1px dashed #ca004e;
-      font-size: 1rem;
-      font-weight: bold;
+      justify-content: center;
+      width: 100%;
 
-      &.filesUploading {
-        opacity: 0.5;
+      h3 {
+        font-family: var(--concertOne);
+        padding: 0.5rem;
+        box-shadow: 0px 10px 10px -2px #d7d9db;
+        text-align: center;
       }
 
-      input {
-        cursor: pointer;
-        display: none;
-      }
+      .enterData {
+        position: relative;
+        width: 100%;
 
-      &:hover {
-        background-color: #ca004e;
-        color: white;
+        input,
+        textarea {
+          outline: none;
+          border: none;
+          width: 100%;
+          padding: 0.5rem 1rem;
+          border-radius: 0.2rem;
+          background-color: var(--light-bg);
+          font-size: 1rem;
+          border: 1px solid #838383;
+          font-family: var(--poppins);
+          color: #222222;
 
-        &::after {
-          color: white;
-          border: 1px dashed white;
+          &:focus,
+          &:valid {
+            outline: none;
+            border: 2px solid #303030;
+          }
+
+          &:focus ~ span,
+          &:valid ~ span {
+            color: #303030;
+            border-left: 2px solid #303030;
+            border-right: 2px solid #303030;
+            transform: translateX(10px) translateY(-1rem);
+            background-color: var(--light-bg);
+            font-size: 0.65rem;
+          }
+        }
+
+        textarea {
+          height: 5rem;
+          overflow: hidden;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+
+        span {
+          position: absolute;
+          left: 0.2rem;
+          top: 0.1rem;
+          color: #838383;
+          pointer-events: none;
+          transition: 0.5s;
+          font-size: 1rem;
+          padding: 0.3rem;
+          font-family: var(--poppins);
         }
       }
 
-      &::after {
-        content: "+";
-        border-radius: 50%;
-        border: 1px dashed #ca004e;
-        width: 2rem;
-        height: 2rem;
-        display: block;
+      .addDoc {
+        position: relative;
+        background-color: white;
+        border: none;
+        color: #8a0035;
+        padding: 0.5rem 1rem;
+        text-align: center;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+        border-radius: 0.2rem;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 1rem;
+        border: 1px dashed #ca004e;
         font-size: 1rem;
         font-weight: bold;
+        font-family: var(--poppins);
+
+        &.filesUploading {
+          opacity: 0.5;
+        }
+
+        input {
+          cursor: pointer;
+          display: none;
+        }
+
+        &:hover {
+          background-color: #ca004e;
+          color: white;
+
+          &::after {
+            color: white;
+            border: 1px dashed white;
+          }
+        }
+
+        &::after {
+          content: "+";
+          border-radius: 50%;
+          border: 1px dashed #ca004e;
+          width: 2rem;
+          height: 2rem;
+          display: block;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1rem;
+          font-weight: bold;
+        }
       }
     }
-
-    .addedDocs {
-      max-height: 20rem;
-      overflow: hidden;
-      overflow-y: scroll;
-      padding: 0.5rem;
-
-      &.filesUploading {
-        opacity: 0.5;
-      }
-
-      /* width */
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-
-      /* Track */
-      &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-
-      /* Handle */
-      &::-webkit-scrollbar-thumb {
-        background: #bdbdbd;
-        border-radius: 0.5rem;
-      }
-
-      /* Handle on hover */
-      &::-webkit-scrollbar-thumb:hover {
-        background: #838383;
-      }
-    }
-  }
-
-  .addQuestion {
-    display: block;
-    width: 30rem;
-    padding: 0.5rem 1rem;
-    border: 2px dashed #ca004e;
-    border-radius: 1rem;
 
     .questionForm {
       display: flex;
@@ -222,7 +260,14 @@
       gap: 1.5rem;
       align-items: center;
       justify-content: center;
-      margin: 1.5rem 0;
+      width: 100%;
+
+      h3 {
+        font-family: var(--concertOne);
+        padding: 0.5rem;
+        box-shadow: 0px 10px 10px -2px #d7d9db;
+        text-align: center;
+      }
 
       .questionData {
         position: relative;
@@ -277,9 +322,9 @@
         align-items: center;
         gap: 0.8rem;
 
-        textarea {
+        input {
           width: 8rem;
-          max-height: 4rem;
+          max-width: 8rem;
           border: none;
           outline: none;
           background-color: transparent;
@@ -288,7 +333,9 @@
           background-color: #d6e0f5;
           border-radius: 0.2rem;
           overflow: hidden;
-          overflow-y: scroll;
+          overflow-x: scroll;
+          text-align: center;
+          font-family: var(--poppins);
 
           &::-webkit-scrollbar {
             display: none;
@@ -346,7 +393,7 @@
           }
 
           &::-webkit-scrollbar-track {
-            background: lightgray;
+            background: transparent;
           }
 
           &::-webkit-scrollbar-thumb {
@@ -363,22 +410,57 @@
       .addQues {
         width: 16rem;
         border: none;
-        border: 1px solid #008000;
+        border: 1px solid #8a0035;
         outline: none;
         padding: 0.5rem 1rem;
-        color: #008000;
+        color: white;
         font-size: 1rem;
         border-radius: 0.2rem;
-        background-color: white;
+        background-color: #8a0035;
         cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        margin: 1rem 0;
+        transition: all 0.3s ease-in-out;
 
         &:hover {
-          background-color: #008000;
+          background-color: #b30044;
           color: white;
         }
       }
+    }
+
+    .questions {
+      width: 100%;
+    }
+
+    .empty {
+      font-family: var(--roboto);
+      color: rgb(121, 7, 7);
+      text-align: center;
+      font-weight: bold;
+      padding: 0.5rem;
+    }
+
+    .finishCreatingLevel {
+      width: 16rem;
+      border: none;
+      border: 1px dashed #131b20;
+      outline: none;
+      padding: 0.5rem 1rem;
+      color: #131b20;
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+      font-weight: bold;
+
+      &:hover {
+        background-color: #131b20;
+        color: white;
+      }
+    }
+
+    .levels {
+      width: 100%;
     }
   }
 

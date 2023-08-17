@@ -15,12 +15,8 @@ router.post("/addQuestion/:id", verify, async (req, res) => {
     const question = await Question.create({
       question: req.body.question,
       fullAnswer: req.body.fullAnswer,
-      CourseId: req.params.id,
+      LevelId: req.params.id,
     });
-
-    console.log("question");
-    console.log(question);
-    console.log(question.id);
 
     for (let i = 0; i < req.body.choices.length; i++) {
       console.log(req.body.choices[i]);
@@ -37,17 +33,17 @@ router.post("/addQuestion/:id", verify, async (req, res) => {
   }
 });
 
-router.delete("/deleteCourseQuestions/:id", verify, async (req, res) => {
-  try {
-    await Question.destroy({
-      where: {
-        CourseId: req.params.id,
-      },
-    });
-    res.status(200).json("questions deleted successfully !!");
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.delete("/deleteCourseQuestions/:id", verify, async (req, res) => {
+//   try {
+//     await Question.destroy({
+//       where: {
+//         LevelId: req.params.id,
+//       },
+//     });
+//     res.status(200).json("questions deleted successfully !!");
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

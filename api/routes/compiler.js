@@ -22,6 +22,14 @@ router.post("/compileCode", verify, (req, res) => {
       if (lan === "js") {
         compileNodeCode(lan, res);
       }
+
+      if (lan === "java") {
+        compileJavaCode(lan, res);
+      }
+
+      if (lan === "php") {
+        compilePhpCode(lan, res);
+      }
     }
   });
 });
@@ -48,8 +56,52 @@ const compilePythonCode = (lan, res) => {
   });
 };
 
+const compileJavaCode = (lan, res) => {
+  exec(`java ./code/temp-code.${lan}`, function (error, stdout, stderr) {
+    console.log("stdout: " + stdout);
+    console.log("stderr: " + stderr);
+    fs.unlink(`./code/temp-code.${lan}`, function (err) {
+      if (err) throw err;
+      else console.log("File deleted!");
+    });
+
+    if (stdout !== "") {
+      res.status(200).json({ errorHappened: false, result: stdout });
+    }
+    if (stderr !== "") {
+      res.status(200).json({ errorHappened: true, result: stderr });
+    }
+    if (error !== null) {
+      console.log("exec error: " + error);
+      // res.status(403).json(error);
+    }
+  });
+};
+
 const compileNodeCode = (lan, res) => {
   exec(`node ./code/temp-code.${lan}`, function (error, stdout, stderr) {
+    console.log("stdout: " + stdout);
+    console.log("stderr: " + stderr);
+    fs.unlink(`./code/temp-code.${lan}`, function (err) {
+      if (err) throw err;
+      console.log("File deleted!");
+    });
+
+    if (stdout !== "") {
+      res.status(200).json(stdout);
+    }
+    if (stderr !== "") {
+      res.status(403).json(stderr);
+    }
+    if (error !== null) {
+      console.log("exec error: " + error);
+      // res.status(403).json(error);
+    }
+  });
+};
+
+const compilePhpCode = (lan, res) => {
+  exec(`php -r ./code/temp-code.${lan}`, function (error, stdout, stderr) {
     console.log("stdout: " + stdout);
     console.log("stderr: " + stderr);
     fs.unlink(`./code/temp-code.${lan}`, function (err) {

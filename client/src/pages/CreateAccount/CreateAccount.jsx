@@ -36,12 +36,12 @@ const CreateAccount = () => {
   const manageRegister = async (e) => {
     if (
       password_validate(passwordData) &&
-      repeatedPasswordData !== passwordData &&
+      repeatedPasswordData === passwordData &&
       validateEmail(emailData) &&
       userNameData !== "" &&
       userFirstName !== "" &&
       userLastName !== "" &&
-      userStudentNumber !== 0 &&
+      (isTeacher || userStudentNumber !== 0) &&
       userCountry !== "" &&
       userState !== "" &&
       userCity !== "" &&
@@ -75,9 +75,8 @@ const CreateAccount = () => {
           JSON.stringify(apiResponse.data.accessToken)
         );
         localStorage.setItem("isTeacher", isTeacher);
-        isTeacher
-          ? navigate("/teacher/mainPage")
-          : navigate("/student/mainPage");
+
+        navigate("/mainPage");
       } catch (err) {
         console.log(err);
       }

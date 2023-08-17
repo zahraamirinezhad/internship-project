@@ -120,6 +120,30 @@
   }
 }
 
+.mainPageUserData {
+  display: flex;
+  gap: 2rem;
+  align-items: end;
+  justify-content: flex-start;
+  margin: 1rem;
+
+  .profile {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: #93b7cf;
+    animation: fadingAnimation 1s ease infinite alternate;
+  }
+
+  .userName {
+    width: 15rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    background-color: #93b7cf;
+    animation: fadingAnimation 1s ease infinite alternate;
+  }
+}
+
 @keyframes fadingAnimation {
   to {
     opacity: 0.5;

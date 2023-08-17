@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { choicesActions } from "../../store/choices";
 import { selectedAnswersActions } from "../../store/selectedAnswers";
 
-const QuizeBlankSpace = ({ index, ans }) => {
+const QuizeBlankSpace = ({ index }) => {
   const dispatch = useDispatch();
 
   const selectedAnswers = useSelector(
@@ -17,6 +17,8 @@ const QuizeBlankSpace = ({ index, ans }) => {
   const handleDrop = (e) => {
     e.preventDefault();
 
+    const currentAnswer = getAnswer(index);
+
     dispatch(
       selectedAnswersActions.addSelectedAnswers({
         index: index,
@@ -24,20 +26,14 @@ const QuizeBlankSpace = ({ index, ans }) => {
       })
     );
 
-    console.log(e);
-    console.log(e.dataTransfer.getData("answer"));
     if (getAnswer(index) === "") {
-      console.log(1);
       dispatch(
         choicesActions.deleteChoice({
           choice: e.dataTransfer.getData("answer"),
         })
       );
     } else {
-      console.log(1);
-      dispatch(
-        choicesActions.addChoice({ choice: e.dataTransfer.getData("answer") })
-      );
+      dispatch(choicesActions.addChoice({ choice: currentAnswer }));
       dispatch(
         choicesActions.deleteChoice({
           choice: e.dataTransfer.getData("answer"),

@@ -12,10 +12,9 @@ const Question = db.define(
     question: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: "",
       unique: true,
     },
-    fullAnswer: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
+    fullAnswer: { type: Sequelize.STRING, allowNull: false },
   },
   { timestamps: true, freezeTableName: true }
 );

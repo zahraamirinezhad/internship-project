@@ -15,9 +15,17 @@ const Practice = () => {
       <h1 className={classes.php}>PHP</h1>
       <div className={classes.options}>
         <Link className={classes.languageOptions} to="/webLan">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
           HTML, CSS and JAVASCRIPT
         </Link>
         <Link className={classes.languageOptions} to="/otherLan">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
           Other Languages
         </Link>
       </div>

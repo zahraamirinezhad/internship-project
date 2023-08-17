@@ -129,6 +129,7 @@
     }
 
     .compileResult {
+      position: relative;
       flex: 1;
       height: 50rem;
       background-color: #333;
@@ -137,6 +138,7 @@
       overflow: hidden;
       overflow-y: scroll;
       padding: 0.5rem;
+      font-family: var(--poppins);
 
       &.error {
         color: red !important;
@@ -156,6 +158,12 @@
 
       &::-webkit-scrollbar-thumb:hover {
         background: rgb(71, 71, 71);
+      }
+
+      .loading {
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     }
   }

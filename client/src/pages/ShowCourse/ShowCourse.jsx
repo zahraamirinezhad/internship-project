@@ -1,35 +1,33 @@
 import { React, useState, useEffect } from "react";
 import classes from "./ShowCourse.module.scss";
-import UploadedFile from "../../components/UploadedFile/UploadedFile";
 import { useParams, Link } from "react-router-dom";
 import SelectImage from "../../images/selectImage.png";
 import { useDispatch, useSelector } from "react-redux";
-import { attachedFilesActions } from "../../store/attachedFiles";
+import { levelsActions } from "../../store/levels";
 import axios from "axios";
+import LevelShow from "../../components/LevelShow/LevelShow";
 
 const ShowCourse = ({ token }) => {
   const params = useParams();
   const courseId = params.courseId;
 
   const dispatch = useDispatch();
-  const attachedFiles = useSelector(
-    (state) => state.attachedFiles.attachedFiles
-  );
-  const attachedFilesNum = useSelector(
-    (state) => state.attachedFiles.attachedFilesNum
-  );
+
+  const levels = useSelector((state) => state.levels.levels);
+  const levelsNum = useSelector((state) => state.levels.levelsNum);
 
   const [courseName, setCourseName] = useState("");
   const [courseGoal, setCourseGoal] = useState("");
   const [courseBio, setCourseBio] = useState("");
   const [courseImage, setCourseImage] = useState(null);
+  const [courseLevels, setCourseLevels] = useState([]);
   const [courseTaken, setCourseTaken] = useState(false);
 
   useEffect(() => {
     const getUserData = async () => {
       try {
         const docsRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseDocs/${courseId}`,
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourse/${courseId}`,
           {
             headers: {
               token: `Bearer ${token}`,
@@ -47,21 +45,29 @@ const ShowCourse = ({ token }) => {
             : `http://localhost:8800/${docsRes.data.avatar}`
         );
 
-        dispatch(attachedFilesActions.deleteAllAttachedFiles());
-        for (let i = 0; i < docsRes.data.UploadedFiles.length; i++) {
+        dispatch(levelsActions.deleteAllLevels());
+        const levelRes = await axios.get(
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseLevels/${courseId}`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(levelRes);
+        for (let i = 0; i < levelRes.data.length; i++) {
           dispatch(
-            attachedFilesActions.addAttachedFiles({
-              id: docsRes.data.UploadedFiles[i].id,
-              name: docsRes.data.UploadedFiles[i].fileName,
-              type: docsRes.data.UploadedFiles[i].type,
-              path: docsRes.data.UploadedFiles[i].path,
+            levelsActions.addLevel({
+              id: levelRes.data[i].level.id,
+              title: levelRes.data[i].level.title,
+              doc: levelRes.data[i].level.doc,
+              desc: levelRes.data[i].level.description,
             })
           );
         }
-        console.log(attachedFiles);
 
         const isTakenRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}scores/isTaken/${courseId}`,
+          `${process.env.REACT_APP_API_ADDRESS}students/isCourseTaken/${courseId}`,
           {
             headers: {
               token: `Bearer ${token}`,
@@ -80,12 +86,9 @@ const ShowCourse = ({ token }) => {
   const takeCourse = async () => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}scores/takeCourse/${courseId}`,
+        `${process.env.REACT_APP_API_ADDRESS}students/takeCourse`,
         {
-          score: 0,
-          lastQuestion: 0,
-          courseFinished: false,
-          CourseId: courseId,
+          courseId: courseId,
         },
         {
           headers: {
@@ -103,7 +106,7 @@ const ShowCourse = ({ token }) => {
   const logOut = async () => {
     try {
       const res = await axios.delete(
-        `${process.env.REACT_APP_API_ADDRESS}scores/logOut/${courseId}`,
+        `${process.env.REACT_APP_API_ADDRESS}students/logOut/${courseId}`,
         {
           headers: {
             token: `Bearer ${token}`,
@@ -143,30 +146,6 @@ const ShowCourse = ({ token }) => {
         </div>
       </div>
 
-      <div className={classes.courseDocs}>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <div className={classes.addedDocs}>
-          {attachedFilesNum !== 0 && (
-            <div className={classes.uploadedFilesList}>
-              {attachedFiles.map((item, index) => (
-                <UploadedFile
-                  key={index}
-                  token={token}
-                  id={item.id}
-                  type={item.name.split(".")[item.name.split(".").length - 1]}
-                  name={item.name}
-                  path={item.path}
-                  downloadOrDelete="download"
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
       <div className={classes.courseOptions}>
         {courseTaken ? (
           <button className={classes.logOut} onClick={logOut}>
@@ -177,15 +156,28 @@ const ShowCourse = ({ token }) => {
             Take the Course :)))
           </button>
         )}
-        {courseTaken && (
-          <Link
-            className={classes.continueCourse}
-            to={`/takeCourse/${courseId}`}
-          >
-            Continue :)))
-          </Link>
-        )}
       </div>
+
+      {levelsNum !== 0 ? (
+        <div
+          className={`${classes.courseLevels} ${
+            courseTaken && classes.courseTaken
+          }`}
+        >
+          {levels.map((item, index) => (
+            <LevelShow
+              key={index}
+              id={item.id}
+              title={item.title}
+              doc={item.doc}
+              desc={item.desc}
+              questions={item.questions}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className={classes.empty}>No Levels</p>
+      )}
     </div>
   );
 };

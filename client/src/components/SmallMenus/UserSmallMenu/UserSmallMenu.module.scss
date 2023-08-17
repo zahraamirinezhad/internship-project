@@ -20,6 +20,8 @@
   }
 
   li {
+    border-bottom: 0.5px solid transparent;
+
     &:nth-child(1) {
       .sidebarOptions {
         border-radius: 0.5rem 0.5rem 0 0;

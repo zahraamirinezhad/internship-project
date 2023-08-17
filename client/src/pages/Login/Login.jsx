@@ -40,7 +40,7 @@ const Login = () => {
           JSON.stringify(apiResponse.data.accessToken)
         );
         localStorage.setItem("isTeacher", isTeacher);
-        navigate("/");
+        navigate("/mainPage");
         // navigate("/mainPage", { state: { isTeacher } });
         // err.data === "Wrong_Password_Username" ? setError(true) : setError(false);
       } catch (err) {

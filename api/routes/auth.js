@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
+  console.log(req);
+
   if (req.body.isTeacher) {
     // await Teacher.sync({ force: true });
 
@@ -102,6 +104,9 @@ router.post("/login", async (req, res) => {
         },
       });
       !user && res.status(401).json("Wrong Password or Username !!!");
+
+      console.log("user");
+      console.log(user);
 
       const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
       const originalPassword = bytes.toString(CryptoJS.enc.Utf8);

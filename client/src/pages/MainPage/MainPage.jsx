@@ -88,17 +88,21 @@ const MainPage = ({ token, isTeacher }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.userData}>
-        <Link to="/profileStructure/profile" className={classes.profile}>
-          <img src={userProfile} alt="profile" />
-        </Link>
-        <div>
-          <h1>{`WELCOME ${userUserName}`}</h1>
-          <h1>{`WELCOME ${userUserName}`}</h1>
-          <h1>{`WELCOME ${userUserName}`}</h1>
-          <h1>{`WELCOME ${userUserName}`}</h1>
+      {isLoading ? (
+        <Skeleton type="MainPageUserData" />
+      ) : (
+        <div className={classes.userData}>
+          <Link to="/profileStructure/profile" className={classes.profile}>
+            <img src={userProfile} alt="profile" />
+          </Link>
+          <div>
+            <h1>{`WELCOME ${userUserName}`}</h1>
+            <h1>{`WELCOME ${userUserName}`}</h1>
+            <h1>{`WELCOME ${userUserName}`}</h1>
+            <h1>{`WELCOME ${userUserName}`}</h1>
+          </div>
         </div>
-      </div>
+      )}
       <div className={classes.seeAllContainer}>
         <button
           className={`${classes.seeAllIdeas} ${
@@ -107,59 +111,59 @@ const MainPage = ({ token, isTeacher }) => {
           onClick={() => setSeeAllMyCourses(true)}
           disabled={seeAllMyCourses}
         >
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
           See All
         </button>
       </div>
 
       <div className={classes.myCoursesContainer}>
         <h2 className={classes.title}>Your Courses</h2>
-        <div className={classes.myCourseListContainer}>
-          <div className={classes.borderLine}></div>
-          <div
-            className={`${classes.myCourses} ${
-              seeAllMyCourses && classes.scrollable
-            }`}
-          >
-            {isLoading ? (
-              <Skeleton type="Course" />
-            ) : (
-              <>
-                {seeAllMyCourses
-                  ? myCourses.map((item, index) => (
-                      <Course
-                        key={index}
-                        id={item.id}
-                        token={token}
-                        title={item.title}
-                        avatar={item.avatar}
-                        goal={item.goal}
-                        abstract={item.abstract}
-                        isTeacher={isTeacher}
-                      />
-                    ))
-                  : myCourses.map(
-                      (item, index) =>
-                        index < 6 && (
-                          <Course
-                            key={index}
-                            id={item.id}
-                            token={token}
-                            title={item.title}
-                            avatar={item.avatar}
-                            goal={item.goal}
-                            abstract={item.abstract}
-                            isTeacher={isTeacher}
-                          />
-                        )
-                    )}
-              </>
-            )}
+        {myCourses.length !== 0 ? (
+          <div className={classes.myCourseListContainer}>
+            <div className={classes.borderLine}></div>
+            <div
+              className={`${classes.myCourses} ${
+                seeAllMyCourses && classes.scrollable
+              }`}
+            >
+              {isLoading ? (
+                <Skeleton type="Course" />
+              ) : (
+                <>
+                  {seeAllMyCourses
+                    ? myCourses.map((item, index) => (
+                        <Course
+                          key={index}
+                          id={item.id}
+                          token={token}
+                          title={item.title}
+                          avatar={item.avatar}
+                          goal={item.goal}
+                          abstract={item.abstract}
+                          isTeacher={isTeacher}
+                        />
+                      ))
+                    : myCourses.map(
+                        (item, index) =>
+                          index < 6 && (
+                            <Course
+                              key={index}
+                              id={item.id}
+                              token={token}
+                              title={item.title}
+                              avatar={item.avatar}
+                              goal={item.goal}
+                              abstract={item.abstract}
+                              isTeacher={isTeacher}
+                            />
+                          )
+                      )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <p className={classes.noCourse}>Sorry, No Course :((</p>
+        )}
       </div>
 
       <div className={classes.seeAllContainer}>
@@ -179,45 +183,51 @@ const MainPage = ({ token, isTeacher }) => {
       </div>
       <div className={classes.coursesContainer}>
         <h2 className={classes.title}>All Courses</h2>
-        <div className={classes.courseListContainer}>
-          <div className={classes.borderLine}></div>
-          <div className={`${classes.courses} ${seeAll && classes.scrollable}`}>
-            {isLoading ? (
-              <Skeleton type="Course" />
-            ) : (
-              <>
-                {seeAll
-                  ? courses.map((item, index) => (
-                      <Course
-                        key={index}
-                        id={item.id}
-                        token={token}
-                        title={item.title}
-                        avatar={item.avatar}
-                        goal={item.goal}
-                        abstract={item.abstract}
-                        isTeacher={isTeacher}
-                      />
-                    ))
-                  : courses.map(
-                      (item, index) =>
-                        index < 6 && (
-                          <Course
-                            key={index}
-                            id={item.id}
-                            token={token}
-                            title={item.title}
-                            avatar={item.avatar}
-                            goal={item.goal}
-                            abstract={item.abstract}
-                            isTeacher={isTeacher}
-                          />
-                        )
-                    )}
-              </>
-            )}
+        {courses.length !== 0 ? (
+          <div className={classes.courseListContainer}>
+            <div className={classes.borderLine}></div>
+            <div
+              className={`${classes.courses} ${seeAll && classes.scrollable}`}
+            >
+              {isLoading ? (
+                <Skeleton type="Course" />
+              ) : (
+                <>
+                  {seeAll
+                    ? courses.map((item, index) => (
+                        <Course
+                          key={index}
+                          id={item.id}
+                          token={token}
+                          title={item.title}
+                          avatar={item.avatar}
+                          goal={item.goal}
+                          abstract={item.abstract}
+                          isTeacher={isTeacher}
+                        />
+                      ))
+                    : courses.map(
+                        (item, index) =>
+                          index < 6 && (
+                            <Course
+                              key={index}
+                              id={item.id}
+                              token={token}
+                              title={item.title}
+                              avatar={item.avatar}
+                              goal={item.goal}
+                              abstract={item.abstract}
+                              isTeacher={isTeacher}
+                            />
+                          )
+                      )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <p className={classes.noCourse}>Sorry, No Course :((</p>
+        )}
       </div>
     </div>
   );

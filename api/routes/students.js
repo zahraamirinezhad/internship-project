@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const Student = require("../models/Student");
-const Score = require("../models/Score");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
 const Course = require("../models/Course");
+const Student_Course = require("../models/Student_Course");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -130,25 +130,77 @@ router.get("/status", verify, async (req, res) => {
   }
 });
 
+//GET COURSE STAT
+router.get("/isCourseTaken/:courseId", verify, async (req, res) => {
+  try {
+    const course = await Student_Course.findOne({
+      where: {
+        StudentId: req.user.id,
+        CourseId: req.params.courseId,
+      },
+    });
+    const isTaken = course === null ? false : true;
+    res.status(200).json(isTaken);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//TAKE COURSE
+router.post("/takeCourse", verify, async (req, res) => {
+  await Student_Course.create({
+    StudentId: req.user.id,
+    CourseId: req.body.courseId,
+  })
+    .then(() => {
+      // console.log(course);
+      res.status(201).json("you got the course.");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+//LOG OUT COURSE
+router.delete("/logOut/:id", verify, async (req, res) => {
+  await Student_Course.destroy({
+    where: {
+      StudentId: req.user.id,
+      CourseId: req.params.id,
+    },
+  })
+    .then(() => {
+      // console.log(course);
+      res.status(201).json("you lost the course.");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 router.get("/getTakenCourses", verify, async (req, res) => {
   try {
-    const scores = await Student.findOne({
+    const courses = await Student_Course.findAll({
       where: {
-        id: req.user.id,
+        StudentId: req.user.id,
       },
-      include: Score,
     });
 
-    const courses = [];
-    for (let i = 0; i < scores.Scores.length; i++) {
-      const course = await Score.findOne({
-        where: {
-          id: scores.Scores[i].id,
-        },
-        include: Course,
-      });
-      courses.push(course.Course);
-    }
+    // console.log("courses");
+    // console.log(courses);
+
+    // const courses = [];
+    // for (let i = 0; i < scores.Scores.length; i++) {
+    //   const course = await Score.findOne({
+    //     where: {
+    //       id: scores.Scores[i].id,
+    //     },
+    //     include: Course,
+    //   });
+    //   courses.push(course.Course);
+    // }
 
     res.status(200).json(courses);
   } catch (err) {

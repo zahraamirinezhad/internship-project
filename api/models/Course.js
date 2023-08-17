@@ -13,7 +13,6 @@ const Course = db.define(
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
-      defaultValue: "",
     },
     goal: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
     abstract: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },

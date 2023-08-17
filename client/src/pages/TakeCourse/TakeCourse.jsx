@@ -15,7 +15,7 @@ import { Cofee } from "../../components";
 
 const TakeCourse = ({ token }) => {
   const params = useParams();
-  const courseId = params.courseId;
+  const levelId = params.levelId;
 
   const dispatch = useDispatch();
 
@@ -41,36 +41,27 @@ const TakeCourse = ({ token }) => {
     const getUserData = async () => {
       try {
         dispatch(questionsActions.deleteAllQuestions());
-        const questionRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseQuestions/${courseId}`,
+        const levelRes = await axios.get(
+          `${process.env.REACT_APP_API_ADDRESS}levels/getLevelQuestions/${levelId}`,
           {
             headers: {
               token: `Bearer ${token}`,
             },
           }
         );
-        console.log(questionRes);
+        console.log(levelRes);
         const questionsList = [];
-        for (let i = 0; i < questionRes.data.Questions.length; i++) {
-          const choiceRes = await axios.get(
-            `${process.env.REACT_APP_API_ADDRESS}courses/getCourseQuestionsChoices/${questionRes.data.Questions[i].id}`,
-            {
-              headers: {
-                token: `Bearer ${token}`,
-              },
-            }
-          );
-          console.log(choiceRes);
+        for (let i = 0; i < levelRes.data.length; i++) {
           questionsList.push({
-            question: choiceRes.data.question,
-            fullAnswer: choiceRes.data.fullAnswer,
-            choices: choiceRes.data.Choices,
+            question: levelRes.data[i].question,
+            fullAnswer: levelRes.data[i].fullAnswer,
+            choices: levelRes.data[i].Choices,
           });
         }
         setQuestions(questionsList);
-        setCurrentQuestion(questionsList[0]);
+        setCurrentQuestion(levelRes.data[0]);
         dispatch(choicesActions.deleteAllChoices());
-        dispatch(choicesActions.setMulChoices(questionsList[0].choices));
+        dispatch(choicesActions.setMulChoices(levelRes.data[0].Choices));
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -81,12 +72,12 @@ const TakeCourse = ({ token }) => {
 
   const next = () => {
     if (questionIndex < questions.length - 1) {
+      setAnswerWrong(false);
+      setAnswerRight(false);
       setQuestionIndex(questionIndex + 1);
-      setCurrentQuestion(questions[questionIndex + 1]);
+      setCurrentQuestion(questions[questionIndex]);
       dispatch(choicesActions.deleteAllChoices());
-      dispatch(
-        choicesActions.setMulChoices(questions[questionIndex + 1].choices)
-      );
+      dispatch(choicesActions.setMulChoices(questions[questionIndex].choices));
       dispatch(selectedAnswersActions.deleteAllSelectedAnswers());
       console.log(currentQuestion);
     }
@@ -94,19 +85,20 @@ const TakeCourse = ({ token }) => {
 
   const back = () => {
     if (questionIndex > 0) {
+      setAnswerWrong(false);
+      setAnswerRight(false);
       setQuestionIndex(questionIndex - 1);
-      setCurrentQuestion(questions[questionIndex - 1]);
+      setCurrentQuestion(questions[questionIndex]);
       dispatch(choicesActions.deleteAllChoices());
-      dispatch(
-        choicesActions.setMulChoices(questions[questionIndex + 1].choices)
-      );
+      dispatch(choicesActions.setMulChoices(questions[questionIndex].choices));
       dispatch(selectedAnswersActions.deleteAllSelectedAnswers());
       console.log(currentQuestion);
     }
   };
 
   const checkAnswer = () => {
-    console.log(selectedAnswers);
+    setAnswerWrong(false);
+    setAnswerRight(false);
 
     const finalAnswerList = reactStringReplace(
       currentQuestion.question,
@@ -124,7 +116,6 @@ const TakeCourse = ({ token }) => {
       setAnswerWrong(true);
     } else {
       setAnswerRight(true);
-      next();
     }
   };
 
@@ -149,6 +140,10 @@ const TakeCourse = ({ token }) => {
           <CircularProgress />
         ) : (
           <div className={classes.questionBox}>
+            <span className={classes.border}></span>
+            <span className={classes.border}></span>
+            <span className={classes.border}></span>
+            <span className={classes.border}></span>
             <div className={classes.question}>
               {reactStringReplace(
                 currentQuestion.question,
@@ -160,7 +155,7 @@ const TakeCourse = ({ token }) => {
             </div>
             <div className={classes.choices}>
               {choices.map((item, index) => (
-                <QuizeChoice answer={item.choice} />
+                <QuizeChoice key={index} answer={item.choice} />
               ))}
             </div>
           </div>
@@ -170,47 +165,19 @@ const TakeCourse = ({ token }) => {
       <div className={classes.options}>
         <button onClick={back}>Back</button>
 
-        <button onClick={checkAnswer}>Check</button>
-
-        {answerRight && (
-          <button disabled={answerRight} onClick={next}>
-            Next
-          </button>
+        {!answerRight ? (
+          <button onClick={checkAnswer}>Check</button>
+        ) : (
+          <button onClick={next}>Next</button>
         )}
       </div>
-      <Snackbar
-        open={answerWrong}
-        autoHideDuration={2000}
-        onClose={() => {
-          setAnswerWrong(false);
-        }}
-      >
-        <Alert
-          variant="filled"
-          severity="error"
-          onClose={() => {
-            setAnswerWrong(false);
-          }}
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={answerWrong}>
+        <Alert variant="filled" severity="error" sx={{ width: "100%" }}>
           WRONG ANSWER :((
         </Alert>
       </Snackbar>
-      <Snackbar
-        open={answerRight}
-        autoHideDuration={2000}
-        onClose={() => {
-          setAnswerRight(false);
-        }}
-      >
-        <Alert
-          variant="filled"
-          severity="success"
-          onClose={() => {
-            setAnswerRight(false);
-          }}
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={answerRight}>
+        <Alert variant="filled" severity="success" sx={{ width: "100%" }}>
           CONGRATULATIONS :))
         </Alert>
       </Snackbar>

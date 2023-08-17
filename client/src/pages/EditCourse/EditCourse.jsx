@@ -3,13 +3,14 @@ import classes from "./EditCourse.module.scss";
 import SelectImage from "../../images/selectImage.png";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { attachedFilesActions } from "../../store/attachedFiles";
+import { levelsActions } from "../../store/levels";
 import { choicesActions } from "../../store/choices";
 import { questionsActions } from "../../store/questions";
-import UploadedFile from "../../components/UploadedFile/UploadedFile";
+import Level from "../../components/Level/Level";
 import { useNavigate, useParams } from "react-router-dom";
 import Choice from "../../components/Choice/Choice";
 import Question from "../../components/Question/Question";
+import { CircularProgress } from "@mui/material";
 
 const EditCourse = ({ token }) => {
   const navigate = useNavigate();
@@ -17,12 +18,6 @@ const EditCourse = ({ token }) => {
   const courseId = params.courseId;
 
   const dispatch = useDispatch();
-  const attachedFiles = useSelector(
-    (state) => state.attachedFiles.attachedFiles
-  );
-  const attachedFilesNum = useSelector(
-    (state) => state.attachedFiles.attachedFilesNum
-  );
 
   const choices = useSelector((state) => state.choices.choices);
   const choicesNum = useSelector((state) => state.choices.choicesNum);
@@ -30,13 +25,21 @@ const EditCourse = ({ token }) => {
   const questions = useSelector((state) => state.questions.questions);
   const questionsNum = useSelector((state) => state.questions.questionsNum);
 
+  const levels = useSelector((state) => state.levels.levels);
+  const levelsNum = useSelector((state) => state.levels.levelsNum);
+
   const [courseName, setCourseName] = useState("");
   const [courseGoal, setCourseGoal] = useState("");
   const [courseBio, setCourseBio] = useState("");
   const [courseImageDisplay, setCourseImageDisplay] = useState(SelectImage);
   const [courseImage, setCourseImage] = useState(null);
+  const [levelImageDisplay, setLevelImageDisplay] = useState(SelectImage);
+  const [levelImage, setLeveleImage] = useState(null);
+  const [levelTitle, setLeveleTitle] = useState("");
+  const [levelDescription, setLeveleDescription] = useState("");
 
   const [filesUploading, setFilesUploading] = useState(false);
+  const [jobDone, setJobDone] = useState(false);
 
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -46,7 +49,7 @@ const EditCourse = ({ token }) => {
     const getUserData = async () => {
       try {
         const docsRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseDocs/${courseId}`,
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourse/${courseId}`,
           {
             headers: {
               token: `Bearer ${token}`,
@@ -65,48 +68,28 @@ const EditCourse = ({ token }) => {
         );
         setCourseImage(docsRes.data.avatar);
 
-        dispatch(attachedFilesActions.deleteAllAttachedFiles());
-        for (let i = 0; i < docsRes.data.UploadedFiles.length; i++) {
-          dispatch(
-            attachedFilesActions.addAttachedFiles({
-              id: docsRes.data.UploadedFiles[i].id,
-              name: docsRes.data.UploadedFiles[i].fileName,
-              type: docsRes.data.UploadedFiles[i].type,
-              path: docsRes.data.UploadedFiles[i].path,
-            })
-          );
-        }
-        console.log(attachedFiles);
-
-        dispatch(questionsActions.deleteAllQuestions());
-        dispatch(choicesActions.deleteAllChoices());
-        const questionRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseQuestions/${courseId}`,
+        dispatch(levelsActions.deleteAllLevels());
+        const levelRes = await axios.get(
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseLevels/${courseId}`,
           {
             headers: {
               token: `Bearer ${token}`,
             },
           }
         );
-        console.log(questionRes);
-        for (let i = 0; i < questionRes.data.Questions.length; i++) {
-          const choiceRes = await axios.get(
-            `${process.env.REACT_APP_API_ADDRESS}courses/getCourseQuestionsChoices/${questionRes.data.Questions[i].id}`,
-            {
-              headers: {
-                token: `Bearer ${token}`,
-              },
-            }
-          );
-          console.log(choiceRes);
+        console.log(levelRes);
+        for (let i = 0; i < levelRes.data.length; i++) {
           dispatch(
-            questionsActions.addQuestion({
-              question: choiceRes.data.question,
-              fullAnswer: choiceRes.data.fullAnswer,
-              choices: choiceRes.data.Choices,
+            levelsActions.addLevel({
+              title: levelRes.data[i].level.title,
+              doc: levelRes.data[i].level.doc,
+              desc: levelRes.data[i].level.description,
+              questions: levelRes.data[i].questions,
             })
           );
         }
+        dispatch(questionsActions.deleteAllQuestions());
+        dispatch(choicesActions.deleteAllChoices());
       } catch (err) {
         console.log(err);
       }
@@ -120,30 +103,12 @@ const EditCourse = ({ token }) => {
     setCourseImageDisplay(URL.createObjectURL(e.target.files[0]));
   };
 
-  const uploadDoc = async (e) => {
+  const handleUploadedLevelDoc = (e) => {
     setFilesUploading(true);
-    console.log(e.target.files);
-    console.log(Array.from(e.target.files || []));
-    const filesList = Array.from(e.target.files || []);
-
-    for (let i = 0; i < filesList.length; i++) {
-      dispatch(attachedFilesActions.addAttachedFiles(filesList[i]));
-      const formData = new FormData();
-      formData.append("avatar", filesList[i]);
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}uploadedFiles/addDoc/${courseId}`,
-        formData,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(res);
-    }
-
+    console.log(e.target.files[0]);
+    setLeveleImage(e.target.files[0]);
+    setLevelImageDisplay(URL.createObjectURL(e.target.files[0]));
     setFilesUploading(false);
-    console.log(attachedFiles);
   };
 
   const addChoice = () => {
@@ -169,18 +134,47 @@ const EditCourse = ({ token }) => {
     }
   };
 
-  const finifhEditingCourse = async () => {
-    const formData = new FormData();
-    formData.append("title", courseName);
-    formData.append("goal", courseGoal);
-    formData.append("abstract", courseBio);
-    formData.append("avatar", courseImage);
-
-    for (const value of formData.values()) {
-      console.log(value);
+  const editLevel = () => {
+    console.log(questions);
+    if (
+      levelTitle !== "" &&
+      levelImage !== null &&
+      questionsNum !== 0 &&
+      levelDescription !== ""
+    ) {
+      dispatch(
+        levelsActions.addLevel({
+          title: levelTitle,
+          doc: levelImage,
+          desc: levelDescription,
+          questions: questions,
+        })
+      );
+      dispatch(questionsActions.deleteAllQuestions());
+      dispatch(choicesActions.deleteAllChoices());
+      setChoice("");
+      setQuestion("");
+      setAnswer("");
+      setLeveleImage(null);
+      setLevelImageDisplay(SelectImage);
+      setLeveleTitle("");
+      setLeveleDescription("");
     }
+  };
 
+  const finifhEditingCourse = async () => {
     try {
+      setJobDone(true);
+      const formData = new FormData();
+      formData.append("title", courseName);
+      formData.append("goal", courseGoal);
+      formData.append("abstract", courseBio);
+      formData.append("avatar", courseImage);
+
+      for (const value of formData.values()) {
+        console.log(value);
+      }
+
       const res = await axios.put(
         `${process.env.REACT_APP_API_ADDRESS}courses/editCourse/${courseId}`,
         formData,
@@ -191,41 +185,39 @@ const EditCourse = ({ token }) => {
         }
       );
       console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
 
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_ADDRESS}questions/deleteCourseQuestions/${courseId}`,
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
+      // await axios.delete(
+      //   `${process.env.REACT_APP_API_ADDRESS}courses/editCourse/deleteLevels/${courseId}`,
+      //   {
+      //     headers: {
+      //       token: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
-      for (let i = 0; i < questionsNum; i++) {
+      for (let i = 0; i < levelsNum; i++) {
+        const levelFormData = new FormData();
+        levelFormData.append("title", levels[i].title);
+        levelFormData.append("description", levels[i].desc);
+        levelFormData.append("avatar", levels[i].doc);
+        levelFormData.append("questions", JSON.stringify(levels[i].questions));
+
         await axios.post(
-          `${process.env.REACT_APP_API_ADDRESS}questions/addQuestion/${courseId}`,
-          {
-            question: questions[i].question,
-            fullAnswer: questions[i].fullAnswer,
-            choices: questions[i].choices,
-          },
+          `${process.env.REACT_APP_API_ADDRESS}levels/addLevel/${courseId}`,
+          levelFormData,
           {
             headers: {
               token: `Bearer ${token}`,
-              "Content-Type": "application/json",
             },
           }
         );
       }
+      navigate("/profileStructure/myCourses");
+      setJobDone(false);
     } catch (err) {
       console.log(err);
     }
 
-    dispatch(attachedFilesActions.deleteAllAttachedFiles());
     dispatch(choicesActions.deleteAllChoices());
     dispatch(questionsActions.deleteAllQuestions());
     navigate("/profileStructure/myCourses");
@@ -281,47 +273,53 @@ const EditCourse = ({ token }) => {
         </div>
       </div>
 
-      <div className={classes.courseDoc}>
-        <label
-          for="uploadDoc"
-          className={`${classes.addDoc}  ${
-            filesUploading && classes.filesUploading
-          }`}
-        >
-          Add New Document
-          <input
-            id="uploadDoc"
-            type="file"
-            multiple="multiple"
-            accept=".pptx, .doc, .pdf, .jpg, .png, .jpeg"
-            onChange={uploadDoc}
-            disabled={filesUploading}
-          />
-        </label>
-        <div
-          className={`${classes.addedDocs} ${
-            filesUploading && classes.filesUploading
-          }`}
-        >
-          {attachedFilesNum !== 0 && (
-            <div className={classes.uploadedFilesList}>
-              {attachedFiles.map((item, index) => (
-                <UploadedFile
-                  key={index}
-                  token={token}
-                  id={item.id}
-                  type={item.name.split(".")[item.name.split(".").length - 1]}
-                  name={item.name}
-                  downloadOrDelete="delete"
-                />
-              ))}
-            </div>
-          )}
+      <div className={classes.addLevel}>
+        <div className={classes.levelDetails}>
+          <h3>Now Create Some Levels for this Course</h3>
+          <div className={classes.enterData}>
+            <input
+              value={levelTitle}
+              type="text"
+              onChange={(e) => {
+                setLeveleTitle(e.target.value);
+              }}
+              required
+            />
+            <span>Level Title</span>
+          </div>
+          <div className={classes.enterData}>
+            <textarea
+              value={levelDescription}
+              type="text"
+              onChange={(e) => {
+                setLeveleDescription(e.target.value);
+              }}
+              required
+            />
+            <span>Level Desciption</span>
+          </div>
+          <label
+            for="uploadDoc"
+            className={`${classes.addDoc}  ${
+              filesUploading && classes.filesUploading
+            }`}
+          >
+            Add New Document
+            <input
+              id="uploadDoc"
+              type="file"
+              multiple="multiple"
+              accept=".jpg, .png, .jpeg, .jfif"
+              onChange={handleUploadedLevelDoc}
+              disabled={filesUploading}
+            />
+          </label>
+          <div className={classes.uploadedDoc}>
+            <img src={levelImageDisplay} alt="Level_Image" />
+          </div>
         </div>
-      </div>
-
-      <div className={classes.addQuestion}>
         <div className={classes.questionForm}>
+          <h3>Add Qusetions for this Level</h3>
           <div className={classes.questionData}>
             <input
               type="text"
@@ -341,17 +339,18 @@ const EditCourse = ({ token }) => {
             <span>Ful Answer</span>
           </div>
           <div className={classes.choiceData}>
-            <textarea
-              value={choice}
-              onChange={(e) => setChoice(e.target.value)}
-            />
+            <input value={choice} onChange={(e) => setChoice(e.target.value)} />
             <button className={classes.addChoice} onClick={addChoice}>
               Add Choice
             </button>
             {choicesNum !== 0 && (
               <div className={classes.choices}>
                 {choices.map((item, index) => (
-                  <Choice answer={item.choice} setChoice={setChoice} />
+                  <Choice
+                    key={index}
+                    answer={item.choice}
+                    setChoice={setChoice}
+                  />
                 ))}
               </div>
             )}
@@ -360,25 +359,56 @@ const EditCourse = ({ token }) => {
             Creating Question Finished :)
           </button>
         </div>
-        <div className={classes.questions}>
-          {questions.map((item, index) => (
-            <Question
-              question={item.question}
-              fullAnswer={item.fullAnswer}
-              choices={item.choices}
-              setAnswer={setAnswer}
-              setQuestion={setQuestion}
-            />
-          ))}
-        </div>
+        {questionsNum !== 0 ? (
+          <div className={classes.questions}>
+            {questions.map((item, index) => (
+              <Question
+                key={index}
+                question={item.question}
+                fullAnswer={item.fullAnswer}
+                choices={item.choices}
+                setAnswer={setAnswer}
+                setQuestion={setQuestion}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className={classes.empty}>No Questions</p>
+        )}
+        <button className={classes.finishCreatingLevel} onClick={editLevel}>
+          Creating Level Finished :)
+        </button>
+        {levelsNum !== 0 ? (
+          <div className={classes.levels}>
+            {levels.map((item, index) => (
+              <Level
+                key={index}
+                title={item.title}
+                doc={item.doc}
+                desc={item.desc}
+                questions={item.questions}
+                setTitle={setLeveleTitle}
+                setDoc={setLeveleImage}
+                setDocDisplay={setLevelImageDisplay}
+                setDesc={setLeveleDescription}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className={classes.empty}>No Levels</p>
+        )}
       </div>
 
-      <button
-        className={classes.finishCreatingCourse}
-        onClick={finifhEditingCourse}
-      >
-        Finish Editing Course :))
-      </button>
+      {!jobDone ? (
+        <button
+          className={classes.finishCreatingCourse}
+          onClick={finifhEditingCourse}
+        >
+          Finish Editing Course :))
+        </button>
+      ) : (
+        <CircularProgress />
+      )}
     </div>
   );
 };

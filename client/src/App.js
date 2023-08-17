@@ -42,7 +42,7 @@ function App() {
             <Route path="/webLan" element={<MainContainer />} />
             <Route path="/editCourse/:courseId" element={<MainContainer />} />
             <Route path="/showCourse/:courseId" element={<MainContainer />} />
-            <Route path="/takeCourse/:courseId" element={<MainContainer />} />
+            <Route path="/takeCourse/:levelId" element={<MainContainer />} />
             <Route
               path="/courseDataShow/:courseId"
               element={<MainContainer />}

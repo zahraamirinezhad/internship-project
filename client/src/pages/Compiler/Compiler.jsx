@@ -5,6 +5,7 @@ import { Editor } from "../../components";
 import axios from "axios";
 import FilterIcon from "../../images/filter.png";
 import CompilerSmallMenu from "../../components/SmallMenus/CompilerSmallMenu/CompilerSmallMenu";
+import { CircularProgress } from "@mui/material";
 
 function Compiler({ token }) {
   const [editorValue, setEditorValue] = useState("");
@@ -15,6 +16,8 @@ function Compiler({ token }) {
   const [rotate, setRotate] = useState(false);
   const [isShowMenu, setIsShowMenu] = useState(false);
 
+  const [isCompiling, setIsCompiling] = useState(false);
+
   const compile = () => {
     if (editorValue !== "") {
       let lan = "";
@@ -23,8 +26,11 @@ function Compiler({ token }) {
         case "python":
           lan = "py";
           break;
-        case "javascript":
-          lan = "js";
+        case "java":
+          lan = "java";
+          break;
+        case "php":
+          lan = "php";
           break;
         default:
           lan = "";
@@ -32,6 +38,7 @@ function Compiler({ token }) {
 
       try {
         const compileCode = async () => {
+          setIsCompiling(true);
           const res = await axios.post(
             `${process.env.REACT_APP_API_ADDRESS}compile/compileCode`,
             {
@@ -47,6 +54,7 @@ function Compiler({ token }) {
           console.log(res);
           setCompileRes(res.data.result);
           setCompileError(res.data.errorHappened);
+          setIsCompiling(false);
         };
         compileCode();
       } catch (err) {
@@ -106,7 +114,7 @@ function Compiler({ token }) {
               }}
             >
               <option value="python">Python</option>
-              <option value="javascript">Node.js</option>
+              <option value="java">Java</option>
             </select>
           </li>
         </ul>
@@ -131,13 +139,18 @@ function Compiler({ token }) {
           setVal={setEditorValue}
           fontSize={14}
         />
-        <p
+        <div
           className={`${classes.compileResult} ${
             compileError && classes.error
           }`}
         >
-          {compileRes}
-        </p>
+          {isCompiling && (
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          )}
+          <p>{compileRes}</p>
+        </div>
       </div>
     </div>
   );

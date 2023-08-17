@@ -1,6 +1,6 @@
 .container {
   min-width: 10rem;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border: 2px dashed lightblue;
   border-radius: 0.5rem;
 
@@ -40,6 +40,7 @@
     width: 100%;
     overflow: hidden;
     overflow-x: scroll;
+    font-family: var(--poppins);
 
     &::-webkit-scrollbar {
       display: none;

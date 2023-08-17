@@ -29,7 +29,15 @@ export default function Skeleton({ type }) {
     </div>
   );
 
+  const MainPageUserDataSkeleton = () => (
+    <div className={classes.mainPageUserData}>
+      <div className={classes.profile}></div>
+      <div className={classes.userName}></div>
+    </div>
+  );
+
   if (type === "Course") return Array(6).fill(<IdeaSkeleton />);
   if (type === "ProfileStructureSkeleton") return <ProfileStructureSkeleton />;
   if (type === "Toolbar") return <ToolbarSkeleton />;
+  if (type === "MainPageUserData") return <MainPageUserDataSkeleton />;
 }

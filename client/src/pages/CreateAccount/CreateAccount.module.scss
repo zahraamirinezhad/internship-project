@@ -142,6 +142,11 @@
           height: 3.5rem;
 
           textarea {
+            &:focus,
+            &:valid {
+              height: 6rem;
+            }
+
             &:focus ~ span,
             &:valid ~ span {
               color: #dad9d9;

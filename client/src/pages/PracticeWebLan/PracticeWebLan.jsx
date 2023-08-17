@@ -4,6 +4,7 @@ import classes from "./PracticeWebLan.module.scss";
 import { CropRotate } from "@mui/icons-material";
 import FilterIcon from "../../images/filter.png";
 import WebLanSmallMenu from "../../components/SmallMenus/WebLanSmallMenu/WebLanSmallMenu";
+import { CircularProgress } from "@mui/material";
 
 const PracticeWebLan = () => {
   const [html, setHtml] = useState("");
@@ -14,6 +15,8 @@ const PracticeWebLan = () => {
   const [rotate, setRotate] = useState(false);
   const [isShowMenu, setIsShowMenu] = useState(false);
 
+  const [isCompiling, setIsCompiling] = useState(false);
+
   const clear = () => {
     setHtml("");
     setCss("");
@@ -22,6 +25,7 @@ const PracticeWebLan = () => {
   };
 
   const runCode = () => {
+    setIsCompiling(true);
     setSrcDoc(`
           <html>
             <body>${html}</body>
@@ -29,6 +33,7 @@ const PracticeWebLan = () => {
             <script>${javascript}</script>
           </html>
         `);
+    setIsCompiling(false);
   };
 
   const showMenuHandler = () => {
@@ -113,14 +118,18 @@ const PracticeWebLan = () => {
           />
         </div>
         <div className={classes.result}>
+          {isCompiling && (
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          )}
           <iframe
+            className={classes.resData}
             srcDoc={srcDoc}
             title="output"
             sandbox="allow-scripts"
-            frameBorder="0"
             width="100%"
             height="100%"
-            className="full-screenable-node"
           />
         </div>
       </div>
