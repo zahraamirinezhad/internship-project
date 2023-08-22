@@ -6,6 +6,8 @@ import {
   ManageAccounts,
   MenuBook,
   School,
+  HistoryEdu,
+  NoteAlt,
 } from "@mui/icons-material";
 
 const UserSmallMenu = ({ showMenuHandler, isShowMenu, isTeacher }) => {
@@ -41,9 +43,30 @@ const UserSmallMenu = ({ showMenuHandler, isShowMenu, isTeacher }) => {
           <li onClick={showMenuHandler}>
             <Link
               className={classes.sidebarOptions}
+              to="/profileStructure/createPractice"
+            >
+              <span>
+                <NoteAlt /> Create Practice
+              </span>
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
               to="/profileStructure/myCourses"
             >
               <School /> My Courses
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/myPractices"
+            >
+              <span>
+                <HistoryEdu /> My Practices
+              </span>
+              <i></i>
             </Link>
           </li>
         </ul>
@@ -80,6 +103,17 @@ const UserSmallMenu = ({ showMenuHandler, isShowMenu, isTeacher }) => {
               to="/profileStructure/myCourses"
             >
               <School /> My Courses
+            </Link>
+          </li>
+          <li onClick={showMenuHandler}>
+            <Link
+              className={classes.sidebarOptions}
+              to="/profileStructure/myPractices"
+            >
+              <span>
+                <HistoryEdu /> My Practices
+              </span>
+              <i></i>
             </Link>
           </li>
         </ul>

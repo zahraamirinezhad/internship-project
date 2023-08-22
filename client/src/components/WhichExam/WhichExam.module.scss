@@ -1,0 +1,349 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  background-color: var(--ligth-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .options {
+    width: 45rem;
+    // height: calc(100vh - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
+
+    @media (max-width: 767.98px) {
+      flex-direction: column;
+    }
+
+    .languageOptions {
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      width: 100%;
+      color: #fff;
+      background-color: #a80242;
+      font-size: 1rem;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      text-align: center;
+      font-family: var(--roboto);
+      box-shadow: 0px 8px 10px 1px #8b98a1;
+
+      @media (max-width: 767.98px) {
+        width: 20rem;
+      }
+
+      @media (max-width: 575.98px) {
+        width: 10rem;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, #fff, transparent);
+        transition: 0.5s;
+      }
+
+      &:hover {
+        background-color: #ca004e;
+        box-shadow: none;
+        color: white;
+        box-shadow: none;
+
+        span:nth-child(1) {
+          transform: scaleY(1);
+          transform-origin: bottom;
+          transition: transform 0.3s;
+        }
+
+        span:nth-child(2) {
+          transform: scaleY(1);
+          transform-origin: left;
+          transition: transform 0.3s;
+        }
+
+        span:nth-child(3) {
+          transform: scaleY(1);
+          transform-origin: bottom;
+          transition: transform 0.3s;
+          transition-delay: 0.3s;
+        }
+
+        span:nth-child(4) {
+          transform: scaleX(1);
+          transform-origin: left;
+          transition: transform 0.3s;
+          transition-delay: 0.3s;
+        }
+      }
+
+      &:hover::before {
+        left: 100%;
+      }
+
+      span {
+        display: block;
+        position: absolute;
+        background-color: #8f0037;
+
+        &:nth-child(1) {
+          left: 0;
+          bottom: 0;
+          width: 3px;
+          height: 100%;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.3s;
+        }
+
+        &:nth-child(2) {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 3px;
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.3s;
+        }
+
+        &:nth-child(3) {
+          right: 0;
+          bottom: 0;
+          width: 3px;
+          height: 100%;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.3s;
+          transition-delay: 0.3s;
+        }
+
+        &:nth-child(4) {
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 3px;
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.3s;
+          transition-delay: 0.3s;
+        }
+      }
+    }
+  }
+
+  .html {
+    position: absolute;
+    animation: htmlAnimation 10s linear 0s infinite alternate;
+    color: #e62e00;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    font-family: var(--satisfy);
+  }
+
+  .css {
+    position: absolute;
+    animation: cssAnimation 10s linear 0s infinite alternate;
+    color: #0000ff;
+    opacity: 0.5;
+    top: 10%;
+    left: 0;
+    font-family: var(--pacificoRegular);
+  }
+
+  .javascript {
+    position: absolute;
+    animation: javascriptAnimation 10s linear 0s infinite alternate;
+    color: #ffff00;
+    opacity: 0.5;
+    top: 0;
+    left: 60%;
+    font-family: var(--carterOne);
+  }
+
+  .nodejs {
+    position: absolute;
+    animation: nodejsAnimation 10s linear 0s infinite alternate;
+    color: #00cc00;
+    opacity: 0.5;
+    bottom: 0;
+    right: 0;
+    font-family: var(--concertOne);
+  }
+
+  .python {
+    position: absolute;
+    animation: pythonAnimation 10s linear 0s infinite alternate;
+    color: #ffcc00;
+    opacity: 0.5;
+    bottom: 15%;
+    right: 10%;
+    font-family: var(--kaushanScript);
+  }
+
+  .c {
+    position: absolute;
+    animation: cAnimation 10s linear 0s infinite alternate;
+    color: #000080;
+    opacity: 0.5;
+    top: 20%;
+    left: 20%;
+    font-family: var(--lobster);
+  }
+
+  .cpp {
+    position: absolute;
+    animation: cppAnimation 10s linear 0s infinite alternate;
+    color: #000066;
+    opacity: 0.5;
+    top: 40;
+    left: 40;
+    font-family: var(--lumanosimo);
+  }
+
+  .php {
+    position: absolute;
+    animation: phpAnimation 10s linear 0s infinite alternate;
+    color: #e60000;
+    opacity: 0.5;
+    top: 10;
+    left: 10;
+    font-family: var(--lugrasimo);
+  }
+}
+
+@keyframes htmlAnimation {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  50% {
+    top: 20%;
+    left: 30%;
+  }
+  100% {
+    top: 5%;
+    left: 50%;
+  }
+}
+
+@keyframes cssAnimation {
+  0% {
+    top: 10%;
+    left: 0;
+  }
+  50% {
+    top: 5%;
+    left: 40%;
+  }
+  100% {
+    top: 5%;
+    left: 60%;
+  }
+}
+
+@keyframes javascriptAnimation {
+  0% {
+    top: 0;
+    left: 60%;
+  }
+  50% {
+    top: 30%;
+    left: 40%;
+  }
+  100% {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+@keyframes nodejsAnimation {
+  0% {
+    bottom: 0;
+    right: 0;
+  }
+  50% {
+    bottom: 30%;
+    right: 20%;
+  }
+  100% {
+    bottom: 10%;
+    right: 50%;
+  }
+}
+
+@keyframes pythonAnimation {
+  0% {
+    bottom: 15%;
+    right: 10%;
+  }
+  50% {
+    bottom: 30%;
+    right: 30%;
+  }
+  100% {
+    bottom: 60%;
+    right: 50%;
+  }
+}
+
+@keyframes cAnimation {
+  0% {
+    top: 20%;
+    left: 20%;
+  }
+  50% {
+    top: 30%;
+    left: 40%;
+  }
+  100% {
+    top: 0%;
+    left: 50%;
+  }
+}
+
+@keyframes cppAnimation {
+  0% {
+    top: 40%;
+    left: 40%;
+  }
+  50% {
+    top: 10%;
+    left: 5%;
+  }
+  100% {
+    top: 0%;
+    left: 20%;
+  }
+}
+
+@keyframes phpAnimation {
+  0% {
+    top: 10%;
+    left: 10%;
+  }
+  50% {
+    top: 30%;
+    left: 30%;
+  }
+  100% {
+    top: 40%;
+    left: 50%;
+  }
+}

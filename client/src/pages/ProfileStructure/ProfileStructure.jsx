@@ -6,12 +6,20 @@ import {
   EditProfile,
   CreateCourse,
   MyCourses,
+  MyPractices,
+  CreatePractice,
+  WhichPractice,
+  WhichExam,
+  CreateWebCourse,
+  CreateWebPractice,
 } from "../../components";
 import {
   AccountCircle,
   ManageAccounts,
   MenuBook,
   School,
+  HistoryEdu,
+  NoteAlt,
 } from "@mui/icons-material";
 
 const ProfileStructure = ({ token, isTeacher }) => {
@@ -47,10 +55,20 @@ const ProfileStructure = ({ token, isTeacher }) => {
           <Link
             style={{ "--clr": "#e60000" }}
             className={classes.sidebarOptions}
-            to="/profileStructure/createCourse"
+            to="/profileStructure/whichExam"
           >
             <span>
-              <MenuBook /> Create Course
+              <MenuBook /> Create Exam
+            </span>
+            <i></i>
+          </Link>
+          <Link
+            style={{ "--clr": "#006666" }}
+            className={classes.sidebarOptions}
+            to="/profileStructure/whichPractice"
+          >
+            <span>
+              <NoteAlt /> Create Practice
             </span>
             <i></i>
           </Link>
@@ -61,6 +79,16 @@ const ProfileStructure = ({ token, isTeacher }) => {
           >
             <span>
               <School /> My Courses
+            </span>
+            <i></i>
+          </Link>
+          <Link
+            style={{ "--clr": "#99003d" }}
+            className={classes.sidebarOptions}
+            to="/profileStructure/myPractices"
+          >
+            <span>
+              <HistoryEdu /> My Practices
             </span>
             <i></i>
           </Link>
@@ -103,7 +131,17 @@ const ProfileStructure = ({ token, isTeacher }) => {
             to="/profileStructure/myCourses"
           >
             <span>
-              <School /> My Courses
+              <School /> My Exams
+            </span>
+            <i></i>
+          </Link>
+          <Link
+            style={{ "--clr": "#99003d" }}
+            className={classes.sidebarOptions}
+            to="/profileStructure/myPractices"
+          >
+            <span>
+              <HistoryEdu /> My Practices
             </span>
             <i></i>
           </Link>
@@ -116,7 +154,15 @@ const ProfileStructure = ({ token, isTeacher }) => {
             profile: <Profile token={token} isTeacher={isTeacher} />,
             myCourses: <MyCourses token={token} isTeacher={isTeacher} />,
             editProfile: <EditProfile token={token} isTeacher={isTeacher} />,
-            createCourse: <CreateCourse token={token} isTeacher={isTeacher} />,
+            whichPractice: <WhichPractice token={token} isTeacher={true} />,
+            whichExam: <WhichExam token={token} isTeacher={true} />,
+            createCourse: <CreateCourse token={token} isTeacher={true} />,
+            createPractice: <CreatePractice token={token} isTeacher={true} />,
+            createWebCourse: <CreateWebCourse token={token} isTeacher={true} />,
+            createWebPractice: (
+              <CreateWebPractice token={token} isTeacher={true} />
+            ),
+            myPractices: <MyPractices token={token} isTeacher={isTeacher} />,
           }[url]
         }
       </div>

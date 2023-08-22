@@ -1,0 +1,200 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color: var(--light-bg);
+  gap: 7rem;
+  padding: 2rem;
+
+  .courseStatus {
+    width: 80%;
+  }
+
+  .courseQuestion {
+    width: 100%;
+    margin: 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .questionBox {
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset -8px -8px 15px #b7d3e5, inset 5px 5px 15px #7595aa;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      width: 40rem;
+      height: 20rem;
+
+      .border:nth-child(1) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        border-radius: 1rem;
+        background: linear-gradient(to right, #0c002b, #1779ff);
+        animation: animate1 5s linear infinite;
+        // filter: blur(2px);
+      }
+
+      .border:nth-child(2) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 5px;
+        height: 100%;
+        border-radius: 1rem;
+        background: linear-gradient(to bottom, #0c002b, #1779ff);
+        animation: animate2 5s linear infinite;
+        // filter: blur(2px);
+      }
+
+      .border:nth-child(3) {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        border-radius: 1rem;
+        background: linear-gradient(to left, #0c002b, #1779ff);
+        animation: animate3 5s linear infinite;
+        // filter: blur(2px);
+      }
+
+      .border:nth-child(4) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        border-radius: 1rem;
+        background: linear-gradient(to top, #0c002b, #1779ff);
+        animation: animate4 5s linear infinite;
+        // filter: blur(2px);
+      }
+
+      .question {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #d7e9f5;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        width: 100%;
+        font-family: var(--roboto);
+        font-weight: bold;
+        border-bottom: 1px solid rgb(129, 178, 202);
+        box-shadow: 0px -5px 5px 0px rgba(177, 210, 226, 0.75) inset;
+      }
+
+      .choices {
+        width: 100%;
+        max-height: 10rem;
+        overflow: hidden;
+        overflow-y: scroll;
+        padding: 1rem;
+        border: 1px solid grey;
+        border-radius: 0.5rem;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 0.5rem;
+        background-color: #ffffff;
+
+        @media (max-width: 767.98px) {
+          grid-template-columns: auto;
+        }
+
+        /* width */
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: #bdbdbd;
+          border-radius: 0.5rem;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: #838383;
+        }
+      }
+    }
+  }
+
+  .options {
+    width: 100%;
+
+    button {
+      width: 10rem;
+      border: none;
+      border: 1px solid #0000e6;
+      outline: none;
+      padding: 0.5rem 1rem;
+      color: #0000e6;
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.4s ease-in-out;
+      margin: 1rem 0;
+
+      &:hover {
+        background-color: #0000e6;
+        color: white;
+      }
+    }
+  }
+}
+
+@keyframes animate1 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes animate2 {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes animate3 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes animate4 {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}

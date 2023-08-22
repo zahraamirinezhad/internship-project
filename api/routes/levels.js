@@ -2,10 +2,10 @@ const router = require("express").Router();
 const Question = require("../models/Question");
 const Level = require("../models/Level");
 const Choice = require("../models/Choice");
+const Score = require("../models/Score");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
-const { where } = require("sequelize");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -74,86 +74,29 @@ router.get("/getLevelQuestions/:id", verify, async (req, res) => {
       });
       questionsRes.push(question);
     }
-    res.status(200).json(questionsRes);
+    res.status(200).json({ questions: questionsRes, courseId: level.CourseId });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const courses = await Course.findAll();
-//     res.status(200).json(courses);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// router.get("/getCourseDocs/:id", verify, async (req, res) => {
-//   try {
-//     const courses = await Course.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//       include: UploadedFile,
-//     });
-//     res.status(200).json(courses);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// router.get("/getCourseQuestions/:id", verify, async (req, res) => {
-//   try {
-//     const courses = await Course.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//       include: Question,
-//     });
-//     res.status(200).json(courses);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// router.get("/getCourseQuestionsChoices/:id", verify, async (req, res) => {
-//   try {
-//     const question = await Question.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//       include: Choice,
-//     });
-//     res.status(200).json(question);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// router.put("/editCourse/:id", verify, upload, async (req, res) => {
-//   // console.log(req);
-//   try {
-//     const avatar =
-//       typeof req.file === "undefined" ? req.body.avatar : req.file.path;
-//     const course = await Course.update(
-//       {
-//         title: req.body.title,
-//         goal: req.body.goal,
-//         abstract: req.body.abstract,
-//         avatar: avatar,
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//         },
-//       }
-//     );
-//     res.status(200).json(course);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+//SET SCORE
+router.post("/setScore/:levelId", verify, async (req, res) => {
+  await Score.create({
+    StudentId: req.user.id,
+    LevelId: req.params.levelId,
+    score: req.body.score,
+    courseFinished: true,
+  })
+    .then((score) => {
+      // console.log(course);
+      res.status(201).json(`your score is ${score.score}`);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // //DELETE COURSE
 // router.delete("/:id", verify, async (req, res) => {

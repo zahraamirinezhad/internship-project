@@ -20,6 +20,7 @@
     background-color: #e0e7eb;
     position: relative;
     overflow: hidden;
+    border-radius: 0.5rem;
     // box-shadow: 0px 0px 20px 15px #a5c2d4;
 
     @media (max-width: 575.98px) {
@@ -35,7 +36,7 @@
       border-radius: 1rem;
       background: linear-gradient(to right, #0c002b, #1779ff);
       animation: animate1 5s linear infinite;
-      filter: blur(2px);
+      // filter: blur(2px);
     }
 
     .border:nth-child(2) {
@@ -47,7 +48,7 @@
       border-radius: 1rem;
       background: linear-gradient(to bottom, #0c002b, #1779ff);
       animation: animate2 5s linear infinite;
-      filter: blur(2px);
+      // filter: blur(2px);
     }
 
     .border:nth-child(3) {
@@ -59,7 +60,7 @@
       border-radius: 1rem;
       background: linear-gradient(to left, #0c002b, #1779ff);
       animation: animate3 5s linear infinite;
-      filter: blur(2px);
+      // filter: blur(2px);
     }
 
     .border:nth-child(4) {
@@ -71,7 +72,7 @@
       border-radius: 1rem;
       background: linear-gradient(to top, #0c002b, #1779ff);
       animation: animate4 5s linear infinite;
-      filter: blur(2px);
+      // filter: blur(2px);
     }
 
     &.courseCreated {

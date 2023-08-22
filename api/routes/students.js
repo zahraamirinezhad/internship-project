@@ -5,6 +5,8 @@ const multer = require("multer");
 const path = require("path");
 const Course = require("../models/Course");
 const Student_Course = require("../models/Student_Course");
+const Student_WebCourse = require("../models/Student_WebCourse");
+const WebCourse = require("../models/WebCourse");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -146,11 +148,43 @@ router.get("/isCourseTaken/:courseId", verify, async (req, res) => {
   }
 });
 
+//GET COURSE STAT
+router.get("/isWebCourseTaken/:courseId", verify, async (req, res) => {
+  try {
+    const course = await Student_WebCourse.findOne({
+      where: {
+        StudentId: req.user.id,
+        WebCourseId: req.params.courseId,
+      },
+    });
+    const isTaken = course === null ? false : true;
+    res.status(200).json(isTaken);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //TAKE COURSE
 router.post("/takeCourse", verify, async (req, res) => {
   await Student_Course.create({
     StudentId: req.user.id,
     CourseId: req.body.courseId,
+  })
+    .then(() => {
+      // console.log(course);
+      res.status(201).json("you got the course.");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+//TAKE WEB COURSE
+router.post("/takeWebCourse", verify, async (req, res) => {
+  await Student_WebCourse.create({
+    StudentId: req.user.id,
+    WebCourseId: req.body.courseId,
   })
     .then(() => {
       // console.log(course);
@@ -180,27 +214,116 @@ router.delete("/logOut/:id", verify, async (req, res) => {
     });
 });
 
-router.get("/getTakenCourses", verify, async (req, res) => {
+router.delete("/logOutWeb/:id", verify, async (req, res) => {
+  await Student_WebCourse.destroy({
+    where: {
+      StudentId: req.user.id,
+      WebCourseId: req.params.id,
+    },
+  })
+    .then(() => {
+      // console.log(course);
+      res.status(201).json("you lost the course.");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+router.get("/getTakenExams", verify, async (req, res) => {
   try {
-    const courses = await Student_Course.findAll({
+    const coursesId = await Student_Course.findAll({
       where: {
         StudentId: req.user.id,
       },
     });
 
-    // console.log("courses");
-    // console.log(courses);
+    const courses = [];
+    for (let i = 0; i < coursesId.length; i++) {
+      const course = await Course.findOne({
+        where: {
+          id: coursesId[i].CourseId,
+          isExam: true,
+        },
+      });
+      courses.push(course);
+    }
 
-    // const courses = [];
-    // for (let i = 0; i < scores.Scores.length; i++) {
-    //   const course = await Score.findOne({
-    //     where: {
-    //       id: scores.Scores[i].id,
-    //     },
-    //     include: Course,
-    //   });
-    //   courses.push(course.Course);
-    // }
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getTakenPractices", verify, async (req, res) => {
+  try {
+    const coursesId = await Student_Course.findAll({
+      where: {
+        StudentId: req.user.id,
+      },
+    });
+
+    const courses = [];
+    for (let i = 0; i < coursesId.length; i++) {
+      const course = await Course.findOne({
+        where: {
+          id: coursesId[i].CourseId,
+          isExam: false,
+        },
+      });
+      courses.push(course);
+    }
+
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getTakenWebExams", verify, async (req, res) => {
+  try {
+    const coursesId = await Student_WebCourse.findAll({
+      where: {
+        StudentId: req.user.id,
+      },
+    });
+
+    const courses = [];
+    for (let i = 0; i < coursesId.length; i++) {
+      const course = await WebCourse.findOne({
+        where: {
+          id: coursesId[i].CourseId,
+          isExam: true,
+        },
+      });
+      courses.push(course);
+    }
+
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getTakenWebPractices", verify, async (req, res) => {
+  try {
+    const coursesId = await Student_WebCourse.findAll({
+      where: {
+        StudentId: req.user.id,
+      },
+    });
+
+    const courses = [];
+    for (let i = 0; i < coursesId.length; i++) {
+      const course = await WebCourse.findOne({
+        where: {
+          id: coursesId[i].CourseId,
+          isExam: false,
+        },
+      });
+      courses.push(course);
+    }
 
     res.status(200).json(courses);
   } catch (err) {

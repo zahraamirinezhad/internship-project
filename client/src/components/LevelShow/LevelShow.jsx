@@ -2,9 +2,12 @@ import React from "react";
 import classes from "./LevelShow.module.scss";
 import { Link } from "react-router-dom";
 
-const LevelShow = ({ id, title, doc, desc }) => {
+const LevelShow = ({ id, title, doc, desc, isExam }) => {
   return (
-    <Link to={`/takeCourse/${id}`} className={classes.container}>
+    <Link
+      to={isExam ? `/takeExam/${id}` : `/takePractice/${id}`}
+      className={classes.container}
+    >
       <div className={classes.levelInfo}>
         <div className={classes.levelTitle}>{title}</div>
         <div>

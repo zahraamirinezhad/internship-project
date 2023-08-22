@@ -1,25 +1,21 @@
 import { React, useState, useEffect } from "react";
 import classes from "./CourseDataShow.module.scss";
-import UploadedFile from "../../components/UploadedFile/UploadedFile";
 import { useParams } from "react-router-dom";
 import SelectImage from "../../images/selectImage.png";
 import { useDispatch, useSelector } from "react-redux";
-import { attachedFilesActions } from "../../store/attachedFiles";
+import { levelsActions } from "../../store/levels";
 import { usersActions } from "../../store/user";
 import axios from "axios";
 import User from "../../components/User/User";
+import LevelShow from "../../components/LevelShow/LevelShow";
 
 const CourseDataShow = ({ token }) => {
   const params = useParams();
   const courseId = params.courseId;
 
   const dispatch = useDispatch();
-  const attachedFiles = useSelector(
-    (state) => state.attachedFiles.attachedFiles
-  );
-  const attachedFilesNum = useSelector(
-    (state) => state.attachedFiles.attachedFilesNum
-  );
+  const levels = useSelector((state) => state.levels.levels);
+  const levelsNum = useSelector((state) => state.levels.levelsNum);
 
   const students = useSelector((state) => state.users.users);
   const studentsNum = useSelector((state) => state.courses.usersNum);
@@ -33,7 +29,7 @@ const CourseDataShow = ({ token }) => {
     const getUserData = async () => {
       try {
         const docsRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseDocs/${courseId}`,
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourse/${courseId}`,
           {
             headers: {
               token: `Bearer ${token}`,
@@ -51,18 +47,27 @@ const CourseDataShow = ({ token }) => {
             : `http://localhost:8800/${docsRes.data.avatar}`
         );
 
-        dispatch(attachedFilesActions.deleteAllAttachedFiles());
-        for (let i = 0; i < docsRes.data.UploadedFiles.length; i++) {
+        dispatch(levelsActions.deleteAllLevels());
+        const levelRes = await axios.get(
+          `${process.env.REACT_APP_API_ADDRESS}courses/getCourseLevels/${courseId}`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(levelRes);
+        for (let i = 0; i < levelRes.data.length; i++) {
           dispatch(
-            attachedFilesActions.addAttachedFiles({
-              id: docsRes.data.UploadedFiles[i].id,
-              name: docsRes.data.UploadedFiles[i].fileName,
-              type: docsRes.data.UploadedFiles[i].type,
-              path: docsRes.data.UploadedFiles[i].path,
+            levelsActions.addLevel({
+              id: levelRes.data[i].level.id,
+              title: levelRes.data[i].level.title,
+              doc: levelRes.data[i].level.doc,
+              desc: levelRes.data[i].level.description,
+              isExam: docsRes.data.isExam,
             })
           );
         }
-        console.log(attachedFiles);
 
         const studentsRes = await axios.get(
           `${process.env.REACT_APP_API_ADDRESS}courses/getStudents/${courseId}`,
@@ -84,44 +89,46 @@ const CourseDataShow = ({ token }) => {
   return (
     <div className={classes.container}>
       <div className={classes.courseDetails}>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
+        <span className={classes.border}></span>
         <div className={classes.courseImage}>
           <img src={courseImage} alt="Select_Image" />
         </div>
         <div className={classes.enterCourseDetails}>
           <div className={classes.enterData}>
-            <label>Title</label>
             <input value={courseName} type="text" readOnly />
+            <span>Title</span>
           </div>
           <div className={classes.enterData}>
-            <label>Goals</label>
             <input value={courseGoal} type="text" readOnly />
+            <span>Goals</span>
           </div>
           <div className={classes.enterData}>
-            <label>Abstract</label>
             <textarea value={courseBio} readOnly />
+            <span>Abstract</span>
           </div>
         </div>
       </div>
 
-      <div className={classes.courseDocs}>
-        <div className={classes.addedDocs}>
-          {attachedFilesNum !== 0 && (
-            <div className={classes.uploadedFilesList}>
-              {attachedFiles.map((item, index) => (
-                <UploadedFile
-                  key={index}
-                  token={token}
-                  id={item.id}
-                  type={item.name.split(".")[item.name.split(".").length - 1]}
-                  name={item.name}
-                  path={item.path}
-                  downloadOrDelete="download"
-                />
-              ))}
-            </div>
-          )}
+      {levelsNum !== 0 ? (
+        <div className={classes.courseLevels}>
+          {levels.map((item, index) => (
+            <LevelShow
+              key={index}
+              id={item.id}
+              title={item.title}
+              doc={item.doc}
+              desc={item.desc}
+              isExam={item.isExam}
+            />
+          ))}
         </div>
-      </div>
+      ) : (
+        <p className={classes.empty}>No Levels</p>
+      )}
+
       <div className={classes.courseStudents}>
         {studentsNum !== 0 && (
           <div className={classes.courseStudentsList}>

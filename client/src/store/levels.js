@@ -18,6 +18,7 @@ const levelsSlice = createSlice({
           doc: newItem.doc,
           desc: newItem.desc,
           questions: newItem.questions,
+          isExam: newItem.isExam,
         });
       }
     },

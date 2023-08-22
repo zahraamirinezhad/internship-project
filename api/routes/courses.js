@@ -7,6 +7,7 @@ const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
 const Student = require("../models/Student");
+const Student_Course = require("../models/Student_Course");
 
 const Storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,6 +32,7 @@ router.post("/create", verify, upload, async (req, res) => {
     goal: req.body.goal,
     abstract: req.body.abstract,
     avatar: avatar,
+    isExam: req.body.isExam,
     TeacherId: req.user.id,
   })
     .then((course) => {
@@ -46,6 +48,32 @@ router.post("/create", verify, upload, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const courses = await Course.findAll();
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getExams", async (req, res) => {
+  try {
+    const courses = await Course.findAll({
+      where: {
+        isExam: true,
+      },
+    });
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/getPractices", async (req, res) => {
+  try {
+    const courses = await Course.findAll({
+      where: {
+        isExam: false,
+      },
+    });
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json(err);
@@ -168,30 +196,28 @@ router.delete("/:id", verify, async (req, res) => {
   }
 });
 
-// router.get("/getStudents/:courseId", verify, async (req, res) => {
-//   try {
-//     const scores = await Course.findOne({
-//       where: {
-//         id: req.params.courseId,
-//       },
-//       include: Score,
-//     });
+router.get("/getStudents/:courseId", verify, async (req, res) => {
+  try {
+    const studentsId = await Student_Course.findAll({
+      where: {
+        CourseId: req.params.courseId,
+      },
+    });
 
-//     const students = [];
-//     for (let i = 0; i < scores.Scores.length; i++) {
-//       const student = await Score.findOne({
-//         where: {
-//           id: scores.Scores[i].id,
-//         },
-//         include: Student,
-//       });
-//       students.push(student.Student);
-//     }
+    const students = [];
+    for (let i = 0; i < studentsId.length; i++) {
+      const student = await Student.findOne({
+        where: {
+          id: studentsId[i].StudentId,
+        },
+      });
+      students.push(student);
+    }
 
-//     res.status(200).json(students);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;

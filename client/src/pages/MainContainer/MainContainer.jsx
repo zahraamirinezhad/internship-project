@@ -10,8 +10,13 @@ import {
   PracticeWebLan,
   ShowCourse,
   EditCourse,
-  TakeCourse,
+  TakeExam,
+  TakePractice,
+  ShowWebCourse,
   CourseDataShow,
+  TakeWebExam,
+  TakeWebPractice,
+  EditWebCourse,
 } from "..";
 import AuthContext from "../../authContext/AuthContext";
 import { useContext } from "react";
@@ -47,8 +52,15 @@ const MainContainer = () => {
               otherLan: <Compiler token={token} isTeacher={isTeacher} />,
               webLan: <PracticeWebLan isTeacher={isTeacher} />,
               editCourse: <EditCourse token={token} isTeacher={true} />,
+              editWebCourse: <EditWebCourse token={token} isTeacher={true} />,
               showCourse: <ShowCourse token={token} isTeacher={isTeacher} />,
-              takeCourse: <TakeCourse token={token} isTeacher={isTeacher} />,
+              showWebCourse: (
+                <ShowWebCourse token={token} isTeacher={isTeacher} />
+              ),
+              takeExam: <TakeExam token={token} />,
+              takeWebExam: <TakeWebExam token={token} />,
+              takePractice: <TakePractice token={token} />,
+              takeWebPractice: <TakeWebPractice token={token} />,
               courseDataShow: <CourseDataShow token={token} isTeacher={true} />,
             }[url]
           }

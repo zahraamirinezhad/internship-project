@@ -14,16 +14,6 @@ const Level = db.define(
       allowNull: false,
       unique: true,
     },
-    score: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    courseFinished: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
     doc: { type: Sequelize.STRING, allowNull: false, defaultValue: null },
     description: {
       type: Sequelize.STRING,

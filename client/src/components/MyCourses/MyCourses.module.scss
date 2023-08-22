@@ -14,28 +14,22 @@
   }
 
   .courses {
+    position: relative;
     width: 100%;
-    padding: 0.5rem 1.5rem;
+    padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     height: 30rem;
     max-height: 30rem;
     display: grid;
     grid-template-columns: auto auto;
-    gap: 0.5rem;
+    gap: 1.5rem;
     overflow: hidden;
     overflow-y: scroll;
     background-color: transparent;
-    overflow: hidden;
-    position: relative;
     box-shadow: inset -8px -8px 15px #b7d3e5, inset 5px 5px 15px #7595aa;
 
     @media (max-width: 991.98px) {
       grid-template-columns: auto;
-    }
-
-    &.scrollable {
-      overflow-y: scroll;
-      padding: 2rem 0;
     }
 
     &::-webkit-scrollbar {
@@ -47,12 +41,12 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: rgb(6, 24, 105);
+      background: rgb(159, 174, 240);
       border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: rgba(8, 32, 136, 1);
+      background: rgb(112, 130, 209);
     }
   }
 }

@@ -59,6 +59,7 @@ const CreateCourse = ({ token }) => {
     formData.append("goal", courseGoal);
     formData.append("abstract", courseBio);
     formData.append("avatar", courseImage);
+    formData.append("isExam", true);
 
     for (const value of formData.values()) {
       console.log(value);

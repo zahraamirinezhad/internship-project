@@ -1,0 +1,265 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-bg);
+  gap: 2rem;
+  padding: 2rem 0;
+
+  .courseDetails {
+    width: 30rem;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background-color: #e0e7eb;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    // box-shadow: 0px 0px 20px 15px #a5c2d4;
+
+    @media (max-width: 575.98px) {
+      width: 90%;
+    }
+
+    .border:nth-child(1) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      border-radius: 1rem;
+      background: linear-gradient(to right, #0c002b, #1779ff);
+      animation: animate1 5s linear infinite;
+      // filter: blur(2px);
+    }
+
+    .border:nth-child(2) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      border-radius: 1rem;
+      background: linear-gradient(to bottom, #0c002b, #1779ff);
+      animation: animate2 5s linear infinite;
+      // filter: blur(2px);
+    }
+
+    .border:nth-child(3) {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      border-radius: 1rem;
+      background: linear-gradient(to left, #0c002b, #1779ff);
+      animation: animate3 5s linear infinite;
+      // filter: blur(2px);
+    }
+
+    .border:nth-child(4) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      border-radius: 1rem;
+      background: linear-gradient(to top, #0c002b, #1779ff);
+      animation: animate4 5s linear infinite;
+      // filter: blur(2px);
+    }
+
+    .enterCourseDetails {
+      width: 100%;
+
+      .enterData {
+        position: relative;
+        margin: 1.5rem 0;
+        width: 100%;
+
+        input,
+        textarea {
+          outline: none;
+          border: none;
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border-radius: 0.2rem;
+          background-color: #e0e7eb;
+          font-size: 1rem;
+          border: 2px solid #32434e;
+          font-family: var(--poppins);
+          color: #222222;
+          box-shadow: 0px 0px 7px 5px #a5c2d4 inset;
+
+          &:focus,
+          &:valid {
+            outline: none;
+            border: 2px solid #32434e;
+          }
+        }
+
+        textarea {
+          height: 20rem;
+        }
+
+        span {
+          position: absolute;
+          left: 10px;
+          top: -1rem;
+          color: #838383;
+          pointer-events: none;
+          font-size: 1rem;
+          padding: 0.3rem;
+          font-family: var(--poppins);
+          color: #303030;
+          border-left: 2px solid #32434e;
+          border-right: 2px solid #32434e;
+          background-color: #e0e7eb;
+          font-size: 0.65rem;
+        }
+      }
+    }
+  }
+
+  .courseImage {
+    background-color: #d9d9d9;
+    width: 30rem;
+    height: 100vh;
+    //   width: 10rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .courseOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+
+    @media (max-width: 575.98px) {
+      width: 100%;
+    }
+
+    button,
+    a {
+      position: relative;
+      width: 16rem;
+      border: none;
+      outline: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 0.4rem;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      text-decoration: none;
+      text-align: center;
+      overflow: hidden;
+      font-family: var(--caveat);
+      font-weight: bold;
+
+      @media (max-width: 575.98px) {
+        width: 90%;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, #fff, transparent);
+        transition: 0.5s;
+      }
+
+      &.takeCourse {
+        border: 1px solid #009933;
+        background-color: #009933;
+        color: white;
+
+        &:hover {
+          background-color: #02b13c;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
+      }
+
+      &.logOut {
+        border: 1px solid #b30000;
+        background-color: #b30000;
+        color: white;
+
+        &:hover {
+          background-color: #d10303;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
+      }
+
+      &.continueCourse {
+        border: 1px solid #002db3;
+        background-color: #002db3;
+        color: white;
+
+        &:hover {
+          background-color: #0d3dcf;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes animate1 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes animate2 {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes animate3 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes animate4 {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}

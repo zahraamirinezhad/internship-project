@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import classes from "./TakeCourse.module.scss";
+import classes from "./TakePractice.module.scss";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { questionsActions } from "../../store/questions";
@@ -13,7 +13,7 @@ import { selectedAnswersActions } from "../../store/selectedAnswers";
 import { Snackbar, Alert } from "@mui/material";
 import { Cofee } from "../../components";
 
-const TakeCourse = ({ token }) => {
+const TakePractice = ({ token }) => {
   const params = useParams();
   const levelId = params.levelId;
 
@@ -185,4 +185,4 @@ const TakeCourse = ({ token }) => {
   );
 };
 
-export default TakeCourse;
+export default TakePractice;

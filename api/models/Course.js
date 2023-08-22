@@ -17,6 +17,7 @@ const Course = db.define(
     goal: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
     abstract: { type: Sequelize.STRING, allowNull: false, defaultValue: "" },
     avatar: { type: Sequelize.STRING, defaultValue: null },
+    isExam: { type: Sequelize.BOOLEAN, defaultValue: true, allowNull: false },
   },
   { timestamps: true, freezeTableName: true }
 );

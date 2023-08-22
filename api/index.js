@@ -6,18 +6,23 @@ const authRoute = require("./routes/auth");
 const teachersRoute = require("./routes/teachers");
 const studentsRoute = require("./routes/students");
 const coursesRoute = require("./routes/courses");
+const webCoursesRoute = require("./routes/weCourses");
 const compilerRoute = require("./routes/compiler");
 const questionsRoute = require("./routes/questions");
 const levelsRoute = require("./routes/levels");
 const cors = require("cors");
 const Sequelize = require("sequelize");
 const Course = require("./models/Course");
+const WebCourse = require("./models/WebCourse");
 const Teacher = require("./models/Teacher");
 const Question = require("./models/Question");
 const Choice = require("./models/Choice");
 const Student = require("./models/Student");
 const Level = require("./models/Level");
 const Student_Course = require("./models/Student_Course");
+const Student_WebCourse = require("./models/Student_WebCourse");
+const Score = require("./models/Score");
+const WebScore = require("./models/WebScore");
 
 const app = express();
 
@@ -37,6 +42,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/teachers", teachersRoute);
 app.use("/api/students", studentsRoute);
 app.use("/api/courses", coursesRoute);
+app.use("/api/webCourses", webCoursesRoute);
 app.use("/api/compile", compilerRoute);
 app.use("/api/questions", questionsRoute);
 app.use("/api/levels", levelsRoute);
@@ -52,6 +58,14 @@ Teacher.hasMany(Course, {
   },
 });
 Course.belongsTo(Teacher);
+//Every teacher created many webcourses
+Teacher.hasMany(WebCourse, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+WebCourse.belongsTo(Teacher);
 // Every course has many levels
 Course.hasMany(Level, {
   foreignKey: {
@@ -92,8 +106,58 @@ Course.hasMany(Student_Course, {
   },
 });
 Student_Course.belongsTo(Course);
+//Every student has many webcourses
+Student.hasMany(Student_WebCourse, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Student_WebCourse.belongsTo(Student);
 
-// db.sync({ force: true });
+WebCourse.hasMany(Student_WebCourse, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Student_WebCourse.belongsTo(WebCourse);
+
+//Every level has many score
+Level.hasOne(Score, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Score.belongsTo(Level);
+
+Student.hasOne(Score, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+Score.belongsTo(Student);
+
+//Every level has many score
+WebCourse.hasOne(WebScore, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+WebScore.belongsTo(WebCourse);
+
+Student.hasOne(WebScore, {
+  foreignKey: {
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+WebScore.belongsTo(Student);
+
+// db.sync({ alter: true });
 
 const port = process.env.PORT || 8800;
 app.listen(port, () => {

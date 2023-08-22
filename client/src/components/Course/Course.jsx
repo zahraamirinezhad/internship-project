@@ -18,7 +18,7 @@ const Course = ({ id, token, title, avatar, goal, abstract, isTeacher }) => {
   const logOut = async () => {
     try {
       const res = await axios.delete(
-        `${process.env.REACT_APP_API_ADDRESS}scores/logOut/${id}`,
+        `${process.env.REACT_APP_API_ADDRESS}students/logOut/${id}`,
         {
           headers: {
             token: `Bearer ${token}`,

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { attachedFilesReducer } from "./attachedFiles";
 import { coursesReducer } from "./course";
+import { webCoursesReducer } from "./webCourse";
 import { choicesReducer } from "./choices";
 import { questionsReducer } from "./questions";
 import { selectedAnswersReducer } from "./selectedAnswers";
@@ -11,6 +12,7 @@ const store = configureStore({
   reducer: {
     attachedFiles: attachedFilesReducer,
     courses: coursesReducer,
+    webCourses: webCoursesReducer,
     choices: choicesReducer,
     questions: questionsReducer,
     selectedAnswers: selectedAnswersReducer,

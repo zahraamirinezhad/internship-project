@@ -1,0 +1,295 @@
+.container {
+  width: 100%;
+  // height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-bg);
+  padding: 1rem 2rem;
+
+  .courseDetails {
+    width: 30rem;
+    margin: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    .enterCourseDetails {
+      width: 100%;
+
+      .enterData {
+        position: relative;
+        margin: 1.5rem 0;
+        width: 100%;
+
+        input,
+        textarea {
+          outline: none;
+          border: none;
+          width: 100%;
+          padding: 0.5rem 1rem;
+          border-radius: 0.2rem;
+          background-color: var(--light-bg);
+          font-size: 1rem;
+          border: 1px solid #838383;
+          font-family: var(--poppins);
+          color: #222222;
+          box-shadow: -6px -6px 5px 0px rgba(201, 198, 198, 0.75) inset;
+          -webkit-box-shadow: -6px -6px 5px 0px rgba(201, 198, 198, 0.75) inset;
+          -moz-box-shadow: -6px -6px 5px 0px rgba(201, 198, 198, 0.75) inset;
+
+          &:focus,
+          &:valid {
+            outline: none;
+            border: 2px solid #565757;
+          }
+
+          &:focus ~ span,
+          &:valid ~ span {
+            color: #565757;
+            border-left: 2px solid #565757;
+            border-right: 2px solid #565757;
+            transform: translateX(10px) translateY(-1rem);
+            background-color: var(--light-bg);
+            font-size: 0.65rem;
+          }
+        }
+
+        textarea {
+          height: 5rem;
+          overflow: hidden;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+
+        span {
+          position: absolute;
+          left: 0.2rem;
+          top: 0.1rem;
+          color: #838383;
+          pointer-events: none;
+          transition: 0.5s;
+          font-size: 1rem;
+          padding: 0.3rem;
+          font-family: var(--poppins);
+        }
+      }
+    }
+  }
+
+  .navbarContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #333;
+
+    .navbar {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      list-style-type: none;
+      background-color: #333;
+      // box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+      // -webkit-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+      // -moz-box-shadow: 10px 10px 5px 0px rgba(13, 13, 13, 0.75) inset;
+
+      @media (max-width: 767.98px) {
+        width: 100%;
+      }
+
+      @media (max-width: 575.98px) {
+        display: none;
+      }
+
+      li {
+        height: 3rem;
+        // width: 8rem;
+        flex: 1;
+
+        button,
+        select {
+          border: none;
+          outline: none;
+          height: 100%;
+          width: 100%;
+          cursor: pointer;
+          text-align: center;
+          color: white;
+          font-weight: bold;
+        }
+
+        &.rotateEditor {
+          button {
+            background-color: #cc0000;
+            box-shadow: 10px 10px 5px 0px #800000 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #800000 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #800000 inset;
+          }
+        }
+
+        &.run {
+          button {
+            background-color: #04aa6d;
+            box-shadow: 10px 10px 5px 0px #017a4e inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #017a4e inset;
+            -moz-box-shadow: 10px 10px 5px 0px #017a4e inset;
+          }
+        }
+
+        &.clear {
+          button {
+            background-color: #0066ff;
+            box-shadow: 10px 10px 5px 0px #013686 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #013686 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #013686 inset;
+          }
+        }
+
+        &.theme {
+          select {
+            background-color: #737373;
+            box-shadow: 10px 10px 5px 0px #404040 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #404040 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #404040 inset;
+          }
+        }
+
+        &.lan {
+          select {
+            background-color: #cc0066;
+            box-shadow: 10px 10px 5px 0px #800040 inset;
+            -webkit-box-shadow: 10px 10px 5px 0px #800040 inset;
+            -moz-box-shadow: 10px 10px 5px 0px #800040 inset;
+          }
+        }
+      }
+    }
+
+    .smallMenu {
+      display: none;
+      margin: 0.5rem;
+
+      @media (max-width: 575.98px) {
+        display: block;
+      }
+
+      .showMenu {
+        border: none;
+        outline: none;
+        background: transparent;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .ide {
+    width: 100%;
+    display: flex;
+
+    @media (max-width: 575.98px) {
+      min-height: fit-content;
+      height: fit-content;
+      display: block;
+    }
+
+    &.rotate {
+      flex-direction: column !important;
+
+      .editors {
+        flex-direction: row !important;
+      }
+
+      .result {
+        height: 30rem;
+      }
+    }
+
+    .editors {
+      flex: 1;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: 575.98px) {
+        height: 100rem;
+      }
+    }
+
+    .result {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100vh;
+      box-shadow: -10px -10px 5px 0px rgba(201, 198, 198, 0.75) inset;
+      -webkit-box-shadow: -10px -10px 5px 0px rgba(201, 198, 198, 0.75) inset;
+      -moz-box-shadow: -10px -10px 5px 0px rgba(201, 198, 198, 0.75) inset;
+
+      @media (max-width: 575.98px) {
+        height: 40rem;
+      }
+
+      .resData {
+        border: none;
+      }
+
+      .loading {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  .finishCreatingExam {
+    position: relative;
+    border: none;
+    outline: none;
+    color: rgb(186, 205, 245);
+    background: rgba(7, 50, 148, 1);
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    font-family: var(--lumanosimo);
+    overflow: hidden;
+    margin-top: 2rem;
+
+    &.disableButton {
+      opacity: 0.5;
+
+      &:hover {
+        cursor: not-allowed;
+        color: rgb(186, 205, 245);
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #fff, transparent);
+      transition: 0.5s;
+    }
+
+    &:hover {
+      background-color: rgb(9, 56, 167);
+      color: white;
+    }
+
+    &:hover::before {
+      left: 100%;
+    }
+  }
+}

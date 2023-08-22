@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import classes from "./ShowCourse.module.scss";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SelectImage from "../../images/selectImage.png";
 import { useDispatch, useSelector } from "react-redux";
 import { levelsActions } from "../../store/levels";
@@ -20,7 +20,6 @@ const ShowCourse = ({ token }) => {
   const [courseGoal, setCourseGoal] = useState("");
   const [courseBio, setCourseBio] = useState("");
   const [courseImage, setCourseImage] = useState(null);
-  const [courseLevels, setCourseLevels] = useState([]);
   const [courseTaken, setCourseTaken] = useState(false);
 
   useEffect(() => {
@@ -62,6 +61,7 @@ const ShowCourse = ({ token }) => {
               title: levelRes.data[i].level.title,
               doc: levelRes.data[i].level.doc,
               desc: levelRes.data[i].level.description,
+              isExam: docsRes.data.isExam,
             })
           );
         }
@@ -171,7 +171,7 @@ const ShowCourse = ({ token }) => {
               title={item.title}
               doc={item.doc}
               desc={item.desc}
-              questions={item.questions}
+              isExam={item.isExam}
             />
           ))}
         </div>
