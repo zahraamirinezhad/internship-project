@@ -293,7 +293,7 @@ router.get("/getTakenWebExams", verify, async (req, res) => {
     for (let i = 0; i < coursesId.length; i++) {
       const course = await WebCourse.findOne({
         where: {
-          id: coursesId[i].CourseId,
+          id: coursesId[i].WebCourseId,
           isExam: true,
         },
       });
@@ -318,7 +318,7 @@ router.get("/getTakenWebPractices", verify, async (req, res) => {
     for (let i = 0; i < coursesId.length; i++) {
       const course = await WebCourse.findOne({
         where: {
-          id: coursesId[i].CourseId,
+          id: coursesId[i].WebCourseId,
           isExam: false,
         },
       });
@@ -326,6 +326,22 @@ router.get("/getTakenWebPractices", verify, async (req, res) => {
     }
 
     res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET SCORE
+router.post("/getWebExamAnswer", verify, async (req, res) => {
+  try {
+    const course = await Student_WebCourse.findOne({
+      where: {
+        StudentId: req.body.studentId,
+        WebCourseId: req.body.courseId,
+      },
+    });
+
+    res.status(200).json(course);
   } catch (err) {
     res.status(500).json(err);
   }

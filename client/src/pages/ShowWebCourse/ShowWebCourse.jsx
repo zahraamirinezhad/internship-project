@@ -30,7 +30,13 @@ const ShowWebCourse = ({ token }) => {
 
         setCourseName(docsRes.data.title);
         setCourseBio(docsRes.data.abstract);
-        setCourseQuestion(docsRes.data.question);
+        setCourseQuestion(`
+        <html>
+          <body>${docsRes.data.html}</body>
+          <style>${docsRes.data.css}</style>
+          <script>${docsRes.data.javascript}</script>
+        </html>
+      `);
         setIsExam(docsRes.data.isExam);
 
         const isTakenRes = await axios.get(

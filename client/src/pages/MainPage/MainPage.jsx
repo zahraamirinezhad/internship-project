@@ -32,25 +32,45 @@ const MainPage = ({ token, isTeacher }) => {
     const getUserData = async () => {
       try {
         const examsRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getExams`
+          `${process.env.REACT_APP_API_ADDRESS}courses/getExams`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
         );
         console.log(examsRes);
         setExams(examsRes.data);
 
         const webExamsRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}webCourses/getExams`
+          `${process.env.REACT_APP_API_ADDRESS}webCourses/getExams`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
         );
         console.log(webExamsRes);
         setWebExams(webExamsRes.data);
 
         const practicesRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}courses/getPractices`
+          `${process.env.REACT_APP_API_ADDRESS}courses/getPractices`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
         );
         console.log(practicesRes);
         setPractices(practicesRes.data);
 
         const webPracticesRes = await axios.get(
-          `${process.env.REACT_APP_API_ADDRESS}webCourses/getPractices`
+          `${process.env.REACT_APP_API_ADDRESS}webCourses/getPractices`,
+          {
+            headers: {
+              token: `Bearer ${token}`,
+            },
+          }
         );
         console.log(webPracticesRes);
         setWebPractices(webPracticesRes.data);

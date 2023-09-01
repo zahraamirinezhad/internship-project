@@ -36,7 +36,7 @@ router.post("/create", verify, async (req, res) => {
     });
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
     const courses = await WebCourse.findAll();
     res.status(200).json(courses);
@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/getExams", async (req, res) => {
+router.get("/getExams", verify, async (req, res) => {
   try {
     const courses = await WebCourse.findAll({
       where: {
@@ -58,7 +58,7 @@ router.get("/getExams", async (req, res) => {
   }
 });
 
-router.get("/getPractices", async (req, res) => {
+router.get("/getPractices", verify, async (req, res) => {
   try {
     const courses = await WebCourse.findAll({
       where: {
@@ -71,7 +71,7 @@ router.get("/getPractices", async (req, res) => {
   }
 });
 
-router.get("/getCourse/:id", async (req, res) => {
+router.get("/getCourse/:id", verify, async (req, res) => {
   try {
     const courses = await WebCourse.findOne({
       where: {
@@ -84,83 +84,27 @@ router.get("/getCourse/:id", async (req, res) => {
   }
 });
 
-router.post("/check/:id", async (req, res) => {
+router.post("/check/:id", verify, async (req, res) => {
   try {
-    // const html1 = fs.readFileSync(
-    //   "D:\\science\\intership\\internship-project\\api\\routes\\one.html",
-    //   "utf-8"
-    // );
-    // const html2 = fs.readFileSync(
-    //   "D:\\science\\intership\\internship-project\\api\\routes\\two.html",
-    //   "utf-8"
-    // );
+    const course = await Student_WebCourse.update(
+      {
+        html: req.body.html,
+        css: req.body.css,
+        javascript: req.body.javascript,
+      },
+      {
+        where: {
+          WebCourseId: req.params.id,
+          StudentId: req.user.id,
+        },
+      }
+    );
 
-    var options = {
-      ignoreAttributes: [],
-      compareAttributesAsJSON: [],
-      ignoreWhitespaces: true,
-      ignoreComments: true,
-      ignoreEndTags: true,
-      ignoreDuplicateAttributes: false,
-    };
-
-    var htmlDiffer = new HtmlDiffer(options);
-
-    var diff = htmlDiffer.diffHtml(req.body.question, req.body.answer),
-      isEqual = htmlDiffer.isEqual(req.body.question, req.body.answer),
-      result = logger.getDiffText(diff, { charsAroundDiff: 40 });
-
-    res.status(200).json({ diff: diff, isEqual: isEqual, result: result });
+    res.status(200).json(course);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
-
-  console.log(req);
-  // try {
-  //   // Those are the HTML fragments that we want to compare:
-  //   var expectedHTML = req.body.question;
-  //   var actualHTML = req.body.answer;
-
-  //   var expectedDOM = new JSDOM(expectedHTML).window.document;
-  //   var actualDOM = new JSDOM(actualHTML).window.document;
-
-  //   var options = {
-  //     stripSpaces: true,
-  //     compareComments: true,
-  //     collapseSpaces: true,
-  //     normalizeNewlines: true,
-  //   };
-
-  //   var result = compare(expectedDOM, actualDOM, options);
-
-  //   console.log("diff array:", result.getDifferences());
-
-  //   // we can use a reporter to pretty-print the result:
-
-  //   console.log(reporter.report(result));
-
-  //   res.status(200).json({
-  //     report: reporter.report(result),
-  //     result: result.getResult(),
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-  //   res.status(500).json(err);
-  // }
-
-  // try {
-  //   // const result =
-  //   //   generateHashCode(req.body.question) === generateHashCode(req.body.answer);
-
-  //   var expectedHTML = req.body.question;
-  //   var actualHTML = req.body.answer;
-  //   const result = expectedHTML.hashCode() === actualHTML.hashCode();
-  //   res.status(200).json(result);
-  // } catch (err) {
-  //   console.log(err);
-  //   res.status(500).json(err);
-  // }
 });
 
 // router.delete("/editCourse/deleteLevels/:id", verify, async (req, res) => {

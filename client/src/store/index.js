@@ -5,7 +5,7 @@ import { webCoursesReducer } from "./webCourse";
 import { choicesReducer } from "./choices";
 import { questionsReducer } from "./questions";
 import { selectedAnswersReducer } from "./selectedAnswers";
-import { usersReducer } from "./user";
+import { usersReducer } from "./users";
 import { levelsReducer } from "./levels";
 
 const store = configureStore({

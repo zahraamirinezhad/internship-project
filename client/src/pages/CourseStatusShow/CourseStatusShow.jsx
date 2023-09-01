@@ -1,15 +1,42 @@
 import { React, useState, useEffect } from "react";
-import classes from "./CourseDataShow.module.scss";
+import classes from "./CourseStatusShow.module.scss";
 import { useParams } from "react-router-dom";
 import SelectImage from "../../images/selectImage.png";
 import { useDispatch, useSelector } from "react-redux";
 import { levelsActions } from "../../store/levels";
-import { usersActions } from "../../store/users";
 import axios from "axios";
 import User from "../../components/User/User";
 import LevelShow from "../../components/LevelShow/LevelShow";
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
+import { CircularProgress } from "@mui/material";
+import LevelStatus from "../../components/LevelStatus/LevelStatus";
 
-const CourseDataShow = ({ token }) => {
+const columns = [
+  {
+    field: "username",
+    headerName: "User Name",
+    width: 150,
+  },
+  {
+    field: "firstName",
+    headerName: "First name",
+    width: 150,
+  },
+  {
+    field: "lastName",
+    headerName: "Last name",
+    width: 150,
+  },
+  {
+    field: "studentNumber",
+    headerName: "Student Number",
+    type: "number",
+    width: 150,
+  },
+];
+
+const CourseStatusShow = ({ token }) => {
   const params = useParams();
   const courseId = params.courseId;
 
@@ -17,13 +44,14 @@ const CourseDataShow = ({ token }) => {
   const levels = useSelector((state) => state.levels.levels);
   const levelsNum = useSelector((state) => state.levels.levelsNum);
 
-  const students = useSelector((state) => state.users.users);
-  const studentsNum = useSelector((state) => state.courses.usersNum);
+  const [students, setStudents] = useState([]);
 
   const [courseName, setCourseName] = useState("");
   const [courseGoal, setCourseGoal] = useState("");
   const [courseBio, setCourseBio] = useState("");
   const [courseImage, setCourseImage] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -78,7 +106,9 @@ const CourseDataShow = ({ token }) => {
           }
         );
         console.log(studentsRes.data);
-        dispatch(usersActions.setData(studentsRes.data));
+        setStudents(studentsRes.data);
+
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -112,6 +142,7 @@ const CourseDataShow = ({ token }) => {
         </div>
       </div>
 
+      <h1 className={classes.title}>Levels</h1>
       {levelsNum !== 0 ? (
         <div className={classes.courseLevels}>
           {levels.map((item, index) => (
@@ -129,24 +160,50 @@ const CourseDataShow = ({ token }) => {
         <p className={classes.empty}>No Levels</p>
       )}
 
+      <h1 className={classes.title}>Students</h1>
       <div className={classes.courseStudents}>
-        {studentsNum !== 0 && (
-          <div className={classes.courseStudentsList}>
-            {students.map((item, index) => (
-              <User
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Box sx={{ height: "100%", width: "100%" }}>
+            <DataGrid
+              rows={students}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+              }}
+              pageSizeOptions={[4]}
+              disableRowSelectionOnClick
+            />
+          </Box>
+        )}
+      </div>
+
+      <h1 className={classes.title}>Levels Scores</h1>
+      <div className={classes.levelsStatus}>
+        {levelsNum !== 0 ? (
+          <div className={classes.levels}>
+            {levels.map((item, index) => (
+              <LevelStatus
                 key={index}
-                token={token}
                 id={item.id}
-                userName={item.username}
-                avatar={item.profilePic}
-                bio={item.bio}
+                token={token}
+                title={item.title}
+                doc={item.doc}
+                desc={item.desc}
               />
             ))}
           </div>
+        ) : (
+          <p className={classes.empty}>No Levels</p>
         )}
       </div>
     </div>
   );
 };
 
-export default CourseDataShow;
+export default CourseStatusShow;

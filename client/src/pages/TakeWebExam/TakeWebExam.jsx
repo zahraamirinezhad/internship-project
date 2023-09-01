@@ -38,7 +38,13 @@ const TakeWebExam = ({ token }) => {
         );
         console.log(docsRes);
 
-        setQuestion(docsRes.data.question);
+        setQuestion(`
+        <html>
+          <body>${docsRes.data.html}</body>
+          <style>${docsRes.data.css}</style>
+          <script>${docsRes.data.javascript}</script>
+        </html>
+      `);
 
         setIsLoading(false);
       } catch (err) {
@@ -50,16 +56,9 @@ const TakeWebExam = ({ token }) => {
 
   const finishExam = async () => {
     try {
-      const answer = `
-          <html>
-            <body>${html}</body>
-            <style>${css}</style>
-            <script>${javascript}</script>
-          </html>
-        `;
       const res = await axios.post(
         `${process.env.REACT_APP_API_ADDRESS}webCourses/check/${courseId}`,
-        { question: question, answer: answer },
+        { html: html, css: css, javascript: javascript },
         {
           headers: {
             token: `Bearer ${token}`,
@@ -201,9 +200,9 @@ const TakeWebExam = ({ token }) => {
         />
       </div>
       <div className={classes.options}>
-        {/* <Link to={`/showCourse/${courseId}`}> */}
-        <button onClick={finishExam}>Finish Exam</button>
-        {/* </Link> */}
+        <Link to={`/profileStructure/myCourses`}>
+          <button onClick={finishExam}>Finish Exam</button>
+        </Link>
       </div>
     </div>
   );

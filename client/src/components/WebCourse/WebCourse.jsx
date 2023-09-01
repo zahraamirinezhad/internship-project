@@ -13,6 +13,13 @@ const WebCourse = ({ id, token, item, isTeacher }) => {
   const url = location.pathname.split("/")[2];
   console.log(url);
 
+  let dest = "";
+  if (url === "myCourses") {
+    dest = isTeacher ? `/webCourseStatusShow/${id}` : `/showWebCourse/${id}`;
+  } else {
+    dest = isTeacher ? `/webCourseDataShow/${id}` : `/showWebCourse/${id}`;
+  }
+
   const dispatch = useDispatch();
 
   const logOut = async () => {
@@ -70,10 +77,7 @@ const WebCourse = ({ id, token, item, isTeacher }) => {
           </div>
         )}
       </div>
-      <Link
-        to={isTeacher ? `/webCourseDataShow/${id}` : `/showWebCourse/${id}`}
-        className={classes.courseImage}
-      >
+      <Link to={dest} className={classes.courseImage}>
         <iframe
           srcDoc={`
           <html>

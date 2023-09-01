@@ -17,6 +17,8 @@ import {
   TakeWebExam,
   TakeWebPractice,
   EditWebCourse,
+  CourseStatusShow,
+  WebCourseStatusShow,
 } from "..";
 import AuthContext from "../../authContext/AuthContext";
 import { useContext } from "react";
@@ -62,6 +64,12 @@ const MainContainer = () => {
               takePractice: <TakePractice token={token} />,
               takeWebPractice: <TakeWebPractice token={token} />,
               courseDataShow: <CourseDataShow token={token} isTeacher={true} />,
+              courseStatusShow: (
+                <CourseStatusShow token={token} isTeacher={true} />
+              ),
+              webCourseStatusShow: (
+                <WebCourseStatusShow token={token} isTeacher={true} />
+              ),
             }[url]
           }
         </div>

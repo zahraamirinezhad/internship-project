@@ -85,6 +85,14 @@ function App() {
               path="/courseDataShow/:courseId"
               element={<MainContainer />}
             />
+            <Route
+              path="/courseStatusShow/:courseId"
+              element={<MainContainer />}
+            />
+            <Route
+              path="/webCourseStatusShow/:webCourseId"
+              element={<MainContainer />}
+            />
           </>
         )}
       </Routes>

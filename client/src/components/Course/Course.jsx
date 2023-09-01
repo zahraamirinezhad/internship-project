@@ -13,6 +13,13 @@ const Course = ({ id, token, title, avatar, goal, abstract, isTeacher }) => {
   const url = location.pathname.split("/")[2];
   console.log(url);
 
+  let dest = "";
+  if (url === "myCourses") {
+    dest = isTeacher ? `/courseStatusShow/${id}` : `/showCourse/${id}`;
+  } else {
+    dest = isTeacher ? `/courseDataShow/${id}` : `/showCourse/${id}`;
+  }
+
   const dispatch = useDispatch();
 
   const logOut = async () => {
@@ -75,7 +82,7 @@ const Course = ({ id, token, title, avatar, goal, abstract, isTeacher }) => {
           <p className={classes.courseDesc}>{abstract}</p>
         </div>
       </div>
-      <Link to={isTeacher ? `/courseDataShow/${id}` : `/showCourse/${id}`}>
+      <Link to={dest}>
         <img
           className={classes.courseImage}
           src={`http://localhost:8800/${avatar}`}

@@ -58,6 +58,7 @@ const MyPractices = ({ token, isTeacher }) => {
             }
           );
           console.log(res.data);
+          res.data = res.data[0] === null ? [] : res.data;
           dispatch(coursesActions.setData(res.data));
           const webRes = await axios.get(
             `${process.env.REACT_APP_API_ADDRESS}students/getTakenWebPractices`,

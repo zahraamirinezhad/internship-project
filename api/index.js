@@ -6,7 +6,7 @@ const authRoute = require("./routes/auth");
 const teachersRoute = require("./routes/teachers");
 const studentsRoute = require("./routes/students");
 const coursesRoute = require("./routes/courses");
-const webCoursesRoute = require("./routes/weCourses");
+const webCoursesRoute = require("./routes/webCourses");
 const compilerRoute = require("./routes/compiler");
 const questionsRoute = require("./routes/questions");
 const levelsRoute = require("./routes/levels");
@@ -22,7 +22,6 @@ const Level = require("./models/Level");
 const Student_Course = require("./models/Student_Course");
 const Student_WebCourse = require("./models/Student_WebCourse");
 const Score = require("./models/Score");
-const WebScore = require("./models/WebScore");
 
 const app = express();
 
@@ -139,23 +138,6 @@ Student.hasOne(Score, {
   },
 });
 Score.belongsTo(Student);
-
-//Every level has many score
-WebCourse.hasOne(WebScore, {
-  foreignKey: {
-    type: Sequelize.UUID,
-    allowNull: false,
-  },
-});
-WebScore.belongsTo(WebCourse);
-
-Student.hasOne(WebScore, {
-  foreignKey: {
-    type: Sequelize.UUID,
-    allowNull: false,
-  },
-});
-WebScore.belongsTo(Student);
 
 // db.sync({ alter: true });
 

@@ -3,6 +3,7 @@ const Question = require("../models/Question");
 const Level = require("../models/Level");
 const Choice = require("../models/Choice");
 const Score = require("../models/Score");
+const Student = require("../models/Student");
 const verify = require("../VerifyToken");
 const multer = require("multer");
 const path = require("path");
@@ -98,6 +99,30 @@ router.post("/setScore/:levelId", verify, async (req, res) => {
     });
 });
 
+router.get("/getStudents/:levelId", verify, async (req, res) => {
+  try {
+    const studentsId = await Score.findAll({
+      where: {
+        LevelId: req.params.levelId,
+      },
+    });
+
+    const students = [];
+    for (let i = 0; i < studentsId.length; i++) {
+      const student = await Student.findOne({
+        where: {
+          id: studentsId[i].StudentId,
+        },
+      });
+      students.push(student);
+    }
+
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // //DELETE COURSE
 // router.delete("/:id", verify, async (req, res) => {
 //   try {
@@ -108,32 +133,6 @@ router.post("/setScore/:levelId", verify, async (req, res) => {
 //     });
 
 //     res.status(200).json("Course deleted successfully :)");
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// router.get("/getStudents/:courseId", verify, async (req, res) => {
-//   try {
-//     const scores = await Course.findOne({
-//       where: {
-//         id: req.params.courseId,
-//       },
-//       include: Score,
-//     });
-
-//     const students = [];
-//     for (let i = 0; i < scores.Scores.length; i++) {
-//       const student = await Score.findOne({
-//         where: {
-//           id: scores.Scores[i].id,
-//         },
-//         include: Student,
-//       });
-//       students.push(student.Student);
-//     }
-
-//     res.status(200).json(students);
 //   } catch (err) {
 //     res.status(500).json(err);
 //   }

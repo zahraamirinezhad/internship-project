@@ -1,21 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const usersSlice = createSlice({
-  name: "user",
+  name: "users",
   initialState: { users: [], usersNum: 0 },
   reducers: {
     addUser(state, action) {
       const newItem = action.payload;
       const existingItem = state.users.find(
-        (item) => item.userName === newItem.userName
+        (item) => item.username === newItem.username
       );
 
       if (!existingItem) {
         state.usersNum++;
         state.users.push({
-          userName: newItem.username,
-          bio: newItem.bio,
-          profilePic: newItem.profilePic,
+          username: newItem.username,
+          firstName: newItem.firstName,
+          lastName: newItem.lastName,
+          studentNumber: newItem.studentNumber,
         });
       }
     },
@@ -26,7 +27,7 @@ const usersSlice = createSlice({
     deleteUser(state, action) {
       const newItem = action.payload;
       const existingItem = state.users.find(
-        (item) => item.userName === newItem.userName
+        (item) => item.username === newItem.username
       );
 
       if (existingItem) {

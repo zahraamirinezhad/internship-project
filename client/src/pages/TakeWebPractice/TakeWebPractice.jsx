@@ -38,7 +38,13 @@ const TakeWebPractice = ({ token }) => {
         );
         console.log(docsRes);
 
-        setQuestion(docsRes.data.question);
+        setQuestion(`
+        <html>
+          <body>${docsRes.data.html}</body>
+          <style>${docsRes.data.css}</style>
+          <script>${docsRes.data.javascript}</script>
+        </html>
+      `);
 
         setIsLoading(false);
       } catch (err) {

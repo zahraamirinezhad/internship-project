@@ -14,4 +14,6 @@ export { default as TakePractice } from "./TakePractice/TakePractice";
 export { default as TakeExam } from "./TakeExam/TakeExam";
 export { default as TakeWebExam } from "./TakeWebExam/TakeWebExam";
 export { default as CourseDataShow } from "./CourseDataShow/CourseDataShow";
+export { default as CourseStatusShow } from "./CourseStatusShow/CourseStatusShow";
+export { default as WebCourseStatusShow } from "./WebCourseStatusShow/WebCourseStatusShow";
 export { default as TakeWebPractice } from "./TakeWebPractice/TakeWebPractice";
