@@ -1,25 +1,23 @@
 import React from "react";
 import classes from "./User.module.scss";
 import UserProfile from "../../images/user (2).png";
+import { Link } from "react-router-dom";
 
 const User = ({
   id,
-  token,
   userName,
   firstName,
   lastName,
   studentNumber,
   avatar,
   bio,
-  showStudentScore,
+  courseId,
 }) => {
   console.log(userName, firstName, lastName, studentNumber, avatar, bio);
   return (
-    <div
+    <Link
       className={classes.container}
-      onClick={() => {
-        showStudentScore(firstName, lastName, studentNumber, id);
-      }}
+      to={`/studentWebCourseScore/${id}/${courseId}`}
     >
       <div className={classes.courseInfo}>
         <div className={classes.courseTitle}>{userName}</div>
@@ -32,7 +30,7 @@ const User = ({
         src={avatar === null ? UserProfile : `http://localhost:8800/${avatar}`}
         alt="course_Image"
       />
-    </div>
+    </Link>
   );
 };
 

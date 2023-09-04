@@ -339,6 +339,7 @@ router.post("/getWebExamAnswer", verify, async (req, res) => {
         StudentId: req.body.studentId,
         WebCourseId: req.body.courseId,
       },
+      include: Student,
     });
 
     res.status(200).json(course);

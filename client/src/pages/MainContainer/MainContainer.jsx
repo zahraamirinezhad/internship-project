@@ -19,6 +19,7 @@ import {
   EditWebCourse,
   CourseStatusShow,
   WebCourseStatusShow,
+  StudentWebCourseScore,
 } from "..";
 import AuthContext from "../../authContext/AuthContext";
 import { useContext } from "react";
@@ -69,6 +70,9 @@ const MainContainer = () => {
               ),
               webCourseStatusShow: (
                 <WebCourseStatusShow token={token} isTeacher={true} />
+              ),
+              studentWebCourseScore: (
+                <StudentWebCourseScore token={token} isTeacher={true} />
               ),
             }[url]
           }

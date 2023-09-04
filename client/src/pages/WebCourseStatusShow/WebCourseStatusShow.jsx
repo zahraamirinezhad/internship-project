@@ -4,8 +4,40 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { usersActions } from "../../store/users";
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
+import { CircularProgress } from "@mui/material";
 import User from "../../components/User/User";
-import { Editor } from "../../components";
+
+const columns = [
+  {
+    field: "username",
+    headerName: "User Name",
+    width: 150,
+  },
+  {
+    field: "firstName",
+    headerName: "First name",
+    width: 150,
+  },
+  {
+    field: "lastName",
+    headerName: "Last name",
+    width: 150,
+  },
+  {
+    field: "studentNumber",
+    headerName: "Student Number",
+    type: "number",
+    width: 150,
+  },
+  {
+    field: "score",
+    headerName: "Score",
+    type: "number",
+    width: 150,
+  },
+];
 
 const WebCourseStatusShow = ({ token }) => {
   const params = useParams();
@@ -15,11 +47,11 @@ const WebCourseStatusShow = ({ token }) => {
   const users = useSelector((state) => state.users.users);
   const usersNum = useSelector((state) => state.users.usersNum);
 
+  const [students, setStudents] = useState([]);
   const [courseName, setCourseName] = useState("");
   const [courseBio, setCourseBio] = useState("");
   const [courseQuestion, setCourseQuestion] = useState(null);
-  const [showStudent, setShowStudent] = useState(false);
-  const [student, setStudent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -53,7 +85,21 @@ const WebCourseStatusShow = ({ token }) => {
           }
         );
         console.log(studentsRes.data);
-        dispatch(usersActions.setData(studentsRes.data));
+        for (let i = 0; i < studentsRes.data.length; i++) {
+          dispatch(
+            usersActions.addUser({
+              id: studentsRes.data[i].Student.id,
+              username: studentsRes.data[i].Student.username,
+              firstName: studentsRes.data[i].Student.firstName,
+              lastName: studentsRes.data[i].Student.lastName,
+              studentNumber: studentsRes.data[i].Student.studentNumber,
+              avatar: studentsRes.data[i].Student.profilePic,
+              bio: studentsRes.data[i].Student.bio,
+              score: studentsRes.data[i].score,
+            })
+          );
+        }
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -61,98 +107,8 @@ const WebCourseStatusShow = ({ token }) => {
     getUserData();
   }, []);
 
-  const showStudentScore = async (firstName, lastName, studentNumber, id) => {
-    try {
-      const studentsRes = await axios.post(
-        `${process.env.REACT_APP_API_ADDRESS}students/getWebExamAnswer`,
-        { studentId: id, courseId: courseId },
-        {
-          headers: {
-            token: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(studentsRes.data);
-      setStudent({
-        firstName: firstName,
-        lastName: lastName,
-        studentNumber: studentNumber,
-        html: studentsRes.data.html,
-        css: studentsRes.data.css,
-        javascript: studentsRes.data.javascript,
-        answer: `
-        <html>
-          <body>${studentsRes.data.html}</body>
-          <style>${studentsRes.data.css}</style>
-          <script>${studentsRes.data.javascript}</script>
-        </html>
-      `,
-      });
-      setShowStudent(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const hideStudentScore = () => {
-    console.log("hide");
-    setShowStudent(false);
-  };
-
   return (
     <div className={classes.container}>
-      {showStudent && (
-        <div className={classes.studentScore}>
-          <div className={classes.studentData}>
-            <div className={classes.enteredData}>
-              <input type="text" readOnly value={student.firstName} />
-              <span>First Name</span>
-            </div>
-            <div className={classes.enteredData}>
-              <input type="text" readOnly value={student.lastName} />
-              <span>Last Name</span>
-            </div>
-            <div className={classes.enteredData}>
-              <input type="text" readOnly value={student.studentNumber} />
-              <span>Student Number</span>
-            </div>
-            <div className={classes.studentCode}>
-              <div className={classes.ide}>
-                <div className={classes.editors}>
-                  <Editor
-                    value={student.html}
-                    mode="html"
-                    theme={"monokai"}
-                    size="small"
-                  />
-                  <Editor
-                    value={student.css}
-                    mode="css"
-                    theme={"monokai"}
-                    size="small"
-                  />
-                  <Editor
-                    value={student.javascript}
-                    mode="javascript"
-                    theme={"monokai"}
-                    size="small"
-                  />
-                </div>
-                <div className={classes.result}>
-                  <iframe
-                    className={classes.resData}
-                    srcDoc={student.answer}
-                    title="output"
-                    sandbox="allow-scripts"
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       <div className={classes.courseDetails}>
         <span className={classes.border}></span>
         <span className={classes.border}></span>
@@ -193,14 +149,37 @@ const WebCourseStatusShow = ({ token }) => {
                 lastName={item.lastName}
                 studentNumber={item.studentNumber}
                 userName={item.username}
-                avatar={item.profilePic}
+                avatar={item.avatar}
                 bio={item.bio}
-                showStudentScore={showStudentScore}
+                courseId={courseId}
               />
             ))}
           </div>
         ) : (
-          <p className={classes.empty}>No Levels</p>
+          <p className={classes.empty}>No Students</p>
+        )}
+      </div>
+
+      <h1 className={classes.title}>scores</h1>
+      <div className={classes.courseStudents}>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Box sx={{ height: "100%", width: "100%" }}>
+            <DataGrid
+              rows={users}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+              }}
+              pageSizeOptions={[4]}
+              disableRowSelectionOnClick
+            />
+          </Box>
         )}
       </div>
     </div>

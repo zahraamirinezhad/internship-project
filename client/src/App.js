@@ -93,6 +93,10 @@ function App() {
               path="/webCourseStatusShow/:webCourseId"
               element={<MainContainer />}
             />
+            <Route
+              path="/studentWebCourseScore/:studentId/:courseId"
+              element={<MainContainer />}
+            />
           </>
         )}
       </Routes>

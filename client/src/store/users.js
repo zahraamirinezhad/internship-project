@@ -13,10 +13,14 @@ const usersSlice = createSlice({
       if (!existingItem) {
         state.usersNum++;
         state.users.push({
+          id: newItem.id,
           username: newItem.username,
           firstName: newItem.firstName,
           lastName: newItem.lastName,
           studentNumber: newItem.studentNumber,
+          score: newItem.score,
+          avatar: newItem.avatar,
+          bio: newItem.bio,
         });
       }
     },

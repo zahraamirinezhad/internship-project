@@ -84,18 +84,17 @@ router.get("/getCourse/:id", verify, async (req, res) => {
   }
 });
 
-router.post("/check/:id", verify, async (req, res) => {
+router.post("/check/:studentId/:courseId", verify, async (req, res) => {
   try {
+    console.log(req);
     const course = await Student_WebCourse.update(
       {
-        html: req.body.html,
-        css: req.body.css,
-        javascript: req.body.javascript,
+        score: req.body.score,
       },
       {
         where: {
-          WebCourseId: req.params.id,
-          StudentId: req.user.id,
+          WebCourseId: req.params.courseId,
+          StudentId: req.params.studentId,
         },
       }
     );
@@ -161,21 +160,23 @@ router.delete("/:id", verify, async (req, res) => {
 
 router.get("/getStudents/:courseId", verify, async (req, res) => {
   try {
-    const studentsId = await Student_WebCourse.findAll({
+    const students = await Student_WebCourse.findAll({
       where: {
         WebCourseId: req.params.courseId,
       },
+      include: Student,
     });
 
-    const students = [];
-    for (let i = 0; i < studentsId.length; i++) {
-      const student = await Student.findOne({
-        where: {
-          id: studentsId[i].StudentId,
-        },
-      });
-      students.push(student);
-    }
+    // const students = [];
+    // for (let i = 0; i < studentsId.length; i++) {
+    //   const student = await Student_WebCourse.findOne({
+    //     where: {
+    //       StudentId: studentsId[i].StudentId,
+    //     },
+    //     include: Student,
+    //   });
+    //   students.push(student);
+    // }
 
     res.status(200).json(students);
   } catch (err) {

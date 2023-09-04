@@ -17,3 +17,4 @@ export { default as CourseDataShow } from "./CourseDataShow/CourseDataShow";
 export { default as CourseStatusShow } from "./CourseStatusShow/CourseStatusShow";
 export { default as WebCourseStatusShow } from "./WebCourseStatusShow/WebCourseStatusShow";
 export { default as TakeWebPractice } from "./TakeWebPractice/TakeWebPractice";
+export { default as StudentWebCourseScore } from "./StudentWebCourseScore/StudentWebCourseScore";
